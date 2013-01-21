@@ -1,4 +1,5 @@
 <?php
+
 namespace JBBCode;
 
 require_once('Node.php');
@@ -11,217 +12,217 @@ require_once('Node.php');
  * the tag name of the element.
  */
 class ElementNode extends Node {
-	
-	/* The tagname of this element, for i.e. "b" in [b]bold[/b] */
-	protected $tagName;
-	
-	/* The attribute, if any, of this element node */
-	protected $attribute;
-	
-	/* The child nodes contained within this element */
-	protected $children;
-	
-	/* The code definition that defines this element's behavior */
-	protected $codeDefinition;
-	
-	/* How deeply this node is nested */
-	protected $nestDepth;
-	
-	/**
-	 * Constructs the elemennt node
-	 */
-	public function __construct() {
-		$this->children = array();
-		$this->nestDepth = 0;
-	}
-	
-	/**
-	 * Gets the CodeDefinition that defines this element.
-	 * 
-	 * @return this element's code definition
-	 */
-	public function getCodeDefinition() {
-		return $this->codeDefinition;
-	}
-	
-	/**
-	 * Sets the CodeDefinition that defines this element.
-	 * 
-	 * @param codeDef the code definition that defines this element node
-	 */
-	public function setCodeDefinition( CodeDefinition $codeDef ) {
-		$this->codeDefinition = $codeDef;
-	}
-	
-	/**
-	 * Returns the tag name of this element.
-	 * 
-	 * @return the element's tag name
-	 */
-	public function getTagName() {
-		return $this->tagName;
-	}
-	
-	/**
-	 * Returns the attribute (used as the option in bbcode definitions) of this element.
-	 * 
-	 * @return the attribute of this element
-	 */
-	public function getAttribute() {
-		return $this->attribute;
-	}
-	
-	/**
-	 * Returns all the children of this element.
-	 * 
-	 * @return an array of this node's child nodes
-	 */
-	public function getChildren() {
-		return $this->children;
-	}
-	
-	/**
-	 * (non-PHPdoc)
-	 * @see JBBCode.Node::getAsText()
-	 * 
-	 * Returns the element as text (not including any bbcode markup)
-	 * 
-	 * @return the plain text representation of this node
-	 */
-	public function getAsText() {
-		$s = "";
-		foreach($this->getChildren() as $child)
-			$s .= $child->getAsText();
-		return $s;
-	}
+    
+    /* The tagname of this element, for i.e. "b" in [b]bold[/b] */
+    protected $tagName;
+    
+    /* The attribute, if any, of this element node */
+    protected $attribute;
+    
+    /* The child nodes contained within this element */
+    protected $children;
+    
+    /* The code definition that defines this element's behavior */
+    protected $codeDefinition;
+    
+    /* How deeply this node is nested */
+    protected $nestDepth;
+    
+    /**
+     * Constructs the elemennt node
+     */
+    public function __construct() {
+        $this->children = array();
+        $this->nestDepth = 0;
+    }
+    
+    /**
+     * Gets the CodeDefinition that defines this element.
+     * 
+     * @return this element's code definition
+     */
+    public function getCodeDefinition() {
+        return $this->codeDefinition;
+    }
+    
+    /**
+     * Sets the CodeDefinition that defines this element.
+     * 
+     * @param codeDef the code definition that defines this element node
+     */
+    public function setCodeDefinition( CodeDefinition $codeDef ) {
+        $this->codeDefinition = $codeDef;
+    }
+    
+    /**
+     * Returns the tag name of this element.
+     * 
+     * @return the element's tag name
+     */
+    public function getTagName() {
+        return $this->tagName;
+    }
+    
+    /**
+     * Returns the attribute (used as the option in bbcode definitions) of this element.
+     * 
+     * @return the attribute of this element
+     */
+    public function getAttribute() {
+        return $this->attribute;
+    }
+    
+    /**
+     * Returns all the children of this element.
+     * 
+     * @return an array of this node's child nodes
+     */
+    public function getChildren() {
+        return $this->children;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see JBBCode.Node::getAsText()
+     * 
+     * Returns the element as text (not including any bbcode markup)
+     * 
+     * @return the plain text representation of this node
+     */
+    public function getAsText() {
+        $s = "";
+        foreach($this->getChildren() as $child)
+            $s .= $child->getAsText();
+        return $s;
+    }
 
-	/**
-	 * (non-PHPdoc)
-	 * @see JBBCode.Node::getAsBBCode()
-	 * 
-	 * Returns the element as bbcode (with all unclosed tags closed)
-	 * 
-	 * @return the bbcode representation of this element
-	 */
-	public function getAsBBCode() {
-		$str = "[".$this->tagName;
-		if( $this->attribute != null )
-			$str .= "=" . $this->attribute;
-		$str .= "]";
-		foreach( $this->getChildren() as $child)
-			$str .= $child->getAsBBCode();
-		$str .= "[/".$this->tagName."]";
-		return $str;
-	}
-	
-	/**
-	 * (non-PHPdoc)
-	 * @see JBBCode.Node::getAsHTML()
-	 * 
-	 * Returns the element as html with all replacements made
-	 * 
-	 * @return the html representation of this node
-	 */
-	public function getAsHTML()
-	{
-		if( $this->codeDefinition )
-			return $this->codeDefinition->asHtml( $this );
-		else
-			return "";
-	}
-	
-	/**
-	 * Adds a child to this node's content. A child may be a TextNode, or another ElementNode... or anything else
-	 * that may extend the abstract Node class.
-	 * 
-	 * @param child the node to add as a child
-	 */
-	public function addChild(Node $child) {
-		array_push($this->children, $child);
-		$child->setParent( $this );
-	}
-	
-	/**
-	 * Removes a child from this node's contnet.
-	 * 
-	 * @param child the child node to remove
-	 */
-	public function removeChild(Node $child) {
-		foreach( $this->children as $key => $value) {
-			if( $value == $child)
-				unset($this->children[$key]);
-		}
-	}
-	
-	/**
-	 * Sets the tag name of this element node.
-	 * 
-	 * @param tagName the element's new tag name
-	 */
-	public function setTagName( $tagName ) {
-		$this->tagName = $tagName;
-	}
-	
-	/**
-	 * Sets the attribute (option) of this element node.
-	 * 
-	 * @param attribute the attribute of this element node
-	 */
-	public function setAttribute( $attribute ) {
-		$this->attribute = $attribute;
-	}
-	
-	
-	/**
-	 * Traverses the parse tree upwards, going from parent to parent, until it finds a parent who has the given tag name. Returns the
-	 * parent with the matching tag name if it exists, otherwise returns null.
-	 * 
-	 * @param str the tag name to search for
-	 * 
-	 * @return the closest parent with the given tag name
-	 */
-	public function closestParentOfType( $str ) {
-		$str = strtolower($str);
-		$currentEl = $this;
-		
-		while( strtolower($currentEl->getTagName()) != $str && $currentEl->hasParent() )
-			$currentEl = $currentEl->getParent();
-		
-		if( strtolower($currentEl->getTagName()) != $str )
-			return null;
-		else
-			return $currentEl;
-	}
-	
-	/**
-	 * Sets the nest depth used for nest limits
-	 * 
-	 * @param nd the nest depth of this node
-	 */
-	public function setNestDepth( $nd ) {
-		$this->nestDepth = $nd;
-	}
-	
-	/**
-	 * Gets the nest depth of this element
-	 * 
-	 * @return this element's nest depth
-	 */
-	public function getNestDepth() {
-		return $this->nestDepth;
-	}
+    /**
+     * (non-PHPdoc)
+     * @see JBBCode.Node::getAsBBCode()
+     * 
+     * Returns the element as bbcode (with all unclosed tags closed)
+     * 
+     * @return the bbcode representation of this element
+     */
+    public function getAsBBCode() {
+        $str = "[".$this->tagName;
+        if( $this->attribute != null )
+            $str .= "=" . $this->attribute;
+        $str .= "]";
+        foreach( $this->getChildren() as $child)
+            $str .= $child->getAsBBCode();
+        $str .= "[/".$this->tagName."]";
+        return $str;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see JBBCode.Node::getAsHTML()
+     * 
+     * Returns the element as html with all replacements made
+     * 
+     * @return the html representation of this node
+     */
+    public function getAsHTML()
+    {
+        if( $this->codeDefinition )
+            return $this->codeDefinition->asHtml( $this );
+        else
+            return "";
+    }
+    
+    /**
+     * Adds a child to this node's content. A child may be a TextNode, or another ElementNode... or anything else
+     * that may extend the abstract Node class.
+     * 
+     * @param child the node to add as a child
+     */
+    public function addChild(Node $child) {
+        array_push($this->children, $child);
+        $child->setParent( $this );
+    }
+    
+    /**
+     * Removes a child from this node's contnet.
+     * 
+     * @param child the child node to remove
+     */
+    public function removeChild(Node $child) {
+        foreach( $this->children as $key => $value) {
+            if( $value == $child)
+                unset($this->children[$key]);
+        }
+    }
+    
+    /**
+     * Sets the tag name of this element node.
+     * 
+     * @param tagName the element's new tag name
+     */
+    public function setTagName( $tagName ) {
+        $this->tagName = $tagName;
+    }
+    
+    /**
+     * Sets the attribute (option) of this element node.
+     * 
+     * @param attribute the attribute of this element node
+     */
+    public function setAttribute( $attribute ) {
+        $this->attribute = $attribute;
+    }
+    
+    
+    /**
+     * Traverses the parse tree upwards, going from parent to parent, until it finds a parent who has the given tag name. Returns the
+     * parent with the matching tag name if it exists, otherwise returns null.
+     * 
+     * @param str the tag name to search for
+     * 
+     * @return the closest parent with the given tag name
+     */
+    public function closestParentOfType( $str ) {
+        $str = strtolower($str);
+        $currentEl = $this;
+        
+        while( strtolower($currentEl->getTagName()) != $str && $currentEl->hasParent() )
+            $currentEl = $currentEl->getParent();
+        
+        if( strtolower($currentEl->getTagName()) != $str )
+            return null;
+        else
+            return $currentEl;
+    }
+    
+    /**
+     * Sets the nest depth used for nest limits
+     * 
+     * @param nd the nest depth of this node
+     */
+    public function setNestDepth( $nd ) {
+        $this->nestDepth = $nd;
+    }
+    
+    /**
+     * Gets the nest depth of this element
+     * 
+     * @return this element's nest depth
+     */
+    public function getNestDepth() {
+        return $this->nestDepth;
+    }
 
-	/**
-	 * (non-PHPdoc)
-	 * @see JBBCode.Node::beyondDefinitionLimit()
-	 * 
-	 * Returns true if this element is beyond the nest limit defined in the CodeDefinition.
-	 * 
-	 * @return true if this element is beyond its nest limit, false otherwise
-	 */
-	public function beyondDefinitionLimit() {
-		$codeLimit = $this->codeDefinition->getNestLimit();
-		return ( $codeLimit > 0 && $this->nestDepth > $codeLimit );		
-	}
-	
+    /**
+     * (non-PHPdoc)
+     * @see JBBCode.Node::beyondDefinitionLimit()
+     * 
+     * Returns true if this element is beyond the nest limit defined in the CodeDefinition.
+     * 
+     * @return true if this element is beyond its nest limit, false otherwise
+     */
+    public function beyondDefinitionLimit() {
+        $codeLimit = $this->codeDefinition->getNestLimit();
+        return ( $codeLimit > 0 && $this->nestDepth > $codeLimit );     
+    }
+    
 }
