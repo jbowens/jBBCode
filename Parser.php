@@ -8,6 +8,7 @@ require_once('TextNode.php');
 require_once('DocumentElement.php');
 require_once('CodeDefinition.php');
 require_once('TokenManager.php');
+require_once('NodeVisitor.php');
 
 /**
  * @author Jackson Owens
@@ -92,6 +93,15 @@ class Parser {
      */
     public function getAsHTML() {
         return $this->treeRoot->getAsHTML();
+    }
+
+    /**
+     * Accepts the given NodeVisitor at the root.
+     *
+     * @param nodeVisitor  a NodeVisitor
+     */
+    public function accept(NodeVisitor $nodeVisitor) {
+        $this->treeRoot->accept($nodeVisitor);
     }
     
     /**

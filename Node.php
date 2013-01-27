@@ -54,7 +54,14 @@ abstract class Node {
     public function isTextNode() {
         return false;
     }
-    
+
+    /**
+     * Accepts a NodeVisitor
+     *
+     * @param nodeVisitor  the NodeVisitor traversing the graph
+     */
+    abstract function accept(NodeVisitor $nodeVisitor);
+
     /**
      * Returns this node as text (without any bbcode markup)
      * 

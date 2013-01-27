@@ -35,7 +35,11 @@ class ElementNode extends Node {
         $this->children = array();
         $this->nestDepth = 0;
     }
-    
+
+    public function accept(NodeVisitor $nodeVisitor) {
+        $nodeVisitor->visitElementNode($this);
+    }
+
     /**
      * Gets the CodeDefinition that defines this element.
      * 

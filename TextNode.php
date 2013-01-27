@@ -22,7 +22,11 @@ class TextNode extends Node {
     public function __construct( $val ) {
         $this->value = $val;
     }
-    
+
+    public function accept(NodeVisitor $visitor) {
+        $visitor->visitTextNode($this);
+    }
+
     /**
      * (non-PHPdoc)
      * @see JBBCode.Node::isTextNode()

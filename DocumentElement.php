@@ -51,5 +51,9 @@ class DocumentElement extends ElementNode {
             $s .= $child->getAsHTML();
         return $s;  
     }
-    
+
+    public function accept(NodeVisitor $visitor) {
+        $visitor->visitDocumentElement($this);
+    }
+
 }
