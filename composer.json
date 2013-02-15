@@ -1,0 +1,15 @@
+{
+    "name": "jbowens/jbbcode",
+    "description": "A lightweight but extensible BBCode parser written in PHP 5.3.",
+    "license": "MIT",
+    "require": {
+        "php": "5.3"
+    },
+    "authors": [
+        {
+            "name": "Jackson Owens",
+            "email": "jackson_owens@brown.edu"
+        }
+    ],
+    "minimum-stability": "stable"
+}
