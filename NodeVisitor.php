@@ -8,12 +8,12 @@ namespace JBBCode;
  * @author jbowens
  * @since January 2013
  */
-interface NodeVisitor {
+interface NodeVisitor
+{
+    public function visitDocumentElement(DocumentElement $documentElement);
 
-    function visitDocumentElement(DocumentElement $documentElement);
+    public function visitTextNode(TextNode $textNode);
 
-    function visitTextNode(TextNode $textNode);
-
-    function visitElementNode(ElementNode $elementNode);
+    public function visitElementNode(ElementNode $elementNode);
 
 }
