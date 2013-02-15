@@ -13,7 +13,7 @@
             "name": "Jackson Owens",
             "email": "jackson_owens@brown.edu",
             "homepage": "http://jbowens.org/",
-            "role": "Developer",
+            "role": "Developer"
         }
     ],
     "autoload": {
