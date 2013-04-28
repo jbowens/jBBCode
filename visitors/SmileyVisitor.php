@@ -11,8 +11,6 @@ namespace JBBCode\visitors;
  */
 class SmileyVisitor implements \JBBcode\NodeVisitor {
 
-    protected $frequencies = array();
-
     function visitDocumentElement(\JBBCode\DocumentElement $documentElement) {
         foreach( $documentElement->getChildren() as $child ) {
             $child->accept($this);
