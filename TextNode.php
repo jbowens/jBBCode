@@ -81,6 +81,15 @@ class TextNode extends Node {
     public function getAsHTML() {
         return $this->getValue();
     }
+
+    /**
+     * Edits the text value contained within this text node.
+     *
+     * @param newValue  the new text value of the text node
+     */
+    public function setValue($newValue) {
+        $this->value = $newValue;
+    }
     
 }
 
