@@ -9,7 +9,7 @@ namespace JBBCode\visitors;
  * @author jbowens
  * @since April 2013
  */
-class SmileyVisitor implements \JBBcode\NodeVisitor {
+class SmileyVisitor implements \JBBCode\NodeVisitor {
 
     function visitDocumentElement(\JBBCode\DocumentElement $documentElement) {
         foreach( $documentElement->getChildren() as $child ) {
