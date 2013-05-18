@@ -2,7 +2,7 @@
 
 require('../Parser.php');
 
-class SimpleEvaluation extends PHPUnit_Framework_TestCase {
+class SimpleEvaluationTest extends PHPUnit_Framework_TestCase {
 
     /**
      * A utility method for these tests that will evaluate
