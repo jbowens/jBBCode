@@ -9,6 +9,26 @@ Documentation
 
 For complete documentation and examples visit [jbbcode.com](http://jbbcode.com).
 
+###A basic example
+
+jBBCode includes a few optional, default bbcode definitions that may be loaded through calling `Parser.loadDefaultCodes`.
+Below is a simple example of using these codes to convert a bbcode string to html.
+
+```php
+<?php
+require_once( "/path/to/jbbcode/Parser.php" );
+ 
+$parser = new JBBCode\Parser();
+$parser->loadDefaultCodes();
+ 
+$text = "The default codes include: [b]bold[/b], [i]italics[/i], [u]underlining[/u], ";
+$text .= "[url=http://jbbcode.com]links[/url], [color=red]color![/color] and more.";
+ 
+$parser->parse($text);
+ 
+print $parser->getAsHtml();
+```
+
 Author
 ------
 
