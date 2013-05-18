@@ -1,6 +1,6 @@
 <?php
 
-require('../Parser.php');
+require_once('../Parser.php');
 
 class SimpleEvaluationTest extends PHPUnit_Framework_TestCase {
 
