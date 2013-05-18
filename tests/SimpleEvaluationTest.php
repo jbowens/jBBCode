@@ -66,4 +66,10 @@ EOD;
         $this->assertProduces($code, $html);
     }
 
+    public function testUnclosedTag() {
+        $code = 'hello [b]world';
+        $html = 'hello <strong>world</strong>';
+        $this->assertProduces($code, $html);
+    }
+
 }
