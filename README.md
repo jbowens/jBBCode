@@ -1,6 +1,9 @@
 jBBCode
 =======
 
+jBBCode is a bbcode parser written in php 5.3. It's relatively lightweight and parses
+bbcodes without resorting to expensive regular expressions.
+
 Documentation
 -------------
 
