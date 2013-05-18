@@ -2,6 +2,12 @@
 
 require_once('../Parser.php');
 
+/**
+ * Test cases testing the ability to parse bbcode and retrieve a
+ * plain text representation without any markup.
+ *
+ * @author jbowens
+ */
 class BBCodeToTextTest extends PHPUnit_Framework_TestCase {
 
     /**
