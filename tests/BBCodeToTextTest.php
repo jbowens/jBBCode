@@ -2,7 +2,7 @@
 
 require_once('../Parser.php');
 
-class TextToTextTest extends PHPUnit_Framework_TestCase {
+class BBCodeToTextTest extends PHPUnit_Framework_TestCase {
 
     /**
      * A utility method for these tests that will evaluate
