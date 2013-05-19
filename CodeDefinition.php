@@ -58,7 +58,7 @@ class CodeDefinition
         $this->parseContent = true;
         $this->useOption = false;
         $this->nestLimit = -1;
-
+        $this->elCounter = 0;
     }
 
     /**
