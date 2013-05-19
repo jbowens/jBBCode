@@ -19,7 +19,7 @@ Below is a simple example of using these codes to convert a bbcode string to htm
 require_once( "/path/to/jbbcode/Parser.php" );
  
 $parser = new JBBCode\Parser();
-$parser->loadDefaultCodes();
+$parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
  
 $text = "The default codes include: [b]bold[/b], [i]italics[/i], [u]underlining[/u], ";
 $text .= "[url=http://jbbcode.com]links[/url], [color=red]color![/color] and more.";
