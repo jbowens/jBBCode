@@ -17,7 +17,7 @@ class ParseContentTest extends PHPUnit_Framework_TestCase {
     public function testSimpleNoParsing() {
 
         $parser = new JBBCode\Parser();
-        $parser->loadDefaultCodes();
+        $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
         $parser->addBBCode('verbatim', '{param}', false, false);
 
         $parser->parse('[verbatim]plain text[/verbatim]');
@@ -36,7 +36,7 @@ class ParseContentTest extends PHPUnit_Framework_TestCase {
     public function testUnclosedTag() {
     
         $parser = new JBBCode\Parser();
-        $parser->loadDefaultCodes();
+        $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
         $parser->addBBCode('verbatim', '{param}', false, false);
 
         $parser->parse('[verbatim]i wonder [b]what will happen[/verbatim]');

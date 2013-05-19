@@ -18,7 +18,7 @@ class BBCodeToTextTest extends PHPUnit_Framework_TestCase {
      */
     private function defaultTextParse($bbcode) {
         $parser = new JBBCode\Parser();
-        $parser->loadDefaultCodes();
+        $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
         $parser->parse($bbcode);
         return $parser->getAsText();
     }

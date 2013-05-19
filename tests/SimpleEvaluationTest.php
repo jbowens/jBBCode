@@ -12,7 +12,7 @@ class SimpleEvaluationTest extends PHPUnit_Framework_TestCase {
      */
     private function defaultParse($bbcode) {
         $parser = new JBBCode\Parser();
-        $parser->loadDefaultCodes();
+        $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
         $parser->parse($bbcode);
         return $parser->getAsHtml();
     }

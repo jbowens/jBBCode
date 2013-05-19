@@ -4,8 +4,11 @@ namespace JBBCode;
 
 require_once 'ElementNode.php';
 require_once 'TextNode.php';
+require_once 'DefaultCodeDefinitionSet.php';
 require_once 'DocumentElement.php';
 require_once 'CodeDefinition.php';
+require_once 'CodeDefinitionBuilder.php';
+require_once 'CodeDefinitionSet.php';
 require_once 'TokenManager.php';
 require_once 'NodeVisitor.php';
 
@@ -46,15 +49,13 @@ class Parser
      */
     public function addBBCode($tagName, $replace, $useOption = false, $parseContent = true, $nestLimit = -1)
     {
-        $code = new CodeDefinition();
-        $code->setTagName($tagName);
-        $code->setUseOption( $useOption );
-        $code->setParseContent( $parseContent );
-        $code->setNestLimit( $nestLimit );
-        $code->setReplacementText($replace);
+        $builder = new CodeDefinitionBuilder($tagName, $replace);
 
-        array_push($this->bbcodes, $code);
+        $builder->setUseOption($useOption);
+        $builder->setParseContent($parseContent);
+        $builder->setNestLimit($nestLimit);
 
+        $this->addCodeDefinition($builder->build());
     }
 
     /**
@@ -66,6 +67,17 @@ class Parser
     public function addCodeDefinition( CodeDefinition $definition )
     {
         array_push($this->bbcodes, $definition);
+    }
+
+    /**
+     * Adds a set of CodeDefinitions.
+     *
+     * @param CodeDefinitionSet $set  the set of definitions to add
+     */
+    public function addCodeDefinitionSet(CodeDefinitionSet $set) {
+        foreach($set->getCodeDefinitions() as $def) {
+            $this->addCodeDefinition($def);
+        }
     }
 
     /**
@@ -277,17 +289,16 @@ class Parser
 
     /**
      * Adds a set of default, standard bbcode definitions commonly used across the web.
+     *
+     * This method is now deprecated. Please use DefaultCodeDefinitionSet and 
+     * addCodeDefinitionSet() instead.
+     *
+     * @deprecated
      */
     public function loadDefaultCodes()
     {
-        $this->addBBCode("b", "<strong>{param}</strong>");
-        $this->addBBCode("i", "<em>{param}</em>");
-        $this->addBBCode("u", "<u>{param}</u>");
-        $this->addBBCode("url", "<a href=\"{param}\">{param}</a>");
-        $this->addBBCode("url", "<a href=\"{option}\">{param}</a>", true);
-        $this->addBBCode("img", "<img src=\"{param}\" alt=\"a user uploaded image\" />");
-        $this->addBBCode("img", "<img src=\"{param}\" alt=\"{option}\" />", true);
-        $this->addBBCode("color", "<span style=\"color: {option}\">{param}</span>", true);
+        $defaultSet = new DefaultCodeDefinitionSet();
+        $this->addCodeDefinitionSet($defaultSet);
     }
 
     /**

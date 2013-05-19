@@ -29,16 +29,36 @@ class CodeDefinition
 
     /**
      * Constructs a new CodeDefinition.
+     */
+    public static function construct($tagName, $replacementText, $useOption = false,
+                                $parseContent = true, $nestLimit = -1) {
+        $def = new CodeDefinition();                            
+        $def->elCounter = 0;
+        $def->setTagName($tagName);
+        $def->setReplacementText($replacementText);
+        $def->useOption = $useOption;
+        $def->parseContent = $parseContent;
+        $def->nestLimit = $nestLimit;
+        return $def;
+     }
+
+
+    /**
+     * Constructs a new CodeDefinition. 
      *
-     * You WILL want to override this if you extend this class and your new definition accepts an option, doesn't parse
-     * its content, etc.
+     * This constructor is deprecated. You should use the static construct() method or the
+     * CodeDefinitionBuilder class to construct a new CodeDefiniton.
+     *
+     * @deprecated
      */
     public function __construct()
     {
-        $this->useOption = false;
+        /* WARNING: This function is deprecated and will be made protected in a future
+         * version of jBBCode. */
         $this->parseContent = true;
+        $this->useOption = false;
         $this->nestLimit = -1;
-        $this->elCounter = 0;
+
     }
 
     /**
