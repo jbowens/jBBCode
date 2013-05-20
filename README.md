@@ -11,8 +11,9 @@ For complete documentation and examples visit [jbbcode.com](http://jbbcode.com).
 
 ###A basic example
 
-jBBCode includes a few optional, default bbcode definitions that may be loaded through calling `Parser.loadDefaultCodes`.
-Below is a simple example of using these codes to convert a bbcode string to html.
+jBBCode includes a few optional, default bbcode definitions that may be loaded through the
+`DefaultCodeDefinitionSet` class. Below is a simple example of using these codes to convert 
+a bbcode string to html.
 
 ```php
 <?php
