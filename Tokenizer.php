@@ -3,7 +3,7 @@
 namespace JBBCode;
 
 /**
- * This Tokenizer is used while construct the parse tree. The tokenizer
+ * This Tokenizer is used while constructing the parse tree. The tokenizer
  * handles splitting the input into brackets and miscellaneous text. The
  * parser is then built as a FSM ontop of these possible inputs.
  *
