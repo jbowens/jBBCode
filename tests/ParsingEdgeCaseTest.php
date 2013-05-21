@@ -96,4 +96,13 @@ class ParsingEdgeCaseTest extends PHPUnit_Framework_TestCase {
         $this->assertProduces('[b]this should be bold[/b',
                               '<strong>this should be bold[/b</strong>');
     }
+
+    /**
+     * Tests lots of left brackets before the actual tag. For example:
+     * [[[[[[[[b]bold![/b]
+     */
+    public function testLeftBracketsThenTag() {
+        $this->assertProduces('[[[[[b]bold![/b]',
+                              '[[[[<strong>bold!</strong>');
+    }
 }

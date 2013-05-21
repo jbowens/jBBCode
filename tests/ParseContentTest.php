@@ -54,4 +54,37 @@ class ParseContentTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('[verbatim]i wonder [b]what will happen[/verbatim]', $parser->getAsBBCode());
     }
 
+    /**
+     * Tests that an unclosed tag with parseContent = false ends cleanly.
+     */
+    public function testUnclosedVerbatimTag() {
+        $parser = new JBBCode\Parser();
+        $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
+        $parser->addBBCode('verbatim', '{param}', false, false);
+
+        $parser->parse('[verbatim]yo this [b]text should not be bold[/b]');
+        $this->assertEquals('yo this [b]text should not be bold[/b]', $parser->getAsHtml());
+    }
+
+    /**
+     * Tests a malformed closing tag for a verbatim block.
+     */
+    public function testMalformedVerbatimClosingTag() {
+        $parser = new JBBCode\Parser();
+        $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
+        $parser->addBBCode('verbatim', '{param}', false, false);
+        $parser->parse('[verbatim]yo this [b]text should not be bold[/b][/verbatim');
+        $this->assertEquals('yo this [b]text should not be bold[/b][/verbatim', $parser->getAsHtml());
+    }
+
+    /**
+     * Tests an immediate end after a verbatim.
+     */
+    public function testVerbatimThenEof() {
+        $parser = new JBBCode\Parser();
+        $parser->addBBCode('verbatim', '{param}', false, false);
+        $parser->parse('[verbatim]');
+        $this->assertEquals('', $parser->getAsHtml());
+    }
+
 }
