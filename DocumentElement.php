@@ -20,6 +20,7 @@ class DocumentElement extends ElementNode
     {
         parent::__construct();
         $this->setTagName("Document");
+        $this->setNodeId(0);
     }
 
     /**

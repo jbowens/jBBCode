@@ -73,6 +73,15 @@ class Tokenizer
     }
 
     /**
+     * Moves the token stream back a token.
+     */
+    public function stepBack() {
+        if($this->i > -1) {
+            $this->i--;
+        }
+    }
+
+    /**
      * Restarts the tokenizer, returning to the beginning of the token stream.
      */
     public function restart() {

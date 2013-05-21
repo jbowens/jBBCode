@@ -60,6 +60,7 @@ class ElementNode extends Node
     public function setCodeDefinition( CodeDefinition $codeDef )
     {
         $this->codeDefinition = $codeDef;
+        $this->setTagName($codeDef->getTagName());
     }
 
     /**
