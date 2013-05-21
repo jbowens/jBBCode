@@ -22,7 +22,7 @@ class SimpleEvaluationTest extends PHPUnit_Framework_TestCase {
      * the bbcode is run through defaultParse.
      */
     private function assertProduces($bbcode, $html) {
-        $this->assertEquals($this->defaultParse($bbcode), $html);
+        $this->assertEquals($html, $this->defaultParse($bbcode));
     }
 
 
@@ -69,6 +69,12 @@ EOD;
     public function testUnclosedTag() {
         $code = 'hello [b]world';
         $html = 'hello <strong>world</strong>';
+        $this->assertProduces($code, $html);
+    }
+
+    public function testNestingTags() {
+        $code = '[url=http://jbbcode.com][b]hello [u]world[/u][/b][/url]';
+        $html = '<a href="http://jbbcode.com"><strong>hello <u>world</u></strong></a>';
         $this->assertProduces($code, $html);
     }
 
