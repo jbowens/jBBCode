@@ -148,6 +148,8 @@ class CodeDefinition
     /**
      * Sets the tag name of this CodeDefinition
      *
+     * @deprecated
+     *
      * @param the new tag name of this definition
      */
     public function setTagName( $tagName )
@@ -157,6 +159,8 @@ class CodeDefinition
 
     /**
      * Sets the html replacement text of this CodeDefinition
+     *
+     * @deprecated
      *
      * @param the new replacement text
      */
@@ -168,6 +172,8 @@ class CodeDefinition
     /**
      * Sets whether or not this CodeDefinition uses the {option}
      *
+     * @deprecated
+     *
      * @param boolean $bool
      */
     public function setUseOption( $bool )
@@ -176,11 +182,11 @@ class CodeDefinition
     }
 
     /**
-     *
      * Sets whether or not this CodeDefinition allows its children to be parsed as html
      *
-     * @param boolean $bool
+     * @deprecated
      *
+     * @param boolean $bool
      */
     public function setParseContent( $bool )
     {
@@ -188,34 +194,23 @@ class CodeDefinition
     }
 
     /**
-     *
-     * NOT YET SUPPORTED
-     *
-     * @param integer $limit
-     *
-     */
-    public function setNestLimit( $limit = -1 )
-    {
-        $this->nestLimit = $limit;
-    }
-
-    /**
-     *
      * Increments the element counter. This is used for tracking depth of elements of the same type for next limits.
      *
-     * @return void
+     * @deprecated
      *
+     * @return void
      */
     public function incrementCounter()
     {
         $this->elCounter++;
     }
+
     /**
-     *
      * Decrements the element counter.
      *
-     * @return void
+     * @deprecated
      *
+     * @return void
      */
     public function decrementCounter()
     {
@@ -223,9 +218,9 @@ class CodeDefinition
     }
 
     /**
-     *
      * Resets the element counter.
      *
+     * @deprecated
      */
     public function resetCounter()
     {
@@ -233,11 +228,11 @@ class CodeDefinition
     }
 
     /**
-     *
      * Returns the current value of the element counter.
      *
-     * @return int
+     * @deprecated
      *
+     * @return int
      */
     public function getCounter()
     {
