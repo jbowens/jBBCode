@@ -311,7 +311,6 @@ class Parser
              * is really just plain text. */
             $this->createTextNode($parent, '[');
             $this->createTextNode($parent, $tagContent);
-            $tokenizer->stepBack();
             return $parent;
         }
 
