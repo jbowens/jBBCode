@@ -28,6 +28,16 @@ class ParseContentTest extends PHPUnit_Framework_TestCase {
 
     }
 
+    public function testNoParsingWithBufferText() {
+        
+        $parser = new JBBCode\Parser();
+        $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
+        $parser->addBBCode('verbatim', '{param}', false, false);
+
+        $parser->parse('buffer text[verbatim]buffer text[b]bold[/b]buffer text[/verbatim]buffer text');
+        $this->assertEquals('buffer textbuffer text[b]bold[/b]buffer textbuffer text', $parser->getAsHtml());
+    }
+
     /**
      * Tests that when a tag is not closed within an unparseable tag,
      * the BBCode output does not automatically close that tag (because

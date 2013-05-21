@@ -139,6 +139,12 @@ class Parser
 
         while($tokenizer->hasNext()) {
             $parent = $this->parseStartState($parent, $tokenizer);
+            if($parent->getCodeDefinition() && false === 
+                    $parent->getCodeDefinition()->parseContent()) {
+                /* We're inside an element that does not allow its contents to be parseable. */
+                $this->parseAsTextUntilClose($parent, $tokenizer);
+                $parent = $parent->getParent();
+            }
         }
     }
 
@@ -210,7 +216,7 @@ class Parser
     public function getCode( $tagName, $usesOption = false )
     {
         foreach ($this->bbcodes as $code) {
-            if( strtolower($tagName) == $code->getTagName() && $code->usesOption() == $usesOption ) {
+            if(strtolower($tagName) == $code->getTagName() && $code->usesOption() == $usesOption) {
                 return $code;
             }
         }
@@ -230,14 +236,6 @@ class Parser
     {
         $defaultSet = new DefaultCodeDefinitionSet();
         $this->addCodeDefinitionSet($defaultSet);
-    }
-
-    /**
-     * FOR DEBUG ONLY. This method prints the entire parse tree in a human-readable format and kills script execution.
-     */
-    public function printTree()
-    {
-        die("<pre>".htmlentities(print_r($this->treeRoot, true))."</pre>");
     }
 
     /**
@@ -366,7 +364,8 @@ class Parser
         /* If we're here, this is a valid opening tag. Let's make a new node for it. */
         $el = new ElementNode();
         $el->setNodeId(++$this->nextNodeid);
-        $el->setCodeDefinition($this->getCode($actualTagName, count($tagPieces) > 1));
+        $code = $this->getCode($actualTagName, count($tagPieces) > 1);
+        $el->setCodeDefinition($code);
         if(count($tagPieces) > 1) {
             /* We have an attribute we should save. */
             unset($tagPieces[0]);
@@ -374,6 +373,43 @@ class Parser
         }
         $parent->addChild($el);
         return $el;
+    }
+
+    /**
+     * Handles parsing elements whose CodeDefinitions disable parsing of element
+     * contents.
+     */
+    protected function parseAsTextUntilClose(ElementNode $parent, Tokenizer $tokenizer) {
+        /* $parent's code definition doesn't allow its contents to be parsed. Here we use
+         * a sliding of window of three tokens until we find [ /tagname ], signifying the
+         * end of the parent. */ 
+        if(!$tokenizer->hasNext()) {
+            return $parent;
+        }
+        $prevPrev = $tokenizer->next();
+        if(!$tokenizer->hasNext()) {
+            $this->createTextNode($parent, $prevPrev);
+            return $parent;
+        }
+        $prev = $tokenizer->next();
+        if(!$tokenizer->hasNext()) {
+            $this->createTextNode($parent, $prevPrev);
+            $this->createTextNode($parent, $prev);
+            return $parent;
+        }
+        $curr = $tokenizer->next();
+        while('[' != $prevPrev || '/'.$parent->getTagName() != strtolower($prev) ||
+                ']' != $curr) {
+            $this->createTextNode($parent, $prevPrev);
+            $prevPrev = $prev;
+            $prev = $curr;        
+            if(!$tokenizer->hasNext()) {
+                $this->createTextNode($parent, $prevPrev);
+                $this->createTextNode($parent, $prev);
+                return $parent;
+            }
+            $curr = $tokenizer->next();
+        }
     }
 
 }

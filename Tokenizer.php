@@ -45,8 +45,7 @@ class Tokenizer
 
     /**
      * Returns true iff there is another token in the token stream.
-     */
-    public function hasNext() {
+     */ public function hasNext() {
         return count($this->tokens) > 1 + $this->i;
     }
 
@@ -86,6 +85,13 @@ class Tokenizer
      */
     public function restart() {
         $this->i = -1;
+    }
+
+    /**
+     * toString method that returns the entire string from the current index on.
+     */
+    public function toString() {
+        return implode('', array_slice($this->tokens, $this->i + 1));
     }
 
 }
