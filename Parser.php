@@ -51,14 +51,25 @@ class Parser
      * @param boolean $parseContent whether or not to parse the content within these elements
      * @param integer $nestLimit    an optional limit of the number of elements of this kind that can be nested within
      *                              each other before the parser stops parsing them.
+     * @param InputValidator $optionValidator   the validator to run {option} through
+     * @param BodyValidator  $bodyValidator     the validator to run {param} through (only used if $parseContent == false)
      */
-    public function addBBCode($tagName, $replace, $useOption = false, $parseContent = true, $nestLimit = -1)
+    public function addBBCode($tagName, $replace, $useOption = false, $parseContent = true, $nestLimit = -1,
+            InputValidator $optionValidator = null, InputValidator $bodyValidator = null)
     {
         $builder = new CodeDefinitionBuilder($tagName, $replace);
 
         $builder->setUseOption($useOption);
         $builder->setParseContent($parseContent);
         $builder->setNestLimit($nestLimit);
+
+        if($optionValidator) {
+            $builder->setOptionValidator($optionValidator);
+        }
+
+        if($bodyValidator) {
+            $builder->setBodyValidator($bodyValidator);
+        }
 
         $this->addCodeDefinition($builder->build());
     }
