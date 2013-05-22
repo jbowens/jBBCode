@@ -37,6 +37,12 @@ class ElementNode extends Node
         $this->nestDepth = 0;
     }
 
+    /**
+     * Accepts the given NodeVisitor. This is part of an implementation
+     * of the Visitor pattern.
+     *
+     * @param $nodeVisitor  the visitor attempting to visit this node
+     */
     public function accept(NodeVisitor $nodeVisitor)
     {
         $nodeVisitor->visitElementNode($this);
