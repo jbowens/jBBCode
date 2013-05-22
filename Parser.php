@@ -62,7 +62,7 @@ class Parser
     }
 
     /**
-     * Adds a complex bbcode defnition. You may subclass the CodeDefinition class, instantiate a definition of your new
+     * Adds a complex bbcode definition. You may subclass the CodeDefinition class, instantiate a definition of your new
      * class and add it to the parser through this method.
      *
      * @param CodeDefinition $definition the bbcode definition to add
