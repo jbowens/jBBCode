@@ -109,11 +109,14 @@ class ElementNode extends Node
      */
     public function getAsText()
     {
-        $s = "";
-        foreach($this->getChildren() as $child)
-            $s .= $child->getAsText();
-
-        return $s;
+        if($this->codeDefinition) {
+            return $this->codeDefinition->asText($this);
+        } else {
+            $s = "";
+            foreach($this->getChildren() as $child)
+                $s .= $child->getAsText();
+            return $s;
+        }
     }
 
     /**

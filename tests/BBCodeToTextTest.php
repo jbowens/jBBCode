@@ -28,7 +28,7 @@ class BBCodeToTextTest extends PHPUnit_Framework_TestCase {
      * the bbcode is run through defaultTextParse
      */
     private function assertTextOutput($bbcode, $text) {
-        $this->assertEquals($this->defaultTextParse($bbcode), $text);
+        $this->assertEquals($text, $this->defaultTextParse($bbcode));
     }
 
 

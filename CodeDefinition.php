@@ -64,10 +64,11 @@ class CodeDefinition
     }
 
     /**
-     * Accepts an ElementNode that is defined by this CodeDefinition and returns the HTML markup of the element.
-     * This is a commonly overridden class for custom CodeDefinitions so that the content can be directly manipulated.
+     * Accepts an ElementNode that is defined by this CodeDefinition and returns the HTML
+     * markup of the element. This is a commonly overridden class for custom CodeDefinitions
+     * so that the content can be directly manipulated.
      *
-     * @param el the element to return an html representation of
+     * @param $el  the element to return an html representation of
      *
      * @return the parsed html of this element (INCLUDING ITS CHILDREN)
      */
@@ -92,7 +93,21 @@ class CodeDefinition
         $html = str_ireplace('{param}', $content, $html);
 
         return $html;
+    }
 
+    /**
+     * Accepts an ElementNode that is defined by this CodeDefinition and returns the text
+     * representation of the element. This may be overridden by a custom CodeDefinition.
+     *
+     * @param $el  the element to return a text representation of
+     *
+     * @return  the text representation of $el
+     */
+    public function asText(ElementNode $el) {
+        $s = "";
+        foreach($el->getChildren() as $child)
+            $s .= $child->getAsText();
+        return $s;
     }
 
     /**
