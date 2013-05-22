@@ -5,11 +5,10 @@ namespace JBBCode;
 require_once 'ElementNode.php';
 
 /**
- * @author Jackson Owens
- *
  * A DocumentElement object represents the root of a document tree. All documents represented by
  * this document model should have one as its root.
  *
+ * @author jbowens
  */
 class DocumentElement extends ElementNode
 {

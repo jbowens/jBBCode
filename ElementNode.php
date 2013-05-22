@@ -5,11 +5,11 @@ namespace JBBCode;
 require_once 'Node.php';
 
 /**
- * @author Jackson Owens
- *
  * An element within the tree. Consists of a tag name which defines the type of the
  * element and any number of Node children. It also contains a CodeDefinition matching
  * the tag name of the element.
+ *
+ * @author jbowens
  */
 class ElementNode extends Node
 {

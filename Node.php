@@ -3,12 +3,11 @@
 namespace JBBCode;
 
 /**
- * @author Jackson Owens
- *
  * A node within the document tree.
  *
  * Known subclasses: TextNode, ElementNode
  *
+ * @author jbowens
  */
 abstract class Node
 {

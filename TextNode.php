@@ -5,9 +5,9 @@ namespace JBBCode;
 require_once 'Node.php';
 
 /**
- * Jackson Owens
- *
  * Represents a piece of text data. TextNodes never have children.
+ *
+ * @author jbowens
  */
 class TextNode extends Node
 {

@@ -3,9 +3,11 @@
 namespace JBBCode;
 
 /**
- * @author Jackson Owens
+ * This class represents a BBCode Definition. You may construct instances of this class directly,
+ * usually through the CodeDefinitionBuilder class, to create text replacement bbcodes, or you
+ * may subclass it to create more complex bbcode definitions.
  *
- * This class represents a BBCode Definition.
+ * @author jbowens
  */
 class CodeDefinition
 {

@@ -15,10 +15,10 @@ require_once 'Tokenizer.php';
 use JBBCode\CodeDefinition;
 
 /**
- * @author Jackson Owens
- *
  * BBCodeParser is the main parser class that constructs and stores the parse tree. Through this class
  * new bbcode definitions can be added, and documents may be parsed and converted to html/bbcode/plaintext, etc.
+ *
+ * @author jbowens
  */
 class Parser
 {
