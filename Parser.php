@@ -11,6 +11,7 @@ require_once 'CodeDefinitionBuilder.php';
 require_once 'CodeDefinitionSet.php';
 require_once 'NodeVisitor.php';
 require_once 'Tokenizer.php';
+require_once 'visitors/NestLimitVisitor.php';
 
 use JBBCode\CodeDefinition;
 
@@ -146,33 +147,23 @@ class Parser
                 $parent = $parent->getParent();
             }
         }
+
+        /* We parsed ignoring nest limits. Do a O(n) traversal to remove any elements that
+         * are nested beywond their CodeDefinition's nest limit. */
+        $this->removeOverNestedElements();
     }
 
     /**
-     * Removes any elements that are nested beyond their nest limit from the parse tree.
+     * Removes any elements that are nested beyond their nest limit from the parse tree. This
+     * method is now deprecated. In a future release its access privileges will be made 
+     * protected.
+     *
+     * @deprecated
      */
     public function removeOverNestedElements()
     {
-        foreach( $this->treeRoot->getChildren() as $child )
-            $this->removeOverNested($child);
-    }
-
-    /**
-     * Recursive version of removeOverNestedElements().
-     *
-     * @param a node to clean up (including the entire subtree)
-     */
-    protected function removeOverNested( Node $el )
-    {
-        if( $el->isTextNode() )
-
-            return;
-        else if ( $el->beyondDefinitionLimit() ) {
-            $el->getParent()->removeChild( $el );
-        } else {
-            foreach( $el->getChildren() as $child )
-                $this->removeOverNested($child);
-        }
+        $nestLimitVisitor = new \JBBCode\visitors\NestLimitVisitor();
+        $this->accept($nestLimitVisitor);
     }
 
     /**

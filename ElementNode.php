@@ -193,7 +193,6 @@ class ElementNode extends Node
         $this->attribute = $attribute;
     }
 
-
     /**
      * Traverses the parse tree upwards, going from parent to parent, until it finds a parent who has the given tag name. Returns the
      * parent with the matching tag name if it exists, otherwise returns null.
@@ -215,41 +214,6 @@ class ElementNode extends Node
             return null;
         else
             return $currentEl;
-    }
-
-    /**
-     * Sets the nest depth used for nest limits
-     *
-     * @param nd the nest depth of this node
-     */
-    public function setNestDepth( $nd )
-    {
-        $this->nestDepth = $nd;
-    }
-
-    /**
-     * Gets the nest depth of this element
-     *
-     * @return this element's nest depth
-     */
-    public function getNestDepth()
-    {
-        return $this->nestDepth;
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see JBBCode.Node::beyondDefinitionLimit()
-     *
-     * Returns true if this element is beyond the nest limit defined in the CodeDefinition.
-     *
-     * @return true if this element is beyond its nest limit, false otherwise
-     */
-    public function beyondDefinitionLimit()
-    {
-        $codeLimit = $this->codeDefinition->getNestLimit();
-
-        return ( $codeLimit > 0 && $this->nestDepth > $codeLimit );
     }
 
 }

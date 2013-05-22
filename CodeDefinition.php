@@ -128,7 +128,8 @@ class CodeDefinition
     }
 
     /**
-     * Returns whether or not this CodeDefnition parses elements contained within it, or just treats its children as text.
+     * Returns whether or not this CodeDefnition parses elements contained within it,
+     * or just treats its children as text.
      *
      * @return true if this CodeDefinition parses elements contained within itself
      */
@@ -138,9 +139,10 @@ class CodeDefinition
     }
 
     /**
-     *
-     * NOT YET SUPPORTED
-     *
+     * Returns the limit of how many elements defined by this CodeDefinition may be
+     * nested together. If after parsing elements are nested beyond this limit, the
+     * subtrees formed by those nodes will be removed from the parse tree. A nest
+     * limit of -1 signifies no limit.
      */
     public function getNestLimit()
     {

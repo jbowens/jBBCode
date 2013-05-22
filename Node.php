@@ -106,14 +106,4 @@ abstract class Node
         $this->nodeid = $nodeid;
     }
 
-    /**
-     * Determines whether this node is nested beyond the nest limit of its definition
-     *
-     * @return true if the node is over nested, false otherwise
-     */
-    public function beyondDefinitionLimit()
-    {
-        return false;
-    }
-
 }
