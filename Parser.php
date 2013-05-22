@@ -12,6 +12,7 @@ require_once 'CodeDefinitionSet.php';
 require_once 'NodeVisitor.php';
 require_once 'Tokenizer.php';
 require_once 'visitors/NestLimitVisitor.php';
+require_once 'InputValidator.php';
 
 use JBBCode\CodeDefinition;
 

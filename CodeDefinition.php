@@ -29,11 +29,19 @@ class CodeDefinition
     /* How many of this element type have been seen */
     protected $elCounter;
 
+    /* The input validator to run options through */
+    protected $optionValidator;
+
+    /* The input validator to run the body ({param}) through */
+    protected $bodyValidator;
+
     /**
      * Constructs a new CodeDefinition.
      */
     public static function construct($tagName, $replacementText, $useOption = false,
-                                $parseContent = true, $nestLimit = -1) {
+            $parseContent = true, $nestLimit = -1, $optionValidator = null,
+            $bodyValidator = null)
+    {
         $def = new CodeDefinition();                            
         $def->elCounter = 0;
         $def->setTagName($tagName);
@@ -41,9 +49,10 @@ class CodeDefinition
         $def->useOption = $useOption;
         $def->parseContent = $parseContent;
         $def->nestLimit = $nestLimit;
+        $def->optionValidator = $optionValidator;
+        $def->bodyValidator = $bodyValidator;
         return $def;
      }
-
 
     /**
      * Constructs a new CodeDefinition. 
@@ -61,6 +70,8 @@ class CodeDefinition
         $this->useOption = false;
         $this->nestLimit = -1;
         $this->elCounter = 0;
+        $this->optionValidator = null;
+        $this->bodyValidator = null;
     }
 
     /**

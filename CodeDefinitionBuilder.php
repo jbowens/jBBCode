@@ -10,13 +10,16 @@ require_once "CodeDefinition.php";
  *
  * @author jbowens
  */
-class CodeDefinitionBuilder {
+class CodeDefinitionBuilder
+{
 
     protected $tagName;
     protected $useOption = false;
     protected $replacementText;
     protected $parseContent = true;
     protected $nestLimit = -1;
+    protected $optionValidator = null;
+    protected $bodyValidator = null;
 
     /**
      * Construct a CodeDefinitionBuilder.
@@ -24,7 +27,8 @@ class CodeDefinitionBuilder {
      * @param $tagName  the tag name of the definition to build
      * @param $replacementText  the replacement text of the definition to build
      */
-    public function __construct($tagName, $replacementText) {
+    public function __construct($tagName, $replacementText)
+    {
         $this->tagName = $tagName;
         $this->replacementText = $replacementText;
     }
@@ -34,7 +38,8 @@ class CodeDefinitionBuilder {
      *
      * @param $tagName  the tag name for the new CodeDefinition
      */
-    public function setTagName($tagName) {
+    public function setTagName($tagName)
+    {
         $this->tagName = $tagName;
     }
 
@@ -44,7 +49,8 @@ class CodeDefinitionBuilder {
      *
      * @param $replacementText  the replacement text for the new CodeDefinition
      */
-    public function setReplacementText($replacementText) {
+    public function setReplacementText($replacementText)
+    {
         $this->replacementText = $replacementText;
     }
 
@@ -54,7 +60,8 @@ class CodeDefinitionBuilder {
      *
      * @param $option  ture iff the definition includes an option
      */
-    public function setUseOption($option) {
+    public function setUseOption($option)
+    {
         $this->useOption = $option;
     }
 
@@ -64,7 +71,8 @@ class CodeDefinitionBuilder {
      *
      * @param $parseContent  true iff the content should be parsed
      */
-    public function setParseContent($parseContent) {
+    public function setParseContent($parseContent)
+    {
         $this->parseContent = $parseContent;
     }
 
@@ -74,12 +82,35 @@ class CodeDefinitionBuilder {
      * @param $nestLimit a positive integer, or -1 if there is no limit.
      * @throws InvalidArgumentException  if the nest limit is invalid
      */
-    public function setNestLimit($limit) {
+    public function setNestLimit($limit)
+    {
         if(!is_int($limit) || ($limit <= 0 && -1 != $limit)) {
             throw new InvalidArgumentException("A nest limit must be a positive integer " .
                                                "or -1.");
         }
         $this->nestLimit = $limit;
+    }
+
+    /**
+     * Sets the InputValidator that option arguments should be validated with.
+     * Providing null removes any existing validator.
+     *
+     * @param $validator  the InputValidator instance to use
+     */
+    public function setOptionValidator(\JBBCode\InputValidator $validator)
+    {
+        $this->optionValidator = $validator;
+    }
+
+    /**
+     * Sets the InputValidator that body ({param}) text should be validated with.
+     * Providing null removes any existing validator.
+     *
+     * @param $validator  the InputValidator instance to use
+     */
+    public function setBodyValidator(\JBBCode\InputValidator $validator)
+    {
+        $this->bodyValidator = $validator;
     }
     
     /**
@@ -87,12 +118,15 @@ class CodeDefinitionBuilder {
      *
      * @return a new CodeDefinition instance
      */
-    public function build() {
+    public function build()
+    {
         $definition = CodeDefinition::construct($this->tagName,
                                                 $this->replacementText,
                                                 $this->useOption,
                                                 $this->parseContent,
-                                                $this->nestLimit);
+                                                $this->nestLimit,
+                                                $this->optionValidator,
+                                                $this->bodyValidator);
         return $definition;
     }
 
