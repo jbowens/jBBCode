@@ -7,7 +7,7 @@ namespace JBBCode;
  * parameters.
  *
  * @author jbowens
- * @since MAy 2013
+ * @since May 2013
  */
 interface InputValidator
 {
