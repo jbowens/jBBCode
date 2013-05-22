@@ -253,6 +253,17 @@ class Parser
         return $textNode;
     }
 
+    /**
+     * jBBCode parsing logic is loosely modelled after a FSM. While not every function maps
+     * to a unique DFSM state, each function handles the logic of one or more FSM states.
+     * This function handles the beginning parse state when we're not currently in a tag
+     * name.
+     *
+     * @param $parent  the current parent node we're under
+     * @param $tokenizer  the tokenizer we're using
+     *
+     * @return the new parent we should use for the next iteration.
+     */
     protected function parseStartState(ElementNode $parent, Tokenizer $tokenizer) {
         $next = $tokenizer->next();
 
@@ -266,6 +277,15 @@ class Parser
         }
     }
 
+    /**
+     * This function handles parsing the beginnings of an open tag. When we see a [
+     * at an appropriate time, this function is entered. 
+     *
+     * @param $parent  the current parent node
+     * @param $tokenizer  the tokenizer we're using
+     *
+     * @return the new parent node
+     */
     protected function parseTagOpen(ElementNode $parent, Tokenizer $tokenizer) {
 
         if(!$tokenizer->hasNext()) {
@@ -303,6 +323,16 @@ class Parser
         }
     }
 
+    /**
+     * This is the next step in parsing a tag. It's possible for it to still be invalid at this
+     * point but many of the basic invalid tag name conditions have already been handled.
+     *
+     * @param $parent  the current parent element
+     * @param $tokenizer  the tokenizer we're using
+     * @param $tagContent  the text between the [ and the ], assuming there is actually a ]
+     *
+     * @return the new parent element
+     */
     protected function parseTag(ElementNode $parent, Tokenizer $tokenizer, $tagContent) {
 
         $next;
@@ -376,7 +406,11 @@ class Parser
 
     /**
      * Handles parsing elements whose CodeDefinitions disable parsing of element
-     * contents.
+     * contents. This function uses a rolling window of 3 tokens until it finds the
+     * appropriate closing tag or reaches the end of the token stream.
+     *
+     * @param $parent  the current parent element
+     * @param $tokenizer  the tokenizer we're using
      */
     protected function parseAsTextUntilClose(ElementNode $parent, Tokenizer $tokenizer) {
         /* $parent's code definition doesn't allow its contents to be parsed. Here we use
