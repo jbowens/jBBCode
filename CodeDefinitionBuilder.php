@@ -93,7 +93,6 @@ class CodeDefinitionBuilder
 
     /**
      * Sets the InputValidator that option arguments should be validated with.
-     * Providing null removes any existing validator.
      *
      * @param $validator  the InputValidator instance to use
      */
@@ -104,13 +103,28 @@ class CodeDefinitionBuilder
 
     /**
      * Sets the InputValidator that body ({param}) text should be validated with.
-     * Providing null removes any existing validator.
      *
      * @param $validator  the InputValidator instance to use
      */
     public function setBodyValidator(\JBBCode\InputValidator $validator)
     {
         $this->bodyValidator = $validator;
+    }
+
+    /**
+     * Removes the attached option validator if one is attached.
+     */
+    public function removeOptionValidator()
+    {
+        $this->optionValidator = null;
+    }
+
+    /**
+     * Removes the attached body validator if one is attached.
+     */
+    public function removeBodyValidator()
+    {
+        $this->bodyValidator = null;
     }
     
     /**

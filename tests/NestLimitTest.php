@@ -9,13 +9,15 @@ require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Parser.php';
  * @author jbowens
  * @since May 2013
  */
-class NestLimitTest extends PHPUnit_Framework_TestCase {
+class NestLimitTest extends PHPUnit_Framework_TestCase
+{
 
     /**
      * Tests that when elements have no nest limits they may be
      * nested indefinitely.
      */
-    public function testIndefiniteNesting() {
+    public function testIndefiniteNesting()
+    {
         $parser = new JBBCode\Parser();
         $parser->addBBCode('b', '<strong>{param}</strong>', false, true, -1);
         $parser->parse('[b][b][b][b][b][b][b][b]bold text[/b][/b][/b][/b][/b][/b][/b][/b]');
@@ -28,7 +30,8 @@ class NestLimitTest extends PHPUnit_Framework_TestCase {
     /**
      * Test over nesting.
      */
-    public function testOverNesting() {
+    public function testOverNesting()
+    {
         $parser = new JBBCode\Parser();
         $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
         $parser->addBBCode('quote', '<blockquote>{param}</blockquote>', false, true, 2);

@@ -75,6 +75,36 @@ class CodeDefinition
     }
 
     /**
+     * Determines if the arguments to the given element are valid based on
+     * any validators attached to this CodeDefinition.
+     *
+     * @param $el  the ElementNode to validate
+     * @return true if the ElementNode's {option} and {param} are OK, false if they're not
+     */
+    public function hasValidInputs(ElementNode $el)
+    {
+        if($this->usesOption() && $this->optionValidator &&
+            !$this->optionValidator->validate($el->getAttribute())) {
+            /* The option argument to $el does not pass the option validator. */    
+            return false;
+        }
+
+        if(!$this->parseContent() && $this->bodyValidator) {
+            /* We only evaluate the content if we're not parsing the content. */
+            $content = "";
+            foreach( $el->getChildren() as $child ) {
+                $content .= $child->getAsBBCode();
+            }
+            if(!$this->bodyValidator->validate($content)) {
+                /* The content of the element is not valid. */
+                return false;
+            }
+        } 
+
+        return true;
+    }
+
+    /**
      * Accepts an ElementNode that is defined by this CodeDefinition and returns the HTML
      * markup of the element. This is a commonly overridden class for custom CodeDefinitions
      * so that the content can be directly manipulated.
@@ -85,6 +115,10 @@ class CodeDefinition
      */
     public function asHtml( ElementNode $el )
     {
+        if(!$this->hasValidInputs($el)) {
+            return $el->getAsBBCode();
+        }
+
         $html = $this->getReplacementText();
 
         if ( $this->usesOption() ) {
@@ -115,6 +149,10 @@ class CodeDefinition
      * @return  the text representation of $el
      */
     public function asText(ElementNode $el) {
+        if(!$this->hasValidInputs($el)) {
+            return $el->getAsBBCode();
+        }
+
         $s = "";
         foreach($el->getChildren() as $child)
             $s .= $child->getAsText();
