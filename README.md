@@ -30,10 +30,23 @@ $parser->parse($text);
 print $parser->getAsHtml();
 ```
 
+Contribute
+----------
+
+I would love help maintaining jBBCode. Look at [open issues](http://github.com/jbowens/jBBCode/issues) for ideas on
+what needs to be done. Before submitting a pull request, verify that all unit tests still pass. 
+
+#### Running unit tests 
+To run the unit tests,
+ensure that [phpunit](http://github.com/sebastianbergmann/phpunit) is installed, or install it through the composer
+dev dependencies. Then run `phpunit ./tests` from the project directory. If you're adding new functionality, writing
+additional unit tests is a great idea.
+
 Author
 ------
 
 jBBCode was written by Jackson Owens. You may reach him at [jackson_owens@brown.edu](mailto:jackson_owens@brown.edu).
+
 
 License
 -------
