@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Parser.php');
+require_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Parser.php');
 
 class SimpleEvaluationTest extends PHPUnit_Framework_TestCase {
 

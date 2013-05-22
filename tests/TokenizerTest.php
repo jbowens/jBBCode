@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Tokenizer.php');
+require_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Tokenizer.php');
 
 /**
  * Test cases testing the functionality of the Tokenizer. The tokenizer
