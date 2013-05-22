@@ -17,7 +17,7 @@ a bbcode string to html.
 
 ```php
 <?php
-require_once( "/path/to/jbbcode/Parser.php" );
+require_once "/path/to/jbbcode/Parser.php";
  
 $parser = new JBBCode\Parser();
 $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
