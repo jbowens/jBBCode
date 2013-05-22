@@ -149,8 +149,9 @@ class ElementNode extends Node
     }
 
     /**
-     * Adds a child to this node's content. A child may be a TextNode, or another ElementNode... or anything else
-     * that may extend the abstract Node class.
+     * Adds a child to this node's content. A child may be a TextNode, or 
+     * another ElementNode... or anything else that may extend the 
+     * abstract Node class.
      *
      * @param child the node to add as a child
      */
@@ -194,8 +195,9 @@ class ElementNode extends Node
     }
 
     /**
-     * Traverses the parse tree upwards, going from parent to parent, until it finds a parent who has the given tag name. Returns the
-     * parent with the matching tag name if it exists, otherwise returns null.
+     * Traverses the parse tree upwards, going from parent to parent, until it finds a 
+     * parent who has the given tag name. Returns the parent with the matching tag name
+     * if it exists, otherwise returns null.
      *
      * @param str the tag name to search for
      *
