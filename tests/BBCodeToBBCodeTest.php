@@ -33,7 +33,6 @@ class BBCodeToBBCodeTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->defaultBBCodeParse($bbcode), $text);
     }
 
-
     public function testEmptyString()
     {
         $this->assertBBCodeOutput('', '');
@@ -48,7 +47,6 @@ class BBCodeToBBCodeTest extends PHPUnit_Framework_TestCase
     {
         $this->assertBBCodeOutput('buffer text [b]this is bold[/b] buffer text',
                                   'buffer text [b]this is bold[/b] buffer text');
-
     }
 
     public function testMultipleTags()
