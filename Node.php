@@ -91,7 +91,7 @@ abstract class Node
      *
      * @param parent the node to set as this node's parent
      */
-    public function setParent( Node $parent )
+    public function setParent(Node $parent)
     {
         $this->parent = $parent;
     }
@@ -101,7 +101,7 @@ abstract class Node
      *
      * @param nodeid this node's node id
      */
-    public function setNodeId( $nodeid )
+    public function setNodeId($nodeid)
     {
         $this->nodeid = $nodeid;
     }

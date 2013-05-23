@@ -92,7 +92,7 @@ class CodeDefinition
         if(!$this->parseContent() && $this->bodyValidator) {
             /* We only evaluate the content if we're not parsing the content. */
             $content = "";
-            foreach( $el->getChildren() as $child ) {
+            foreach($el->getChildren() as $child) {
                 $content .= $child->getAsBBCode();
             }
             if(!$this->bodyValidator->validate($content)) {
@@ -113,25 +113,25 @@ class CodeDefinition
      *
      * @return the parsed html of this element (INCLUDING ITS CHILDREN)
      */
-    public function asHtml( ElementNode $el )
+    public function asHtml(ElementNode $el)
     {
-        if(!$this->hasValidInputs($el)) {
+        if (!$this->hasValidInputs($el)) {
             return $el->getAsBBCode();
         }
 
         $html = $this->getReplacementText();
 
-        if ( $this->usesOption() ) {
+        if ($this->usesOption()) {
             $html = str_ireplace('{option}', $el->getAttribute(), $html);
         }
 
-        if ( $this->parseContent() ) {
+        if ($this->parseContent()) {
             $content = "";
-            foreach( $el->getChildren() as $child )
+            foreach($el->getChildren() as $child)
                 $content .= $child->getAsHTML();
         } else {
             $content = "";
-            foreach( $el->getChildren() as $child )
+            foreach($el->getChildren() as $child)
                 $content .= $child->getAsBBCode();
         }
 
@@ -148,7 +148,8 @@ class CodeDefinition
      *
      * @return  the text representation of $el
      */
-    public function asText(ElementNode $el) {
+    public function asText(ElementNode $el)
+    {
         if(!$this->hasValidInputs($el)) {
             return $el->getAsBBCode();
         }
@@ -220,7 +221,7 @@ class CodeDefinition
      *
      * @param the new tag name of this definition
      */
-    public function setTagName( $tagName )
+    public function setTagName($tagName)
     {
         $this->tagName = strtolower($tagName);
     }
@@ -232,7 +233,7 @@ class CodeDefinition
      *
      * @param the new replacement text
      */
-    public function setReplacementText( $txt )
+    public function setReplacementText($txt)
     {
         $this->replacementText = $txt;
     }
@@ -244,7 +245,7 @@ class CodeDefinition
      *
      * @param boolean $bool
      */
-    public function setUseOption( $bool )
+    public function setUseOption($bool)
     {
         $this->useOption = $bool;
     }
@@ -256,7 +257,7 @@ class CodeDefinition
      *
      * @param boolean $bool
      */
-    public function setParseContent( $bool )
+    public function setParseContent($bool)
     {
         $this->parseContent = $bool;
     }

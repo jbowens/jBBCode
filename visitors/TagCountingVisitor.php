@@ -15,7 +15,7 @@ class TagCountingVisitor implements \JBBcode\NodeVisitor
 
     public function visitDocumentElement(\JBBCode\DocumentElement $documentElement)
     {
-        foreach ( $documentElement->getChildren() as $child ) {
+        foreach ($documentElement->getChildren() as $child) {
             $child->accept($this);
         }
     }
@@ -30,14 +30,14 @@ class TagCountingVisitor implements \JBBcode\NodeVisitor
         $tagName = strtolower($elementNode->getTagName());
 
         // Update this tag name's frequency
-        if ( isset($this->frequencies[$tagName]) ) {
+        if (isset($this->frequencies[$tagName])) {
             $this->frequencies[$tagName]++;
         } else {
             $this->frequencies[$tagName] = 1;
         }
 
         // Visit all the node's childrens
-        foreach ( $elementNode->getChildren() as $child ) {
+        foreach ($elementNode->getChildren() as $child) {
             $child->accept($this);
         }
 
@@ -50,7 +50,7 @@ class TagCountingVisitor implements \JBBcode\NodeVisitor
      */
     public function getFrequency($tagName)
     {
-        if ( ! isset($this->frequencies[$tagName]) ) {
+        if (!isset($this->frequencies[$tagName])) {
             return 0;
         } else {
             return $this->frequencies[$tagName];

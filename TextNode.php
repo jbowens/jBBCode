@@ -19,7 +19,7 @@ class TextNode extends Node
      *
      * @param string $val
      */
-    public function __construct( $val )
+    public function __construct($val)
     {
         $this->value = $val;
     }

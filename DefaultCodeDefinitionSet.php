@@ -12,7 +12,8 @@ require_once 'validators/UrlValidator.php';
  *
  * @author jbowens
  */
-class DefaultCodeDefinitionSet implements CodeDefinitionSet {
+class DefaultCodeDefinitionSet implements CodeDefinitionSet
+{
 
     /* The default code definitions in this set. */
     protected $definitions = array();
@@ -20,7 +21,8 @@ class DefaultCodeDefinitionSet implements CodeDefinitionSet {
     /**
      * Constructs the default code definitions.
      */
-    public function __construct() {
+    public function __construct()
+    {
         /* [b] bold tag */
         $builder = new CodeDefinitionBuilder('b', '<strong>{param}</strong>');
         array_push($this->definitions, $builder->build());
@@ -78,7 +80,8 @@ class DefaultCodeDefinitionSet implements CodeDefinitionSet {
     /**
      * Returns an array of the default code definitions.
      */
-    public function getCodeDefinitions() {
+    public function getCodeDefinitions()
+    {
         return $this->definitions;
     }
 

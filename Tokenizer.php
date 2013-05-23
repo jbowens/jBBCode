@@ -21,12 +21,13 @@ class Tokenizer
      *
      * @param $str  the string to tokenize
      */
-    public function __construct($str) {
+    public function __construct($str)
+    {
         $strStart = 0;
-        for($index = 0; $index < strlen($str); ++$index) {
-            if(']' == $str[$index] || '[' == $str[$index]) {
+        for ($index = 0; $index < strlen($str); ++$index) {
+            if (']' == $str[$index] || '[' == $str[$index]) {
                 /* Are there characters in the buffer from a previous string? */
-                if($strStart < $index) {
+                if ($strStart < $index) {
                     array_push($this->tokens, substr($str, $strStart, $index - $strStart));
                     $strStart = $index;
                 }
@@ -37,7 +38,7 @@ class Tokenizer
             }
         }
 
-        if($strStart < strlen($str)) {
+        if ($strStart < strlen($str)) {
             /* There are still characters in the buffer. Add them to the tokens. */
             array_push($this->tokens, substr($str, $strStart, strlen($str) - $strStart));
         }
@@ -45,15 +46,18 @@ class Tokenizer
 
     /**
      * Returns true iff there is another token in the token stream.
-     */ public function hasNext() {
+     */
+    public function hasNext()
+    {
         return count($this->tokens) > 1 + $this->i;
     }
 
     /**
      * Advances the token stream to the next token and returns the new token.
      */
-    public function next() {
-        if(!$this->hasNext()) {
+    public function next()
+    {
+        if (!$this->hasNext()) {
             return null;
         } else {
             return $this->tokens[++$this->i];
@@ -63,8 +67,9 @@ class Tokenizer
     /**
      * Retrieves the current token.
      */
-    public function current() {
-        if($this->i < 0) {
+    public function current()
+    {
+        if ($this->i < 0) {
             return null;
         } else {
             return $this->tokens[$this->i];
@@ -74,8 +79,9 @@ class Tokenizer
     /**
      * Moves the token stream back a token.
      */
-    public function stepBack() {
-        if($this->i > -1) {
+    public function stepBack()
+    {
+        if ($this->i > -1) {
             $this->i--;
         }
     }
@@ -83,14 +89,16 @@ class Tokenizer
     /**
      * Restarts the tokenizer, returning to the beginning of the token stream.
      */
-    public function restart() {
+    public function restart()
+    {
         $this->i = -1;
     }
 
     /**
      * toString method that returns the entire string from the current index on.
      */
-    public function toString() {
+    public function toString()
+    {
         return implode('', array_slice($this->tokens, $this->i + 1));
     }
 

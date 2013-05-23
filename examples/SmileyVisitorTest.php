@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 $parser = new JBBCode\Parser();
 $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
 
-if( count($argv) < 2 ) {
+if (count($argv) < 2) {
     die("Usage: " . $argv[0] . " \"bbcode string\"\n");
 }
 

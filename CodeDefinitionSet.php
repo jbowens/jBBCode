@@ -11,7 +11,8 @@ use JBBCode\CodeDefinition;
  *
  * @author jbowens
  */
-interface CodeDefinitionSet {
+interface CodeDefinitionSet
+{
 
     /**
      * Retrieves the CodeDefinitions within this set as an array.

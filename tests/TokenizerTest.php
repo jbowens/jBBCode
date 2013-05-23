@@ -8,21 +8,25 @@ require_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Tokenizer.php')
  *
  * @author jbowens
  */
-class TokenizerTest extends PHPUnit_Framework_TestCase {
+class TokenizerTest extends PHPUnit_Framework_TestCase
+{
 
-    public function testEmptyString() {
+    public function testEmptyString()
+    {
         $tokenizer = new JBBCode\Tokenizer('');
         $this->assertFalse($tokenizer->hasNext());
     }
 
-    public function testPlainTextOnly() {
+    public function testPlainTextOnly()
+    {
         $tokenizer = new JBBCode\Tokenizer('this is some plain text.');
         $this->assertEquals('this is some plain text.', $tokenizer->next());
         $this->assertEquals('this is some plain text.', $tokenizer->current());
         $this->assertFalse($tokenizer->hasNext());
     }
 
-    public function testStartingBracket() {
+    public function testStartingBracket()
+    {
         $tokenizer = new JBBCode\Tokenizer('[this has a starting bracket.');
         $this->assertEquals('[', $tokenizer->next());
         $this->assertEquals('[', $tokenizer->current());
@@ -32,7 +36,8 @@ class TokenizerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(null, $tokenizer->next());
     }
 
-    public function testOneTag() {
+    public function testOneTag()
+    {
         $tokenizer = new JBBCode\Tokenizer('[b]');
         $this->assertEquals('[', $tokenizer->next());
         $this->assertEquals('b', $tokenizer->next());
@@ -40,7 +45,8 @@ class TokenizerTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($tokenizer->hasNext());
     }
 
-    public function testMatchingTags() {
+    public function testMatchingTags()
+    {
         $tokenizer = new JBBCode\Tokenizer('[url]http://jbbcode.com[/url]');
         $this->assertEquals('[', $tokenizer->next());
         $this->assertEquals('url', $tokenizer->next());
@@ -52,7 +58,8 @@ class TokenizerTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($tokenizer->hasNext());
     }
 
-    public function testLotsOfBrackets() {
+    public function testLotsOfBrackets()
+    {
         $tokenizer = new JBBCode\Tokenizer('[[][]][');
         $this->assertEquals('[', $tokenizer->next());
         $this->assertEquals('[', $tokenizer->next());

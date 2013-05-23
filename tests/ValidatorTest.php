@@ -15,7 +15,8 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
     /**
      * Tests an invalid url directly on the UrlValidator.
      */
-    public function testInvalidUrl() {
+    public function testInvalidUrl()
+    {
         $urlValidator = new \JBBCode\validators\UrlValidator();
         $this->assertFalse($urlValidator->validate('#yolo#swag'));
         $this->assertFalse($urlValidator->validate('giehtiehwtaw352353%3'));
@@ -24,7 +25,8 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
     /**
      * Tests a valid url directly on the UrlValidator.
      */
-    public function testValidUrl() {
+    public function testValidUrl()
+    {
         $urlValidator = new \JBBCode\validators\UrlValidator();
         $this->assertTrue($urlValidator->validate('http://google.com'));
         $this->assertTrue($urlValidator->validate('http://jbbcode.com/docs'));
@@ -36,7 +38,8 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
      *
      * @depends testInvalidUrl
      */
-    public function testInvalidOptionUrlBBCode() {
+    public function testInvalidOptionUrlBBCode()
+    {
         $parser = new JBBCode\Parser();
         $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
         $parser->parse('[url=javascript:alert("HACKED!");]click me[/url]');
@@ -49,7 +52,8 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
      *
      * @depends testInvalidUrl
      */
-    public function testInvalidBodyUrlBBCode() {
+    public function testInvalidBodyUrlBBCode()
+    {
         $parser = new JBBCode\Parser();
         $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
         $parser->parse('[url]javascript:alert("HACKED!");[/url]');
@@ -61,7 +65,8 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
      *
      * @depends testValidUrl
      */
-    public function testValidUrlBBCode() {
+    public function testValidUrlBBCode()
+    {
         $parser = new JBBCode\Parser();
         $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
         $parser->parse('[url]http://jbbcode.com[/url]');

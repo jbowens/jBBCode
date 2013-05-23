@@ -63,7 +63,7 @@ class ElementNode extends Node
      *
      * @param codeDef the code definition that defines this element node
      */
-    public function setCodeDefinition( CodeDefinition $codeDef )
+    public function setCodeDefinition(CodeDefinition $codeDef)
     {
         $this->codeDefinition = $codeDef;
         $this->setTagName($codeDef->getTagName());
@@ -109,11 +109,11 @@ class ElementNode extends Node
      */
     public function getAsText()
     {
-        if($this->codeDefinition) {
+        if ($this->codeDefinition) {
             return $this->codeDefinition->asText($this);
         } else {
             $s = "";
-            foreach($this->getChildren() as $child)
+            foreach ($this->getChildren() as $child)
                 $s .= $child->getAsText();
             return $s;
         }
@@ -130,11 +130,13 @@ class ElementNode extends Node
     public function getAsBBCode()
     {
         $str = "[".$this->tagName;
-        if( $this->attribute != null )
+        if ($this->attribute != null) {
             $str .= "=" . $this->attribute;
+        }
         $str .= "]";
-        foreach( $this->getChildren() as $child)
+        foreach ($this->getChildren() as $child) {
             $str .= $child->getAsBBCode();
+        }
         $str .= "[/".$this->tagName."]";
 
         return $str;
@@ -151,7 +153,7 @@ class ElementNode extends Node
     public function getAsHTML()
     {
         if($this->codeDefinition) {
-            return $this->codeDefinition->asHtml( $this );
+            return $this->codeDefinition->asHtml($this);
         } else {
             return "";
         }
@@ -167,7 +169,7 @@ class ElementNode extends Node
     public function addChild(Node $child)
     {
         array_push($this->children, $child);
-        $child->setParent( $this );
+        $child->setParent($this);
     }
 
     /**
@@ -178,7 +180,7 @@ class ElementNode extends Node
     public function removeChild(Node $child)
     {
         foreach ($this->children as $key => $value) {
-            if( $value == $child)
+            if ($value == $child)
                 unset($this->children[$key]);
         }
     }
@@ -188,7 +190,7 @@ class ElementNode extends Node
      *
      * @param tagName the element's new tag name
      */
-    public function setTagName( $tagName )
+    public function setTagName($tagName)
     {
         $this->tagName = $tagName;
     }
@@ -198,7 +200,7 @@ class ElementNode extends Node
      *
      * @param attribute the attribute of this element node
      */
-    public function setAttribute( $attribute )
+    public function setAttribute($attribute)
     {
         $this->attribute = $attribute;
     }
@@ -212,19 +214,20 @@ class ElementNode extends Node
      *
      * @return the closest parent with the given tag name
      */
-    public function closestParentOfType( $str )
+    public function closestParentOfType($str)
     {
         $str = strtolower($str);
         $currentEl = $this;
 
-        while( strtolower($currentEl->getTagName()) != $str && $currentEl->hasParent() )
+        while (strtolower($currentEl->getTagName()) != $str && $currentEl->hasParent()) {
             $currentEl = $currentEl->getParent();
+        }
 
-        if( strtolower($currentEl->getTagName()) != $str )
-
+        if (strtolower($currentEl->getTagName()) != $str) {
             return null;
-        else
+        } else {
             return $currentEl;
+        }
     }
 
 }

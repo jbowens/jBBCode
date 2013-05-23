@@ -63,11 +63,11 @@ class Parser
         $builder->setParseContent($parseContent);
         $builder->setNestLimit($nestLimit);
 
-        if($optionValidator) {
+        if ($optionValidator) {
             $builder->setOptionValidator($optionValidator);
         }
 
-        if($bodyValidator) {
+        if ($bodyValidator) {
             $builder->setBodyValidator($bodyValidator);
         }
 
@@ -91,7 +91,7 @@ class Parser
      * @param CodeDefinitionSet $set  the set of definitions to add
      */
     public function addCodeDefinitionSet(CodeDefinitionSet $set) {
-        foreach($set->getCodeDefinitions() as $def) {
+        foreach ($set->getCodeDefinitions() as $def) {
             $this->addCodeDefinition($def);
         }
     }
@@ -150,9 +150,9 @@ class Parser
         $parent = $this->treeRoot;
         $tokenizer = new Tokenizer($str);
 
-        while($tokenizer->hasNext()) {
+        while ($tokenizer->hasNext()) {
             $parent = $this->parseStartState($parent, $tokenizer);
-            if($parent->getCodeDefinition() && false === 
+            if ($parent->getCodeDefinition() && false === 
                     $parent->getCodeDefinition()->parseContent()) {
                 /* We're inside an element that does not allow its contents to be parseable. */
                 $this->parseAsTextUntilClose($parent, $tokenizer);
@@ -200,7 +200,7 @@ class Parser
     public function codeExists( $tagName, $usesOption = false )
     {
         foreach ($this->bbcodes as $code) {
-            if(strtolower($tagName) == $code->getTagName() && $usesOption == $code->usesOption()) {
+            if (strtolower($tagName) == $code->getTagName() && $usesOption == $code->usesOption()) {
                 return true;
             }
         }
@@ -219,7 +219,7 @@ class Parser
     public function getCode( $tagName, $usesOption = false )
     {
         foreach ($this->bbcodes as $code) {
-            if(strtolower($tagName) == $code->getTagName() && $code->usesOption() == $usesOption) {
+            if (strtolower($tagName) == $code->getTagName() && $code->usesOption() == $usesOption) {
                 return $code;
             }
         }
@@ -272,7 +272,7 @@ class Parser
     {
         $next = $tokenizer->next();
 
-        if('[' == $next) {
+        if ('[' == $next) {
             return $this->parseTagOpen($parent, $tokenizer);
         } else {
             $this->createTextNode($parent, $next);
@@ -294,7 +294,7 @@ class Parser
     protected function parseTagOpen(ElementNode $parent, Tokenizer $tokenizer)
     {
 
-        if(!$tokenizer->hasNext()) {
+        if (!$tokenizer->hasNext()) {
             /* The [ that sent us to this state was just a trailing [, not the
              * opening for a new tag. Treat it as such. */
             $this->createTextNode($parent, '[');
@@ -307,11 +307,11 @@ class Parser
          * which would likely be a lot clearer but I decided to use a while loop to
          * prevent stack overflow with a string like [[[[[[[[[...[[[.
          */
-        while('[' == $next) {
+        while ('[' == $next) {
             /* The previous [ was just a random bracket that should be treated as text.
              * Continue until we get a non open bracket. */
             $this->createTextNode($parent, '[');
-            if(!$tokenizer->hasNext()) {
+            if (!$tokenizer->hasNext()) {
                 $this->createTextNode($parent, '[');
                 return $parent;
             }
@@ -319,7 +319,7 @@ class Parser
         }
 
         /* At this point $next is either ']' or plain text. */
-        if(']' == $next) {
+        if (']' == $next) {
             $this->createTextNode($parent, '[');
             $this->createTextNode($parent, ']');
             return $parent;
@@ -343,7 +343,7 @@ class Parser
     {
 
         $next;
-        if(!$tokenizer->hasNext() || ($next = $tokenizer->next()) != ']') {
+        if (!$tokenizer->hasNext() || ($next = $tokenizer->next()) != ']') {
             /* This is a malformed tag. Both the previous [ and the tagContent
              * is really just plain text. */
             $this->createTextNode($parent, '[');
@@ -362,7 +362,7 @@ class Parser
         $tmpTagName = $tagPieces[0];
 
         $actualTagName;
-        if('/' == $tmpTagName[0]) {
+        if ('/' == $tmpTagName[0]) {
             /* This is a closing tag name. */
             $actualTagName = substr($tmpTagName, 1);
         } else {
@@ -370,7 +370,7 @@ class Parser
         }
 
         /* Verify that this is a known bbcode tag name. */
-        if('' == $actualTagName || !$this->codeExists($actualTagName, count($tagPieces) > 1)) {
+        if ('' == $actualTagName || !$this->codeExists($actualTagName, count($tagPieces) > 1)) {
             /* This is an invalid tag name! Treat everything we've seen as plain text. */
             $this->createTextNode($parent, '[');
             $this->createTextNode($parent, $tagContent);
@@ -378,12 +378,12 @@ class Parser
             return $parent;
         }
 
-        if('/' == $tmpTagName[0]) {
+        if ('/' == $tmpTagName[0]) {
             /* This is attempting to close an open tag. We must verify that there exists an
              * open tag of the same type and that there is no option (options on closing
              * tags don't make any sense). */
             $elToClose = $parent->closestParentOfType($actualTagName);
-            if(null == $elToClose || count($tagPieces) > 1) {
+            if (null == $elToClose || count($tagPieces) > 1) {
                 /* Closing an unopened tag or has an option. Treat everything as plain text. */
                 $this->createTextNode($parent, '[');
                 $this->createTextNode($parent, $tagContent);
@@ -402,7 +402,7 @@ class Parser
         $el->setNodeId(++$this->nextNodeid);
         $code = $this->getCode($actualTagName, count($tagPieces) > 1);
         $el->setCodeDefinition($code);
-        if(count($tagPieces) > 1) {
+        if (count($tagPieces) > 1) {
             /* We have an attribute we should save. */
             unset($tagPieces[0]);
             $el->setAttribute(implode('=', $tagPieces));
@@ -424,27 +424,27 @@ class Parser
         /* $parent's code definition doesn't allow its contents to be parsed. Here we use
          * a sliding of window of three tokens until we find [ /tagname ], signifying the
          * end of the parent. */ 
-        if(!$tokenizer->hasNext()) {
+        if (!$tokenizer->hasNext()) {
             return $parent;
         }
         $prevPrev = $tokenizer->next();
-        if(!$tokenizer->hasNext()) {
+        if (!$tokenizer->hasNext()) {
             $this->createTextNode($parent, $prevPrev);
             return $parent;
         }
         $prev = $tokenizer->next();
-        if(!$tokenizer->hasNext()) {
+        if (!$tokenizer->hasNext()) {
             $this->createTextNode($parent, $prevPrev);
             $this->createTextNode($parent, $prev);
             return $parent;
         }
         $curr = $tokenizer->next();
-        while('[' != $prevPrev || '/'.$parent->getTagName() != strtolower($prev) ||
+        while ('[' != $prevPrev || '/'.$parent->getTagName() != strtolower($prev) ||
                 ']' != $curr) {
             $this->createTextNode($parent, $prevPrev);
             $prevPrev = $prev;
             $prev = $curr;        
-            if(!$tokenizer->hasNext()) {
+            if (!$tokenizer->hasNext()) {
                 $this->createTextNode($parent, $prevPrev);
                 $this->createTextNode($parent, $prev);
                 return $parent;
