@@ -249,7 +249,8 @@ class Parser
      *
      * @return the newly created TextNode
      */
-    protected function createTextNode(ElementNode $parent, $string) {
+    protected function createTextNode(ElementNode $parent, $string)
+    {
         $textNode = new TextNode($string);
         $textNode->setNodeId(++$this->nextNodeid);
         $parent->addChild($textNode);
@@ -267,7 +268,8 @@ class Parser
      *
      * @return the new parent we should use for the next iteration.
      */
-    protected function parseStartState(ElementNode $parent, Tokenizer $tokenizer) {
+    protected function parseStartState(ElementNode $parent, Tokenizer $tokenizer)
+    {
         $next = $tokenizer->next();
 
         if('[' == $next) {
@@ -289,7 +291,8 @@ class Parser
      *
      * @return the new parent node
      */
-    protected function parseTagOpen(ElementNode $parent, Tokenizer $tokenizer) {
+    protected function parseTagOpen(ElementNode $parent, Tokenizer $tokenizer)
+    {
 
         if(!$tokenizer->hasNext()) {
             /* The [ that sent us to this state was just a trailing [, not the
@@ -336,7 +339,8 @@ class Parser
      *
      * @return the new parent element
      */
-    protected function parseTag(ElementNode $parent, Tokenizer $tokenizer, $tagContent) {
+    protected function parseTag(ElementNode $parent, Tokenizer $tokenizer, $tagContent)
+    {
 
         $next;
         if(!$tokenizer->hasNext() || ($next = $tokenizer->next()) != ']') {
@@ -415,7 +419,8 @@ class Parser
      * @param $parent  the current parent element
      * @param $tokenizer  the tokenizer we're using
      */
-    protected function parseAsTextUntilClose(ElementNode $parent, Tokenizer $tokenizer) {
+    protected function parseAsTextUntilClose(ElementNode $parent, Tokenizer $tokenizer)
+    {
         /* $parent's code definition doesn't allow its contents to be parsed. Here we use
          * a sliding of window of three tokens until we find [ /tagname ], signifying the
          * end of the parent. */ 
