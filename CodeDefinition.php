@@ -83,19 +83,19 @@ class CodeDefinition
      */
     public function hasValidInputs(ElementNode $el)
     {
-        if($this->usesOption() && $this->optionValidator &&
+        if ($this->usesOption() && $this->optionValidator &&
             !$this->optionValidator->validate($el->getAttribute())) {
             /* The option argument to $el does not pass the option validator. */    
             return false;
         }
 
-        if(!$this->parseContent() && $this->bodyValidator) {
+        if (!$this->parseContent() && $this->bodyValidator) {
             /* We only evaluate the content if we're not parsing the content. */
             $content = "";
-            foreach($el->getChildren() as $child) {
+            foreach ($el->getChildren() as $child) {
                 $content .= $child->getAsBBCode();
             }
-            if(!$this->bodyValidator->validate($content)) {
+            if (!$this->bodyValidator->validate($content)) {
                 /* The content of the element is not valid. */
                 return false;
             }
@@ -127,11 +127,11 @@ class CodeDefinition
 
         if ($this->parseContent()) {
             $content = "";
-            foreach($el->getChildren() as $child)
+            foreach ($el->getChildren() as $child)
                 $content .= $child->getAsHTML();
         } else {
             $content = "";
-            foreach($el->getChildren() as $child)
+            foreach ($el->getChildren() as $child)
                 $content .= $child->getAsBBCode();
         }
 
@@ -150,12 +150,12 @@ class CodeDefinition
      */
     public function asText(ElementNode $el)
     {
-        if(!$this->hasValidInputs($el)) {
+        if (!$this->hasValidInputs($el)) {
             return $el->getAsBBCode();
         }
 
         $s = "";
-        foreach($el->getChildren() as $child)
+        foreach ($el->getChildren() as $child)
             $s .= $child->getAsText();
         return $s;
     }
