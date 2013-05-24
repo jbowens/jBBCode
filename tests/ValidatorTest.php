@@ -2,6 +2,7 @@
 
 require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Parser.php';
 require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'validators' . DIRECTORY_SEPARATOR . 'UrlValidator.php';
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'validators' . DIRECTORY_SEPARATOR . 'CssColorValidator.php';
 
 /**
  * Test cases for InputValidators.
@@ -71,6 +72,79 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
         $parser->parse('[url]http://jbbcode.com[/url]');
         $this->assertEquals('<a href="http://jbbcode.com">http://jbbcode.com</a>',
+                $parser->getAsHtml());
+    }
+
+    /**
+     * Tests valid english CSS color descriptions on the CssColorValidator.
+     */
+    public function testCssColorEnglish()
+    {
+        $colorValidator = new JBBCode\validators\CssColorValidator();
+        $this->assertTrue($colorValidator->validate('red'));
+        $this->assertTrue($colorValidator->validate('yellow'));
+        $this->assertTrue($colorValidator->validate('LightGoldenRodYellow'));
+    }
+
+    /**
+     * Tests valid hexadecimal CSS color values on the CssColorValidator.
+     */
+    public function testCssColorHex()
+    {
+        $colorValidator = new JBBCode\validators\CssColorValidator();
+        $this->assertTrue($colorValidator->validate('#000'));
+        $this->assertTrue($colorValidator->validate('#ff0000'));
+        $this->assertTrue($colorValidator->validate('#aaaaaa'));
+    }
+
+    /**
+     * Tests valid rgba CSS color values on the CssColorValidator.
+     */
+    public function testCssColorRgba()
+    {
+        $colorValidator = new JBBCode\validators\CssColorValidator();
+        $this->assertTrue($colorValidator->validate('rgba(255, 0, 0, 0.5)'));
+        $this->assertTrue($colorValidator->validate('rgba(50, 50, 50, 0.0)'));
+    }
+
+    /**
+     * Tests invalid CSS color values on the CssColorValidator.
+     */
+    public function testInvalidCssColor()
+    {
+        $colorValidator = new JBBCode\validators\CssColorValidator();
+        $this->assertFalse($colorValidator->validate('" onclick="javascript: alert(\"gotcha!\");'));
+        $this->assertFalse($colorValidator->validate('"><marquee scrollamount="100'));
+    }
+
+    /**
+     * Tests valid css colors in a color bbcode.
+     *
+     * @depends testCssColorEnglish
+     * @depends testCssColorHex
+     */
+    public function testValidColorBBCode()
+    {
+        $parser = new JBBCode\Parser();
+        $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
+        $parser->parse('[color=red]colorful text[/color]');
+        $this->assertEquals('<span style="color: red">colorful text</span>',
+                $parser->getAsHtml());
+        $parser->parse('[color=#00ff00]green[/color]');
+        $this->assertEquals('<span style="color: #00ff00">green</span>', $parser->getAsHtml());
+    }
+
+    /**
+     * Tests invalid css colors in a color bbcode.
+     *
+     * @depends testInvalidCssColor
+     */
+    public function testInvalidColorBBCode()
+    {
+        $parser = new JBBCode\Parser();
+        $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
+        $parser->parse('[color=" onclick="alert(\'hey ya!\');]click me[/color]');
+        $this->assertEquals('[color=" onclick="alert(\'hey ya!\');]click me[/color]',
                 $parser->getAsHtml());
     }
 

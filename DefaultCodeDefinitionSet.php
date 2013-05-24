@@ -5,6 +5,7 @@ namespace JBBCode;
 require_once 'CodeDefinition.php';
 require_once 'CodeDefinitionBuilder.php';
 require_once 'CodeDefinitionSet.php';
+require_once 'validators/CssColorValidator.php';
 require_once 'validators/UrlValidator.php';
 
 /**
@@ -73,7 +74,7 @@ class DefaultCodeDefinitionSet implements CodeDefinitionSet
         $builder->setReplacementText('<span style="color: {option}">{param}</span>');
         $builder->removeBodyValidator();
         $builder->setParseContent(true);
-        /* TODO: Validate color */
+        $builder->setOptionValidator(new \JBBCode\validators\CssColorValidator());
         array_push($this->definitions, $builder->build());
     }
 
