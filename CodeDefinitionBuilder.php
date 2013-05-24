@@ -34,13 +34,14 @@ class CodeDefinitionBuilder
     }
 
     /**
-     * Sets the tag name the CodeDeinition should be built with.
+     * Sets the tag name the CodeDefinition should be built with.
      *
      * @param $tagName  the tag name for the new CodeDefinition
      */
     public function setTagName($tagName)
     {
         $this->tagName = $tagName;
+        return $this;
     }
 
     /**
@@ -52,6 +53,7 @@ class CodeDefinitionBuilder
     public function setReplacementText($replacementText)
     {
         $this->replacementText = $replacementText;
+        return $this;
     }
 
     /**
@@ -63,6 +65,7 @@ class CodeDefinitionBuilder
     public function setUseOption($option)
     {
         $this->useOption = $option;
+        return $this;
     }
 
     /**
@@ -74,6 +77,7 @@ class CodeDefinitionBuilder
     public function setParseContent($parseContent)
     {
         $this->parseContent = $parseContent;
+        return $this;
     }
 
     /**
@@ -89,6 +93,7 @@ class CodeDefinitionBuilder
                                                "or -1.");
         }
         $this->nestLimit = $limit;
+        return $this;
     }
 
     /**
@@ -99,6 +104,7 @@ class CodeDefinitionBuilder
     public function setOptionValidator(\JBBCode\InputValidator $validator)
     {
         $this->optionValidator = $validator;
+        return $this;
     }
 
     /**
@@ -109,6 +115,7 @@ class CodeDefinitionBuilder
     public function setBodyValidator(\JBBCode\InputValidator $validator)
     {
         $this->bodyValidator = $validator;
+        return $this;
     }
 
     /**
@@ -117,6 +124,7 @@ class CodeDefinitionBuilder
     public function removeOptionValidator()
     {
         $this->optionValidator = null;
+        return $this;
     }
 
     /**
@@ -125,6 +133,7 @@ class CodeDefinitionBuilder
     public function removeBodyValidator()
     {
         $this->bodyValidator = null;
+        return $this;
     }
     
     /**
