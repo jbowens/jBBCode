@@ -369,15 +369,6 @@ class Parser
             $actualTagName = $tmpTagName;
         }
 
-        /* Verify that this is a known bbcode tag name. */
-        if ('' == $actualTagName || !$this->codeExists($actualTagName, count($tagPieces) > 1)) {
-            /* This is an invalid tag name! Treat everything we've seen as plain text. */
-            $this->createTextNode($parent, '[');
-            $this->createTextNode($parent, $tagContent);
-            $this->createTextNode($parent, ']');
-            return $parent;
-        }
-
         if ('/' == $tmpTagName[0]) {
             /* This is attempting to close an open tag. We must verify that there exists an
              * open tag of the same type and that there is no option (options on closing
@@ -395,6 +386,15 @@ class Parser
                  * elToClose's parent. */
                 return $elToClose->getParent();
             }
+        }
+
+        /* Verify that this is a known bbcode tag name. */
+        if ('' == $actualTagName || !$this->codeExists($actualTagName, count($tagPieces) > 1)) {
+            /* This is an invalid tag name! Treat everything we've seen as plain text. */
+            $this->createTextNode($parent, '[');
+            $this->createTextNode($parent, $tagContent);
+            $this->createTextNode($parent, ']');
+            return $parent;
         }
 
         /* If we're here, this is a valid opening tag. Let's make a new node for it. */
