@@ -29,52 +29,38 @@ class DefaultCodeDefinitionSet implements CodeDefinitionSet
         array_push($this->definitions, $builder->build());
 
         /* [i] italics tag */
-        $builder->setTagName('i');
-        $builder->setReplacementText('<em>{param}</em>');
+        $builder = new CodeDefinitionBuilder('i', '<em>{param}</em>');
         array_push($this->definitions, $builder->build());
 
         /* [u] italics tag */
-        $builder->setTagName('u');
-        $builder->setReplacementText('<u>{param}</u>');
+        $builder = new CodeDefinitionBuilder('u', '<u>{param}</u>');
         array_push($this->definitions, $builder->build());
 
         $urlValidator = new \JBBCode\validators\UrlValidator();
 
         /* [url] link tag */
-        $builder->setTagName('url');
-        $builder->setReplacementText('<a href="{param}">{param}</a>');
-        $builder->setParseContent(false);
-        $builder->setBodyValidator($urlValidator);
+        $builder = new CodeDefinitionBuilder('url', '<a href="{param}">{param}</a>');
+        $builder->setParseContent(false)->setBodyValidator($urlValidator);
         array_push($this->definitions, $builder->build());
 
         /* [url=http://example.com] link tag */
-        $builder->setUseOption(true);
-        $builder->setReplacementText('<a href="{option}">{param}</a>');
-        $builder->setParseContent(true);
-        $builder->removeBodyValidator();
-        $builder->setOptionValidator($urlValidator);
+        $builder = new CodeDefinitionBuilder('url', '<a href="{option}">{param}</a>');
+        $builder->setUseOption(true)->setParseContent(true)->setOptionValidator($urlValidator);
         array_push($this->definitions, $builder->build());
 
         /* [img] image tag */
-        $builder->setTagName('img');
-        $builder->setUseOption(false);
-        $builder->setParseContent(false);
-        $builder->setReplacementText('<img src="{param}" />');
-        $builder->removeOptionValidator();
-        $builder->setBodyValidator($urlValidator);
+        $builder = new CodeDefinitionBuilder('img', '<img src="{param}" />');
+        $builder->setUseOption(false)->setParseContent(false)->setBodyValidator($urlValidator);
         array_push($this->definitions, $builder->build());
 
         /* [img=alt text] image tag */
+        $builder = new CodeDefinitionBuilder('img', '<img src="{param} alt="{option}" />');
         $builder->setUseOption(true);
-        $builder->setReplacementText('<img src="{param}" alt="{option}" />');
         array_push($this->definitions, $builder->build());
 
         /* [color] color tag */
-        $builder->setTagName('color');
-        $builder->setReplacementText('<span style="color: {option}">{param}</span>');
-        $builder->removeBodyValidator();
-        $builder->setParseContent(true);
-        $builder->setOptionValidator(new \JBBCode\validators\CssColorValidator());
+        $builder = new CodeDefinitionBuilder('color', '<span style="color: {option}">{param}</span>');
+        $builder->setUseOption(true)->setOptionValidator(new \JBBCode\validators\CssColorValidator());
         array_push($this->definitions, $builder->build());
     }
 
