@@ -251,6 +251,17 @@ class Parser
      */
     protected function createTextNode(ElementNode $parent, $string)
     {
+        if(count($parent->getChildren())) {
+            $children = $parent->getChildren();
+            $lastElement = end($children);
+            reset($children);
+
+            if($lastElement->isTextNode()) {
+                $lastElement->setValue($lastElement->getValue() . $string);
+                return $lastElement;
+            }
+        }
+
         $textNode = new TextNode($string);
         $textNode->setNodeId(++$this->nextNodeid);
         $parent->addChild($textNode);
