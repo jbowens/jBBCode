@@ -80,7 +80,7 @@ class Parser
      *
      * @param CodeDefinition $definition the bbcode definition to add
      */
-    public function addCodeDefinition( CodeDefinition $definition )
+    public function addCodeDefinition(CodeDefinition $definition)
     {
         array_push($this->bbcodes, $definition);
     }
@@ -142,7 +142,7 @@ class Parser
      *
      * @param string $str the bbcode markup to parse
      */
-    public function parse( $str )
+    public function parse($str)
     {
         /* Set the tree root back to a fresh DocumentElement. */
         $this->reset();
@@ -197,7 +197,7 @@ class Parser
      *
      * @return true if the code exists, false otherwise
      */
-    public function codeExists( $tagName, $usesOption = false )
+    public function codeExists($tagName, $usesOption = false)
     {
         foreach ($this->bbcodes as $code) {
             if (strtolower($tagName) == $code->getTagName() && $usesOption == $code->usesOption()) {
@@ -216,7 +216,7 @@ class Parser
      *
      * @return CodeDefinition if the bbcode exists, null otherwise
      */
-    public function getCode( $tagName, $usesOption = false )
+    public function getCode($tagName, $usesOption = false)
     {
         foreach ($this->bbcodes as $code) {
             if (strtolower($tagName) == $code->getTagName() && $code->usesOption() == $usesOption) {
@@ -251,12 +251,12 @@ class Parser
      */
     protected function createTextNode(ElementNode $parent, $string)
     {
-        if(count($parent->getChildren())) {
+        if (count($parent->getChildren())) {
             $children = $parent->getChildren();
             $lastElement = end($children);
             reset($children);
 
-            if($lastElement->isTextNode()) {
+            if ($lastElement->isTextNode()) {
                 $lastElement->setValue($lastElement->getValue() . $string);
                 return $lastElement;
             }
