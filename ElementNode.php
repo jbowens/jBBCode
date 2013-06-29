@@ -29,7 +29,7 @@ class ElementNode extends Node
     protected $nestDepth;
 
     /**
-     * Constructs the elemennt node
+     * Constructs the element node
      */
     public function __construct()
     {
