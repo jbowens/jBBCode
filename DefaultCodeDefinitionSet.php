@@ -32,7 +32,7 @@ class DefaultCodeDefinitionSet implements CodeDefinitionSet
         $builder = new CodeDefinitionBuilder('i', '<em>{param}</em>');
         array_push($this->definitions, $builder->build());
 
-        /* [u] italics tag */
+        /* [u] underline tag */
         $builder = new CodeDefinitionBuilder('u', '<u>{param}</u>');
         array_push($this->definitions, $builder->build());
 
