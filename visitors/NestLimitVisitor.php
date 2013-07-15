@@ -52,7 +52,7 @@ class NestLimitVisitor implements \JBBCode\NodeVisitor
              * of its children. */
             $elementNode->getParent()->removeChild($elementNode);
         } else {
-            /* This element is not nested too deeply. Visit all of the children. */
+            /* This element is not nested too deeply. Visit all of its children. */
             foreach ($elementNode->getChildren() as $child) {
                 $child->accept($this);
             }

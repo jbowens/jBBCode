@@ -160,8 +160,8 @@ class Parser
             }
         }
 
-        /* We parsed ignoring nest limits. Do a O(n) traversal to remove any elements that
-         * are nested beywond their CodeDefinition's nest limit. */
+        /* We parsed ignoring nest limits. Do an O(n) traversal to remove any elements that
+         * are nested beyond their CodeDefinition's nest limit. */
         $this->removeOverNestedElements();
     }
 
@@ -433,7 +433,7 @@ class Parser
     protected function parseAsTextUntilClose(ElementNode $parent, Tokenizer $tokenizer)
     {
         /* $parent's code definition doesn't allow its contents to be parsed. Here we use
-         * a sliding of window of three tokens until we find [ /tagname ], signifying the
+         * a sliding window of three tokens until we find [ /tagname ], signifying the
          * end of the parent. */ 
         if (!$tokenizer->hasNext()) {
             return $parent;
