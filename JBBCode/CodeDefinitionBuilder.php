@@ -18,7 +18,7 @@ class CodeDefinitionBuilder
     protected $replacementText;
     protected $parseContent = true;
     protected $nestLimit = -1;
-    protected $optionValidator = null;
+    protected $optionValidator = array();
     protected $bodyValidator = null;
 
     /**
@@ -101,9 +101,12 @@ class CodeDefinitionBuilder
      *
      * @param $validator  the InputValidator instance to use
      */
-    public function setOptionValidator(\JBBCode\InputValidator $validator)
+    public function setOptionValidator(\JBBCode\InputValidator $validator, $option=null)
     {
-        $this->optionValidator = $validator;
+        if(empty($option)){
+            $option = $this->tagName;
+        }
+        $this->optionValidator[$option] = $validator;
         return $this;
     }
 
@@ -123,7 +126,7 @@ class CodeDefinitionBuilder
      */
     public function removeOptionValidator()
     {
-        $this->optionValidator = null;
+        $this->optionValidator = array();
         return $this;
     }
 
