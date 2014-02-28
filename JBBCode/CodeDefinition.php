@@ -39,7 +39,7 @@ class CodeDefinition
      * Constructs a new CodeDefinition.
      */
     public static function construct($tagName, $replacementText, $useOption = false,
-            $parseContent = true, $nestLimit = -1, $optionValidator = null,
+            $parseContent = true, $nestLimit = -1, $optionValidator = array(),
             $bodyValidator = null)
     {
         $def = new CodeDefinition();                            
@@ -70,7 +70,7 @@ class CodeDefinition
         $this->useOption = false;
         $this->nestLimit = -1;
         $this->elCounter = 0;
-        $this->optionValidator = null;
+        $this->optionValidator = array();
         $this->bodyValidator = null;
     }
 
@@ -83,10 +83,14 @@ class CodeDefinition
      */
     public function hasValidInputs(ElementNode $el)
     {
-        if ($this->usesOption() && $this->optionValidator &&
-            !$this->optionValidator->validate($el->getAttribute())) {
-            /* The option argument to $el does not pass the option validator. */    
-            return false;
+        if ($this->usesOption() && $this->optionValidator) {
+            $att = $el->getAttribute();
+
+            foreach($att as $name => $value){
+                if(isset($this->optionValidator[$name]) && !$this->optionValidator[$name]->validate($value)){
+                    return false;
+                }
+            }
         }
 
         if (!$this->parseContent() && $this->bodyValidator) {
@@ -122,9 +126,26 @@ class CodeDefinition
         $html = $this->getReplacementText();
 
         if ($this->usesOption()) {
-            $html = str_ireplace('{option}', $el->getAttribute(), $html);
+            $options = $el->getAttribute();
+            if(count($options)==1){
+                $vals = array_values($options);
+                $html = str_ireplace('{option}', reset($vals), $html);
+            }
+            else{
+                foreach($options as $key => $val){
+                    $html = str_ireplace("{$key}", $val, $html);
+                }
+            }
         }
 
+        $content = $this->getContent($el);
+
+        $html = str_ireplace('{param}', $content, $html);
+
+        return $html;
+    }
+
+    protected function getContent(ElementNode $el){
         if ($this->parseContent()) {
             $content = "";
             foreach ($el->getChildren() as $child)
@@ -134,10 +155,7 @@ class CodeDefinition
             foreach ($el->getChildren() as $child)
                 $content .= $child->getAsBBCode();
         }
-
-        $html = str_ireplace('{param}', $content, $html);
-
-        return $html;
+        return $content;
     }
 
     /**

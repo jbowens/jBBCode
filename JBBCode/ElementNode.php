@@ -130,8 +130,16 @@ class ElementNode extends Node
     public function getAsBBCode()
     {
         $str = "[".$this->tagName;
-        if ($this->attribute != null) {
-            $str .= "=" . $this->attribute;
+        if (!empty($this->attribute)) {
+
+            foreach($this->attribute as $key => $value){
+                if($key == $this->tagName){
+                    $str .= "=".$value;
+                }
+                else{
+                    $str .= " ".$key."=" . $value;
+                }
+            }
         }
         $str .= "]";
         foreach ($this->getChildren() as $child) {
