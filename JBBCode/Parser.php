@@ -482,6 +482,10 @@ class Parser
             }
 
             if(count($keys) && count($values)){
+                if(count($keys)==(count($values)+1)){
+                    array_unshift($values, "");
+                }
+
                 $options = array_combine($keys, $values);
             }
             return array($tagName, $options);
