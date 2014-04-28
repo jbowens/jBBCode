@@ -62,6 +62,8 @@ class Parser
      *                              each other before the parser stops parsing them.
      * @param InputValidator $optionValidator   the validator to run {option} through
      * @param BodyValidator  $bodyValidator     the validator to run {param} through (only used if $parseContent == false)
+     * 
+     * @return Parser
      */
     public function addBBCode($tagName, $replace, $useOption = false, $parseContent = true, $nestLimit = -1,
                               InputValidator $optionValidator = null, InputValidator $bodyValidator = null)
@@ -81,6 +83,8 @@ class Parser
         }
 
         $this->addCodeDefinition($builder->build());
+
+        return $this;
     }
 
     /**
@@ -88,27 +92,35 @@ class Parser
      * class and add it to the parser through this method.
      *
      * @param CodeDefinition $definition the bbcode definition to add
+     * 
+     * @return Parser
      */
     public function addCodeDefinition(CodeDefinition $definition)
     {
         array_push($this->bbcodes, $definition);
+
+        return $this;
     }
 
     /**
      * Adds a set of CodeDefinitions.
      *
      * @param CodeDefinitionSet $set  the set of definitions to add
+     * 
+     * @return Parser
      */
     public function addCodeDefinitionSet(CodeDefinitionSet $set) {
         foreach ($set->getCodeDefinitions() as $def) {
             $this->addCodeDefinition($def);
         }
+
+        return $this;
     }
 
     /**
      * Returns the entire parse tree as text. Only {param} content is returned. BBCode markup will be ignored.
      *
-     * @return a text representation of the parse tree
+     * @return string a text representation of the parse tree
      */
     public function getAsText()
     {
@@ -119,7 +131,7 @@ class Parser
      * Returns the entire parse tree as bbcode. This will be identical to the inputted string, except unclosed tags
      * will be closed.
      *
-     * @return a bbcode representation of the parse tree
+     * @return string a bbcode representation of the parse tree
      */
     public function getAsBBCode()
     {
@@ -130,7 +142,7 @@ class Parser
      * Returns the entire parse tree as HTML. All BBCode replacements will be made. This is generally the method
      * you will want to use to retrieve the parsed bbcode.
      *
-     * @return a parsed html string
+     * @return string a parsed html string
      */
     public function getAsHTML()
     {
@@ -140,16 +152,22 @@ class Parser
     /**
      * Accepts the given NodeVisitor at the root.
      *
-     * @param nodeVisitor  a NodeVisitor
+     * @param NodeVisitor  a NodeVisitor
+     * 
+     * @return Parser
      */
     public function accept(NodeVisitor $nodeVisitor)
     {
         $this->treeRoot->accept($nodeVisitor);
+
+        return $this;
     }
     /**
      * Constructs the parse tree from a string of bbcode markup.
      *
      * @param string $str the bbcode markup to parse
+     * 
+     * @return Parser
      */
     public function parse($str)
     {
@@ -172,6 +190,8 @@ class Parser
         /* We parsed ignoring nest limits. Do an O(n) traversal to remove any elements that
          * are nested beyond their CodeDefinition's nest limit. */
         $this->removeOverNestedElements();
+
+        return $this;
     }
 
     /**
@@ -204,7 +224,7 @@ class Parser
      * @param string  $tagName    the bbcode tag name to check
      * @param boolean $usesOption whether or not the bbcode accepts an option
      *
-     * @return true if the code exists, false otherwise
+     * @return bool true if the code exists, false otherwise
      */
     public function codeExists($tagName, $usesOption = false)
     {
@@ -256,7 +276,7 @@ class Parser
      * @param $parent  the parent of the text node
      * @param $string  the text of the text node
      *
-     * @return the newly created TextNode
+     * @return TextNode the newly created TextNode
      */
     protected function createTextNode(ElementNode $parent, $string)
     {
@@ -283,10 +303,10 @@ class Parser
      * This function handles the beginning parse state when we're not currently in a tag
      * name.
      *
-     * @param $parent  the current parent node we're under
-     * @param $tokenizer  the tokenizer we're using
+     * @param ElementNode  $parent the current parent node we're under
+     * @param Tokenizer    $tokenizer the tokenizer we're using
      *
-     * @return the new parent we should use for the next iteration.
+     * @return ElementNode the new parent we should use for the next iteration.
      */
     protected function parseStartState(ElementNode $parent, Tokenizer $tokenizer)
     {
@@ -307,10 +327,10 @@ class Parser
      * This function handles parsing the beginnings of an open tag. When we see a [
      * at an appropriate time, this function is entered.
      *
-     * @param $parent  the current parent node
-     * @param $tokenizer  the tokenizer we're using
+     * @param ElementNode $parent  the current parent node
+     * @param Tokenizer   $tokenizer  the tokenizer we're using
      *
-     * @return the new parent node
+     * @return ElementNode the new parent node
      */
     protected function parseTagOpen(ElementNode $parent, Tokenizer $tokenizer)
     {
@@ -501,11 +521,11 @@ class Parser
      * This is the next step in parsing a tag. It's possible for it to still be invalid at this
      * point but many of the basic invalid tag name conditions have already been handled.
      *
-     * @param $parent  the current parent element
-     * @param $tokenizer  the tokenizer we're using
-     * @param $tagContent  the text between the [ and the ], assuming there is actually a ]
+     * @param ElementNode $parent  the current parent element
+     * @param Tokenizer   $tokenizer  the tokenizer we're using
+     * @param string      $tagContent  the text between the [ and the ], assuming there is actually a ]
      *
-     * @return the new parent element
+     * @return ElementNode the new parent element
      */
     protected function parseTag(ElementNode $parent, Tokenizer $tokenizer, $tagContent)
     {
@@ -585,8 +605,10 @@ class Parser
      * contents. This function uses a rolling window of 3 tokens until it finds the
      * appropriate closing tag or reaches the end of the token stream.
      *
-     * @param $parent  the current parent element
-     * @param $tokenizer  the tokenizer we're using
+     * @param ElementNode $parent  the current parent element
+     * @param Tokenizer   $tokenizer  the tokenizer we're using
+     *
+     * @return ElementNode the new parent element
      */
     protected function parseAsTextUntilClose(ElementNode $parent, Tokenizer $tokenizer)
     {
