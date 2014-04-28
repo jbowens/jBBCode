@@ -62,6 +62,8 @@ class Parser
      *                              each other before the parser stops parsing them.
      * @param InputValidator $optionValidator   the validator to run {option} through
      * @param BodyValidator  $bodyValidator     the validator to run {param} through (only used if $parseContent == false)
+     * 
+     * @return Parser
      */
     public function addBBCode($tagName, $replace, $useOption = false, $parseContent = true, $nestLimit = -1,
                               InputValidator $optionValidator = null, InputValidator $bodyValidator = null)
@@ -81,6 +83,8 @@ class Parser
         }
 
         $this->addCodeDefinition($builder->build());
+
+        return $this;
     }
 
     /**
@@ -92,17 +96,23 @@ class Parser
     public function addCodeDefinition(CodeDefinition $definition)
     {
         array_push($this->bbcodes, $definition);
+
+        return $this;
     }
 
     /**
      * Adds a set of CodeDefinitions.
      *
      * @param CodeDefinitionSet $set  the set of definitions to add
+     * 
+     * @return Parser
      */
     public function addCodeDefinitionSet(CodeDefinitionSet $set) {
         foreach ($set->getCodeDefinitions() as $def) {
             $this->addCodeDefinition($def);
         }
+
+        return $this;
     }
 
     /**
@@ -141,15 +151,21 @@ class Parser
      * Accepts the given NodeVisitor at the root.
      *
      * @param nodeVisitor  a NodeVisitor
+     * 
+     * @return Parser
      */
     public function accept(NodeVisitor $nodeVisitor)
     {
         $this->treeRoot->accept($nodeVisitor);
+
+        return $this;
     }
     /**
      * Constructs the parse tree from a string of bbcode markup.
      *
      * @param string $str the bbcode markup to parse
+     * 
+     * @return Parser
      */
     public function parse($str)
     {
@@ -172,6 +188,8 @@ class Parser
         /* We parsed ignoring nest limits. Do an O(n) traversal to remove any elements that
          * are nested beyond their CodeDefinition's nest limit. */
         $this->removeOverNestedElements();
+
+        return $this;
     }
 
     /**
