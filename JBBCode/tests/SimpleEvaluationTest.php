@@ -89,4 +89,19 @@ EOD;
         $this->assertProduces($code, $html);
     }
 
+    public function testBracketInTag()
+    {
+        $this->assertProduces('[b]:-[[/b]', '<strong>:-[</strong>');
+    }
+
+    public function testBracketWithSpaceInTag()
+    {
+        $this->assertProduces('[b]:-[ [/b]', '<strong>:-[ </strong>');
+    }
+
+    public function testBracketWithTextInTag()
+    {
+        $this->assertProduces('[b]:-[ foobar[/b]', '<strong>:-[ foobar</strong>');
+    }
+
 }
