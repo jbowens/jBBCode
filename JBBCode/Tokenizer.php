@@ -45,7 +45,7 @@ class Tokenizer
     }
 
     /**
-     * Returns true iff there is another token in the token stream.
+     * Returns true if there is another token in the token stream.
      */
     public function hasNext()
     {

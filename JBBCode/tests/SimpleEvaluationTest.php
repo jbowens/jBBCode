@@ -104,4 +104,9 @@ EOD;
         $this->assertProduces('[b]:-[ foobar[/b]', '<strong>:-[ foobar</strong>');
     }
 
+    public function testMultibleBracketsWithTextInTag()
+    {
+        $this->assertProduces('[b]:-[ [fo[o[bar[/b]', '<strong>:-[ [fo[o[bar</strong>');
+    }
+
 }
