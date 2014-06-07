@@ -359,6 +359,20 @@ class Parser
             $next = $tokenizer->next();
         }
 
+        if (!$tokenizer->hasNext()) {
+            $this->createTextNode($parent, '['.$next);
+            return $parent;
+        }
+
+        $after_next = $tokenizer->next();
+        $tokenizer->stepBack();
+
+        if ($after_next != ']')
+        {
+            $this->createTextNode($parent, '['.$next);
+            return $parent;
+        }
+
         /* At this point $next is either ']' or plain text. */
         if (']' == $next) {
             $this->createTextNode($parent, '[');
