@@ -126,4 +126,5 @@ class ParsingEdgeCaseTest extends PHPUnit_Framework_TestCase
         $this->assertProduces('[ ABC ] ',
                               '[ ABC ] ');
     }
+
 }
