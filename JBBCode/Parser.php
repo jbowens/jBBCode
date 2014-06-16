@@ -384,7 +384,8 @@ class Parser
         }
     }
 
-    protected function parseOptions($tagContent){
+    protected function parseOptions($tagContent)
+    {
         $buffer = "";
         $tagName = "";
         $state = static::OPTION_STATE_TAGNAME;
@@ -522,13 +523,12 @@ class Parser
 
                 $options = array_combine($keys, $values);
             }
-            return array($tagName, $options);
         }
         catch(ParserException $e){
             // if we're in this state, then something evidently went wrong. We'll consider everything that came after the tagname to be the attribute for that keyname
             $options[$tagName]= substr($tagContent, strpos($tagContent, "=")+1);
-            return array($tagName, $options);
         }
+        return array($tagName, $options);
     }
 
     /**
@@ -558,22 +558,21 @@ class Parser
          * if it's a closing tag, we need to ensure that there was a previous matching
          * opening tag.
          */
-
         /* There could be attributes. */
         list($tmpTagName, $options) = $this->parseOptions($tagContent);
 
-//        $tagPieces = explode('=', $tagContent);
-        //       $tmpTagName = $tagPieces[0];
+        // $tagPieces = explode('=', $tagContent);
+        // $tmpTagName = $tagPieces[0];
 
         $actualTagName;
-        if ('/' == $tmpTagName[0]) {
+        if ('' != $tmpTagName && '/' == $tmpTagName[0]) {
             /* This is a closing tag name. */
             $actualTagName = substr($tmpTagName, 1);
         } else {
             $actualTagName = $tmpTagName;
         }
 
-        if ('/' == $tmpTagName[0]) {
+        if ('' != $tmpTagName && '/' == $tmpTagName[0]) {
             /* This is attempting to close an open tag. We must verify that there exists an
              * open tag of the same type and that there is no option (options on closing
              * tags don't make any sense). */
