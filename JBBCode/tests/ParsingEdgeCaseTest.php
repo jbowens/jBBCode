@@ -117,4 +117,14 @@ class ParsingEdgeCaseTest extends PHPUnit_Framework_TestCase
         $this->assertProduces('[[[[[b]bold![/b]',
                               '[[[[<strong>bold!</strong>');
     }
+
+    /**
+     * Tests a whitespace after left bracket.
+     */
+    public function testWhitespaceAfterLeftBracketWhithoutTag()
+    {
+        $this->assertProduces('[ ABC ] ',
+                              '[ ABC ] ');
+    }
+
 }
