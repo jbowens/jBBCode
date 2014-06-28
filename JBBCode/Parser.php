@@ -481,6 +481,8 @@ class Parser
                                 $keys[] = $buffer;
                                 $buffer = '';
                                 break;
+                            case ' ': // ignore <space>key=value
+                                break;
                             default:
                                 $buffer .= $char;
                                 break;

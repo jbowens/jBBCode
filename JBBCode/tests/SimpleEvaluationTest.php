@@ -73,6 +73,11 @@ EOD;
 
         $expected = 'Multiple <img src="http://jbbcode.com/img.png" height="50" alt="alt text" /> options.';
 
+        $code = 'Multiple [img height="50" alt="alt text"]http://jbbcode.com/img.png[/img] options.';
+        $parser->parse($code);
+        $result = $parser->getAsHTML();
+        $this->assertEquals($expected, $result);
+
         $code = 'Multiple [img height=50 alt="alt text"]http://jbbcode.com/img.png[/img] options.';
         $parser->parse($code);
         $result = $parser->getAsHTML();
