@@ -133,7 +133,7 @@ class CodeDefinition
             }
             else{
                 foreach($options as $key => $val){
-                    $html = str_ireplace("{$key}", $val, $html);
+                    $html = str_ireplace('{' . $key . '}', $val, $html);
                 }
             }
         }
