@@ -65,15 +65,15 @@ EOD;
         $this->assertProduces($code, $html);
     }
 
-    public function testAttribute()
+    public function testAttributes()
     {
         $parser = new JBBCode\Parser();
-        $builder = new JBBCode\CodeDefinitionBuilder('img', '<img src="{param}" height="{height}" />');
+        $builder = new JBBCode\CodeDefinitionBuilder('img', '<img src="{param}" height="{height}" alt="{alt}" />');
         $parser->addCodeDefinition($builder->setUseOption(true)->setParseContent(false)->build());
 
-        $code = 'Multiple [img height=50]http://jbbcode.com/img.png[/img] options.';
-        $expected = 'Multiple <img src="http://jbbcode.com/img.png" height="50" /> options.';
+        $expected = 'Multiple <img src="http://jbbcode.com/img.png" height="50" alt="alt text" /> options.';
 
+        $code = 'Multiple [img height=50 alt="alt text"]http://jbbcode.com/img.png[/img] options.';
         $parser->parse($code);
         $result = $parser->getAsHTML();
         $this->assertEquals($expected, $result);

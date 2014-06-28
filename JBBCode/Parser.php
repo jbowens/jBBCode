@@ -442,6 +442,7 @@ class Parser
                                 $state = static::OPTION_STATE_QUOTED_VALUE;
                                 break;
                             case null: // intentional fall-through
+                            case ' ': // key=value<space> delimits to next key
                             case '=':
                                 $values[] = $buffer;
                                 $buffer = "";
