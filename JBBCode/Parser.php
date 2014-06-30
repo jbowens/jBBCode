@@ -443,7 +443,6 @@ class Parser
                                 break;
                             case null: // intentional fall-through
                             case ' ': // key=value<space> delimits to next key
-                            case '=':
                                 $values[] = $buffer;
                                 $buffer = "";
                                 $state = static::OPTION_STATE_KEY;

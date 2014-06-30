@@ -60,8 +60,8 @@ EOD;
 
     public function testCodeOptions()
     {
-        $code = 'This contains a [url=http://jbbcode.com]url[/url] which uses an option.';
-        $html = 'This contains a <a href="http://jbbcode.com">url</a> which uses an option.';
+        $code = 'This contains a [url=http://jbbcode.com/?b=2]url[/url] which uses an option.';
+        $html = 'This contains a <a href="http://jbbcode.com/?b=2">url</a> which uses an option.';
         $this->assertProduces($code, $html);
     }
 
