@@ -60,9 +60,28 @@ EOD;
 
     public function testCodeOptions()
     {
-        $code = 'This contains a [url=http://jbbcode.com]url[/url] which uses an option.';
-        $html = 'This contains a <a href="http://jbbcode.com">url</a> which uses an option.';
+        $code = 'This contains a [url=http://jbbcode.com/?b=2]url[/url] which uses an option.';
+        $html = 'This contains a <a href="http://jbbcode.com/?b=2">url</a> which uses an option.';
         $this->assertProduces($code, $html);
+    }
+
+    public function testAttributes()
+    {
+        $parser = new JBBCode\Parser();
+        $builder = new JBBCode\CodeDefinitionBuilder('img', '<img src="{param}" height="{height}" alt="{alt}" />');
+        $parser->addCodeDefinition($builder->setUseOption(true)->setParseContent(false)->build());
+
+        $expected = 'Multiple <img src="http://jbbcode.com/img.png" height="50" alt="alt text" /> options.';
+
+        $code = 'Multiple [img height="50" alt="alt text"]http://jbbcode.com/img.png[/img] options.';
+        $parser->parse($code);
+        $result = $parser->getAsHTML();
+        $this->assertEquals($expected, $result);
+
+        $code = 'Multiple [img height=50 alt="alt text"]http://jbbcode.com/img.png[/img] options.';
+        $parser->parse($code);
+        $result = $parser->getAsHTML();
+        $this->assertEquals($expected, $result);
     }
 
     /**

@@ -62,7 +62,7 @@ class Parser
      *                              each other before the parser stops parsing them.
      * @param InputValidator $optionValidator   the validator to run {option} through
      * @param BodyValidator  $bodyValidator     the validator to run {param} through (only used if $parseContent == false)
-     * 
+     *
      * @return Parser
      */
     public function addBBCode($tagName, $replace, $useOption = false, $parseContent = true, $nestLimit = -1,
@@ -92,7 +92,7 @@ class Parser
      * class and add it to the parser through this method.
      *
      * @param CodeDefinition $definition the bbcode definition to add
-     * 
+     *
      * @return Parser
      */
     public function addCodeDefinition(CodeDefinition $definition)
@@ -106,7 +106,7 @@ class Parser
      * Adds a set of CodeDefinitions.
      *
      * @param CodeDefinitionSet $set  the set of definitions to add
-     * 
+     *
      * @return Parser
      */
     public function addCodeDefinitionSet(CodeDefinitionSet $set) {
@@ -153,7 +153,7 @@ class Parser
      * Accepts the given NodeVisitor at the root.
      *
      * @param NodeVisitor  a NodeVisitor
-     * 
+     *
      * @return Parser
      */
     public function accept(NodeVisitor $nodeVisitor)
@@ -166,7 +166,7 @@ class Parser
      * Constructs the parse tree from a string of bbcode markup.
      *
      * @param string $str the bbcode markup to parse
-     * 
+     *
      * @return Parser
      */
     public function parse($str)
@@ -442,7 +442,7 @@ class Parser
                                 $state = static::OPTION_STATE_QUOTED_VALUE;
                                 break;
                             case null: // intentional fall-through
-                            case '=':
+                            case ' ': // key=value<space> delimits to next key
                                 $values[] = $buffer;
                                 $buffer = "";
                                 $state = static::OPTION_STATE_KEY;
@@ -479,6 +479,8 @@ class Parser
                                 $state = static::OPTION_STATE_VALUE;
                                 $keys[] = $buffer;
                                 $buffer = '';
+                                break;
+                            case ' ': // ignore <space>key=value
                                 break;
                             default:
                                 $buffer .= $char;
