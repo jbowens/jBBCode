@@ -84,12 +84,12 @@ class CodeDefinitionBuilder
      * Sets the nest limit for this code definition.
      *
      * @param $nestLimit a positive integer, or -1 if there is no limit.
-     * @throws InvalidArgumentException  if the nest limit is invalid
+     * @throws \InvalidArgumentException  if the nest limit is invalid
      */
     public function setNestLimit($limit)
     {
         if(!is_int($limit) || ($limit <= 0 && -1 != $limit)) {
-            throw new InvalidArgumentException("A nest limit must be a positive integer " .
+            throw new \InvalidArgumentException("A nest limit must be a positive integer " .
                                                "or -1.");
         }
         $this->nestLimit = $limit;
@@ -138,7 +138,7 @@ class CodeDefinitionBuilder
         $this->bodyValidator = null;
         return $this;
     }
-    
+
     /**
      * Builds a CodeDefinition with the current state of the builder.
      *
