@@ -15,6 +15,6 @@ interface InputValidator
     /**
      * Returns true iff the given input is valid, false otherwise.
      */
-    public function validate($input); 
+    public function validate($input);
 
 }

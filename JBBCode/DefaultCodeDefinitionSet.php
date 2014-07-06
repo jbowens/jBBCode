@@ -67,7 +67,7 @@ class DefaultCodeDefinitionSet implements CodeDefinitionSet
     /**
      * Returns an array of the default code definitions.
      */
-    public function getCodeDefinitions() 
+    public function getCodeDefinitions()
     {
         return $this->definitions;
     }

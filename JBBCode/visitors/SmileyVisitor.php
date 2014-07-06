@@ -22,8 +22,8 @@ class SmileyVisitor implements \JBBCode\NodeVisitor
     function visitTextNode(\JBBCode\TextNode $textNode)
     {
         /* Convert :) into an image tag. */
-        $textNode->setValue(str_replace(':)', 
-                                        '<img src="/smiley.png" alt=":)" />', 
+        $textNode->setValue(str_replace(':)',
+                                        '<img src="/smiley.png" alt=":)" />',
                                         $textNode->getValue()));
     }
 

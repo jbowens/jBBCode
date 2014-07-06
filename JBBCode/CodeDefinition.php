@@ -42,7 +42,7 @@ class CodeDefinition
             $parseContent = true, $nestLimit = -1, $optionValidator = array(),
             $bodyValidator = null)
     {
-        $def = new CodeDefinition();                            
+        $def = new CodeDefinition();
         $def->elCounter = 0;
         $def->setTagName($tagName);
         $def->setReplacementText($replacementText);
@@ -55,7 +55,7 @@ class CodeDefinition
      }
 
     /**
-     * Constructs a new CodeDefinition. 
+     * Constructs a new CodeDefinition.
      *
      * This constructor is deprecated. You should use the static construct() method or the
      * CodeDefinitionBuilder class to construct a new CodeDefiniton.
@@ -103,7 +103,7 @@ class CodeDefinition
                 /* The content of the element is not valid. */
                 return false;
             }
-        } 
+        }
 
         return true;
     }
