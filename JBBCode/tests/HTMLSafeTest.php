@@ -1,6 +1,7 @@
 <?php
 
 require_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Parser.php');
+require_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'visitors' . DIRECTORY_SEPARATOR . 'HTMLSafeVisitor.php');
 
 /**
  * Test cases testing the HTMLSafe visitor, which escapes all html characters in the source text
