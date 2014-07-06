@@ -12,21 +12,21 @@ For complete documentation and examples visit [jbbcode.com](http://jbbcode.com).
 ###A basic example
 
 jBBCode includes a few optional, default bbcode definitions that may be loaded through the
-`DefaultCodeDefinitionSet` class. Below is a simple example of using these codes to convert 
+`DefaultCodeDefinitionSet` class. Below is a simple example of using these codes to convert
 a bbcode string to html.
 
 ```php
 <?php
 require_once "/path/to/jbbcode/Parser.php";
- 
+
 $parser = new JBBCode\Parser();
 $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
- 
+
 $text = "The default codes include: [b]bold[/b], [i]italics[/i], [u]underlining[/u], ";
 $text .= "[url=http://jbbcode.com]links[/url], [color=red]color![/color] and more.";
- 
+
 $parser->parse($text);
- 
+
 print $parser->getAsHtml();
 ```
 
@@ -34,9 +34,9 @@ Contribute
 ----------
 
 I would love help maintaining jBBCode. Look at [open issues](http://github.com/jbowens/jBBCode/issues) for ideas on
-what needs to be done. Before submitting a pull request, verify that all unit tests still pass. 
+what needs to be done. Before submitting a pull request, verify that all unit tests still pass.
 
-#### Running unit tests 
+#### Running unit tests
 To run the unit tests,
 ensure that [phpunit](http://github.com/sebastianbergmann/phpunit) is installed, or install it through the composer
 dev dependencies. Then run `phpunit ./tests` from the project directory. If you're adding new functionality, writing
@@ -45,7 +45,7 @@ additional unit tests is a great idea.
 Author
 ------
 
-jBBCode was written by Jackson Owens. You may reach him at [jackson_owens@brown.edu](mailto:jackson_owens@brown.edu).
+jBBCode was written by Jackson Owens. You may reach him at [jackson_owens@alumni.brown.edu](mailto:jackson_owens@alumni.brown.edu).
 
 Other languages
 ---------------
