@@ -30,6 +30,24 @@ $parser->parse($text);
 print $parser->getAsHtml();
 ```
 
+### Composer
+
+You may load jBBCode via composer. In your composer.json file:
+
+```json
+"require": {
+    "jbbcode/jbbcode": "1.3.*"
+}
+```
+
+In your php file:
+
+```php
+require 'vendor/autoloader.php';
+
+$parser = new JBBCode\Parser();
+```
+
 Contribute
 ----------
 
