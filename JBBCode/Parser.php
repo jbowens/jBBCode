@@ -430,6 +430,7 @@ class Parser
                         switch($char){
                             case ' ':
                                 // do nothing
+								break;
                             default:
                                 $state = static::OPTION_STATE_KEY;
                                 $buffer .= $char;
@@ -445,7 +446,7 @@ class Parser
                             case ' ': // key=value<space> delimits to next key
                                 $values[] = $buffer;
                                 $buffer = "";
-                                $state = static::OPTION_STATE_KEY;
+                                $state = static::OPTION_STATE_DEFAULT;
                                 break;
                             case ":":
                                 if($buffer=="javascript"){
@@ -465,7 +466,7 @@ class Parser
                                 $buffer .= $char;
                                 $values[] = $buffer;
                                 $buffer = "";
-                                $state = static::OPTION_STATE_KEY;
+                                $state = static::OPTION_STATE_DEFAULT;
 
                                 break;
                             default:
@@ -480,7 +481,11 @@ class Parser
                                 $keys[] = $buffer;
                                 $buffer = '';
                                 break;
-                            case ' ': // ignore <space>key=value
+                            case ' ': // This option has no value
+								$state = static::OPTION_STATE_DEFAULT;
+								$keys[] = $buffer;
+								$values[] = true;
+								$buffer = '';
                                 break;
                             default:
                                 $buffer .= $char;
@@ -492,7 +497,7 @@ class Parser
                         switch($char){
                             case null:
                             case '"':
-                                $state = static::OPTION_STATE_KEY;
+                                $state = static::OPTION_STATE_DEFAULT;
                                 $values[] = $buffer;
                                 $buffer = '';
 
@@ -508,7 +513,7 @@ class Parser
                         break;
                     default:
                         if(!empty($char)){
-                            $state = static::OPTION_STATE_KEY;
+                            $state = static::OPTION_STATE_DEFAULT;
                         }
 
                 }
