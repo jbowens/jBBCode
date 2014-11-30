@@ -430,7 +430,7 @@ class Parser
                         switch($char){
                             case ' ':
                                 // do nothing
-								break;
+                                break;
                             default:
                                 $state = static::OPTION_STATE_KEY;
                                 $buffer .= $char;
@@ -482,10 +482,10 @@ class Parser
                                 $buffer = '';
                                 break;
                             case ' ': // This option has no value
-								$state = static::OPTION_STATE_DEFAULT;
-								$keys[] = $buffer;
-								$values[] = true;
-								$buffer = '';
+                                $state = static::OPTION_STATE_DEFAULT;
+                                $keys[] = $buffer;
+                                $values[] = true;
+                                $buffer = '';
                                 break;
                             default:
                                 $buffer .= $char;
