@@ -442,10 +442,20 @@ class Parser
                                 $state = static::OPTION_STATE_QUOTED_VALUE;
                                 break;
                             case null: // intentional fall-through
-                            case ' ': // key=value<space> delimits to next key
                                 $values[] = $buffer;
                                 $buffer = "";
                                 $state = static::OPTION_STATE_KEY;
+                                break;
+                            case ' ':
+                                // peek ahead, if it's a key after this ([a-z]+=)
+                                if (preg_match('/^[a-z]+=/', substr($tagContent, $idx+1)) !== 0) {
+                                    $values[] = $buffer;
+                                    $buffer = "";
+                                    $state = static::OPTION_STATE_KEY;
+                                    break;
+                                } else {
+                                    $buffer .= $char;
+                                }
                                 break;
                             case ":":
                                 if($buffer=="javascript"){
