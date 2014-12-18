@@ -23,6 +23,11 @@ class ParsingEdgeCaseTest extends PHPUnit_Framework_TestCase
     {
         $parser = new JBBCode\Parser();
         $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
+
+        $builder = new JBBCode\CodeDefinitionBuilder('quote', '<p>{option} wrote:</p><blockquote>{param}</blockquote>');
+        $builder->setUseOption(true);
+        $parser->addCodeDefinition($builder->build());
+
         $parser->parse($bbcode);
         return $parser->getAsHtml();
     }
@@ -127,4 +132,12 @@ class ParsingEdgeCaseTest extends PHPUnit_Framework_TestCase
                               '[ ABC ] ');
     }
 
+    /**
+     * Tests having whitespace within options without quotation marks
+     */
+    public function testWhitespaceWithinOptions()
+    {
+        $this->assertProduces('[quote=hello hello]test[/quote]',
+                              '<p>hello hello wrote:</p><blockquote>test</blockquote>');
+    }
 }
