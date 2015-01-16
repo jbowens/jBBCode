@@ -38,12 +38,15 @@ class CodeDefinition
     /* Whether this tag is unary or not */
     protected $unary;
 
+    /* Whether this tag (if unary) will encompass text past it until next tag, or not */
+    protected $unaryExpand;
+
     /**
      * Constructs a new CodeDefinition.
      */
     public static function construct($tagName, $replacementText, $useOption = false,
             $parseContent = true, $nestLimit = -1, $optionValidator = array(),
-            $bodyValidator = null, $unary = false)
+            $bodyValidator = null, $unary = false, $unaryExpand = false)
     {
         $def = new CodeDefinition();
         $def->elCounter = 0;
@@ -55,6 +58,7 @@ class CodeDefinition
         $def->optionValidator = $optionValidator;
         $def->bodyValidator = $bodyValidator;
         $def->unary = $unary;
+        $def->unaryExpand = $unaryExpand;
         return $def;
      }
 
@@ -77,6 +81,7 @@ class CodeDefinition
         $this->optionValidator = array();
         $this->bodyValidator = null;
         $this->unary = false;
+        $this->unaryExpand = false;
     }
 
     /**
@@ -243,6 +248,14 @@ class CodeDefinition
     public function getUnary()
     {
         return $this->unary;
+    }
+
+    /**
+     * Returns whether this element is a unary-expanding tag
+     */
+    public function getUnaryExpand()
+    {
+        return $this->unaryExpand;
     }
 
     /**

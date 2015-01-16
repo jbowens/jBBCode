@@ -319,6 +319,14 @@ class Parser
         }
         else {
             $this->createTextNode($parent, $next);
+
+            /* If non-expanding unary tag, process this tag and close */
+            if ($parent->getCodeDefinition() &&
+                true === $parent->getCodeDefinition()->getUnary() &&
+                true === $parent->getCodeDefinition()->getUnaryExpand()) {
+                return $parent->getParent();
+            }
+
             /* Drop back into the main parse loop which will call this
              * same method again. */
             return $parent;
@@ -624,6 +632,7 @@ class Parser
             $el->setAttribute($options);
         }
         $parent->addChild($el);
+    
         return $el;
     }
 

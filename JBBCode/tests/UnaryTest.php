@@ -22,7 +22,12 @@ class UnaryTest extends PHPUnit_Framework_TestCase
 
         /* [*] tag */
         $builder = new JBBCode\CodeDefinitionBuilder('*', '<li>{param}</li>');
-        $builder->setUseOption(false)->setUnary(true);
+        $builder->setUseOption(false)->setUnary(true, true);
+        $parser->addCodeDefinition($builder->build());
+
+        /* [search] tag */
+        $builder = new JBBCode\CodeDefinitionBuilder('user', '<a href="/user/{option}">{option}</a>');
+        $builder->setUseOption(true)->setUnary(true);
         $parser->addCodeDefinition($builder->build());
 
         $parser->parse($bbcode);
@@ -43,6 +48,14 @@ class UnaryTest extends PHPUnit_Framework_TestCase
         $this->assertHtmlOutput('[list][*]a[/list]', '<ul><li>a</li></ul>');
         $this->assertHtmlOutput('[list][*]a[*]b[/list]', '<ul><li>a</li><li>b</li></ul>');
         $this->assertHtmlOutput('[list][*]a[*]b[*]c[/list]', '<ul><li>a</li><li>b</li><li>c</li></ul>');
-        $this->assertHtmlOutput('[list][*]a[*]b[*]c[*]d[/list]', '<ul><li>a</li><li>b</li><li>c</li><li>d</li></ul>');
+        $this->assertHtmlOutput('[list][*]a [*]b [*]c [*]d [/list]', '<ul><li>a </li><li>b </li><li>c </li><li>d </li></ul>');
+
+        $this->assertHtmlOutput('[*]a b c d e', '<li>a b c d e</li>');
+    }
+
+    public function testUnaryUser()
+    {
+        $this->assertHtmlOutput('[user=whoami] something entirely else', '<a href="/user/whoami">whoami</a> something entirely else');
+        $this->assertHtmlOutput('[user=whoami][user=whoami]', '<a href="/user/whoami">whoami</a><a href="/user/whoami">whoami</a>');
     }
 }
