@@ -314,23 +314,39 @@ class Parser
     {
         $next = $tokenizer->next();
 
+        /* If expanding unary tag, process this tag and close */
+        if ($parent->getCodeDefinition() &&
+            true === $parent->getCodeDefinition()->getUnary()) {
+            var_dump($parent);
+            return $this->parseTagUnary($parent, $tokenizer);
+        }
+
         if ('[' == $next) {
             return $this->parseTagOpen($parent, $tokenizer);
         }
         else {
             $this->createTextNode($parent, $next);
 
-            /* If non-expanding unary tag, process this tag and close */
-            if ($parent->getCodeDefinition() &&
-                true === $parent->getCodeDefinition()->getUnary() &&
-                true === $parent->getCodeDefinition()->getUnaryExpand()) {
-                return $parent->getParent();
-            }
-
             /* Drop back into the main parse loop which will call this
              * same method again. */
             return $parent;
         }
+    }
+
+    protected function parseTagUnary(ElementNode $parent, Tokenizer $tokenizer)
+    {
+        $code = $parent->getCodeDefinition();
+
+        $current = $tokenizer->current();
+
+        if (true === $parent->getCodeDefinition()->getUnaryExpand()) {
+            $this->createTextNode($parent, $current);
+        } else {
+            $this->createTextNode($parent->getParent(), $current);
+            var_dump($parent);
+        }
+
+        return $parent->getParent();
     }
 
     /**
@@ -631,6 +647,7 @@ class Parser
             /* We have an attribute we should save. */
             $el->setAttribute($options);
         }
+
         $parent->addChild($el);
     
         return $el;
