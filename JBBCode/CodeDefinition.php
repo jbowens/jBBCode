@@ -35,12 +35,15 @@ class CodeDefinition
     /* The input validator to run the body ({param}) through */
     protected $bodyValidator;
 
+    /* Whether this tag is unary or not */
+    protected $unary;
+
     /**
      * Constructs a new CodeDefinition.
      */
     public static function construct($tagName, $replacementText, $useOption = false,
             $parseContent = true, $nestLimit = -1, $optionValidator = array(),
-            $bodyValidator = null)
+            $bodyValidator = null, $unary = false)
     {
         $def = new CodeDefinition();
         $def->elCounter = 0;
@@ -51,6 +54,7 @@ class CodeDefinition
         $def->nestLimit = $nestLimit;
         $def->optionValidator = $optionValidator;
         $def->bodyValidator = $bodyValidator;
+        $def->unary = $unary;
         return $def;
      }
 
@@ -72,6 +76,7 @@ class CodeDefinition
         $this->elCounter = 0;
         $this->optionValidator = array();
         $this->bodyValidator = null;
+        $this->unary = false;
     }
 
     /**
@@ -230,6 +235,14 @@ class CodeDefinition
     public function getNestLimit()
     {
         return $this->nestLimit;
+    }
+
+    /**
+     * Returns whether this element is a unary tag
+     */
+    public function getUnary()
+    {
+        return $this->unary;
     }
 
     /**

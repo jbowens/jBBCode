@@ -20,6 +20,7 @@ class CodeDefinitionBuilder
     protected $nestLimit = -1;
     protected $optionValidator = array();
     protected $bodyValidator = null;
+    protected $unary = false;
 
     /**
      * Construct a CodeDefinitionBuilder.
@@ -122,6 +123,17 @@ class CodeDefinitionBuilder
     }
 
     /**
+     * Sets whether it's a unary tag or not
+     *
+     * @param $unary  true/false value for whether tag is unary
+     */
+    public function setUnary($unary)
+    {
+        $this->unary = $unary;
+        return $this;
+    }
+
+    /**
      * Removes the attached option validator if one is attached.
      */
     public function removeOptionValidator()
@@ -152,7 +164,8 @@ class CodeDefinitionBuilder
                                                 $this->parseContent,
                                                 $this->nestLimit,
                                                 $this->optionValidator,
-                                                $this->bodyValidator);
+                                                $this->bodyValidator,
+                                                $this->unary);
         return $definition;
     }
 

@@ -62,17 +62,19 @@ class Parser
      *                              each other before the parser stops parsing them.
      * @param InputValidator $optionValidator   the validator to run {option} through
      * @param BodyValidator  $bodyValidator     the validator to run {param} through (only used if $parseContent == false)
+     * @param boolean $unary        whether the tag is unary; if it is, tag is auto-closed immediately upon another tag
      *
      * @return Parser
      */
     public function addBBCode($tagName, $replace, $useOption = false, $parseContent = true, $nestLimit = -1,
-                              InputValidator $optionValidator = null, InputValidator $bodyValidator = null)
+                              InputValidator $optionValidator = null, InputValidator $bodyValidator = null, $unary = false)
     {
         $builder = new CodeDefinitionBuilder($tagName, $replace);
 
         $builder->setUseOption($useOption);
         $builder->setParseContent($parseContent);
         $builder->setNestLimit($nestLimit);
+        $builder->setUnary($unary);
 
         if ($optionValidator) {
             $builder->setOptionValidator($optionValidator);
