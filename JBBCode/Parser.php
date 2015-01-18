@@ -317,7 +317,6 @@ class Parser
         /* If expanding unary tag, process this tag and close */
         if ($parent->getCodeDefinition() &&
             true === $parent->getCodeDefinition()->getUnary()) {
-            var_dump($parent);
             return $this->parseTagUnary($parent, $tokenizer);
         }
 
@@ -342,8 +341,10 @@ class Parser
         if (true === $parent->getCodeDefinition()->getUnaryExpand()) {
             $this->createTextNode($parent, $current);
         } else {
+            if ('[' == $current) {
+                return $this->parseTagOpen($parent->getParent(), $tokenizer);
+            }
             $this->createTextNode($parent->getParent(), $current);
-            var_dump($parent);
         }
 
         return $parent->getParent();
