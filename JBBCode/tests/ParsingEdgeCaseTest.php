@@ -23,6 +23,7 @@ class ParsingEdgeCaseTest extends PHPUnit_Framework_TestCase
     {
         $parser = new JBBCode\Parser();
         $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
+
         $parser->parse($bbcode);
         return $parser->getAsHtml();
     }
@@ -127,4 +128,40 @@ class ParsingEdgeCaseTest extends PHPUnit_Framework_TestCase
                               '[ ABC ] ');
     }
 
+    /**
+     * Tests having whitespace within options without quotation marks
+     *
+     * Non-default definition, thus parser code is re-written here
+     */
+    public function testWhitespaceWithinOptions()
+    {
+        $parser = new JBBCode\Parser();
+        $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
+
+        $builder = new JBBCode\CodeDefinitionBuilder('quote', '<p>{option} wrote:</p><blockquote>{param}</blockquote>');
+        $builder->setUseOption(true);
+        $parser->addCodeDefinition($builder->build());
+
+        $this->assertEquals($parser->parse('[quote=hello hello]test[/quote]')->getAsHTML(),
+                              '<p>hello hello wrote:</p><blockquote>test</blockquote>');
+    }
+
+    /**
+     * Tests having whitespace within options without quotation marks, with
+     * additional key afterwards
+     *
+     * Non-default definition, thus parser code is re-written here
+     */
+    public function testWhitespaceWithinOptionsWithKey()
+    {
+        $parser = new JBBCode\Parser();
+        $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
+
+        $builder = new JBBCode\CodeDefinitionBuilder('quote', '<p>{quote} wrote:</p><blockquote>{param} by {by}</blockquote>');
+        $builder->setUseOption(true);
+        $parser->addCodeDefinition($builder->build());
+
+        $this->assertEquals($parser->parse('[quote=hello hello by=someone]test[/quote]')->getAsHTML(),
+                              '<p>hello hello wrote:</p><blockquote>test by someone</blockquote>');
+    }
 }

@@ -62,17 +62,19 @@ class Parser
      *                              each other before the parser stops parsing them.
      * @param InputValidator $optionValidator   the validator to run {option} through
      * @param BodyValidator  $bodyValidator     the validator to run {param} through (only used if $parseContent == false)
+     * @param boolean $unary        whether the tag is unary; if it is, tag is auto-closed immediately upon another tag
      *
      * @return Parser
      */
     public function addBBCode($tagName, $replace, $useOption = false, $parseContent = true, $nestLimit = -1,
-                              InputValidator $optionValidator = null, InputValidator $bodyValidator = null)
+                              InputValidator $optionValidator = null, InputValidator $bodyValidator = null, $unary = false)
     {
         $builder = new CodeDefinitionBuilder($tagName, $replace);
 
         $builder->setUseOption($useOption);
         $builder->setParseContent($parseContent);
         $builder->setNestLimit($nestLimit);
+        $builder->setUnary($unary);
 
         if ($optionValidator) {
             $builder->setOptionValidator($optionValidator);
@@ -312,15 +314,40 @@ class Parser
     {
         $next = $tokenizer->next();
 
+        /* If expanding unary tag, process this tag and close */
+        if ($parent->getCodeDefinition() &&
+            true === $parent->getCodeDefinition()->getUnary()) {
+            return $this->parseTagUnary($parent, $tokenizer);
+        }
+
         if ('[' == $next) {
             return $this->parseTagOpen($parent, $tokenizer);
         }
         else {
             $this->createTextNode($parent, $next);
+
             /* Drop back into the main parse loop which will call this
              * same method again. */
             return $parent;
         }
+    }
+
+    protected function parseTagUnary(ElementNode $parent, Tokenizer $tokenizer)
+    {
+        $code = $parent->getCodeDefinition();
+
+        $current = $tokenizer->current();
+
+        if (true === $parent->getCodeDefinition()->getUnaryExpand()) {
+            $this->createTextNode($parent, $current);
+        } else {
+            if ('[' == $current) {
+                return $this->parseTagOpen($parent->getParent(), $tokenizer);
+            }
+            $this->createTextNode($parent->getParent(), $current);
+        }
+
+        return $parent->getParent();
     }
 
     /**
@@ -442,10 +469,20 @@ class Parser
                                 $state = static::OPTION_STATE_QUOTED_VALUE;
                                 break;
                             case null: // intentional fall-through
-                            case ' ': // key=value<space> delimits to next key
                                 $values[] = $buffer;
                                 $buffer = "";
                                 $state = static::OPTION_STATE_KEY;
+                                break;
+                            case ' ':
+                                // peek ahead, if it's a key after this ([a-z]+=)
+                                if (preg_match('/^[a-z]+=/', substr($tagContent, $idx+1)) !== 0) {
+                                    $values[] = $buffer;
+                                    $buffer = "";
+                                    $state = static::OPTION_STATE_KEY;
+                                    break;
+                                } else {
+                                    $buffer .= $char;
+                                }
                                 break;
                             case ":":
                                 if($buffer=="javascript"){
@@ -611,7 +648,9 @@ class Parser
             /* We have an attribute we should save. */
             $el->setAttribute($options);
         }
+
         $parent->addChild($el);
+    
         return $el;
     }
 
