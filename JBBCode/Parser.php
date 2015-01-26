@@ -564,12 +564,10 @@ class Parser
         // $tagPieces = explode('=', $tagContent);
         // $tmpTagName = $tagPieces[0];
 
-        $actualTagName;
+        $actualTagName = $tmpTagName;
         if ('' != $tmpTagName && '/' == $tmpTagName[0]) {
             /* This is a closing tag name. */
             $actualTagName = substr($tmpTagName, 1);
-        } else {
-            $actualTagName = $tmpTagName;
         }
 
         if ('' != $tmpTagName && '/' == $tmpTagName[0]) {
