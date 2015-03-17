@@ -19,7 +19,7 @@ class Tokenizer
      * Constructs a tokenizer from the given string. The string will be tokenized
      * upon construction.
      *
-     * @param $str  the string to tokenize
+     * @param string $str the string to tokenize
      */
     public function __construct($str)
     {
@@ -46,6 +46,7 @@ class Tokenizer
 
     /**
      * Returns true if there is another token in the token stream.
+     * @return boolean
      */
     public function hasNext()
     {
@@ -54,6 +55,7 @@ class Tokenizer
 
     /**
      * Advances the token stream to the next token and returns the new token.
+     * @return null|string
      */
     public function next()
     {
@@ -66,6 +68,7 @@ class Tokenizer
 
     /**
      * Retrieves the current token.
+     * @return null|string
      */
     public function current()
     {
@@ -96,6 +99,7 @@ class Tokenizer
 
     /**
      * toString method that returns the entire string from the current index on.
+     * @return string
      */
     public function toString()
     {

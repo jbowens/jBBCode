@@ -16,7 +16,7 @@ require_once 'validators/UrlValidator.php';
 class DefaultCodeDefinitionSet implements CodeDefinitionSet
 {
 
-    /* The default code definitions in this set. */
+    /* @var CodeDefinition[] The default code definitions in this set. */
     protected $definitions = array();
 
     /**
@@ -66,6 +66,8 @@ class DefaultCodeDefinitionSet implements CodeDefinitionSet
 
     /**
      * Returns an array of the default code definitions.
+     *
+     * @return CodeDefinition[]
      */
     public function getCodeDefinitions()
     {

@@ -11,28 +11,28 @@ namespace JBBCode;
  */
 class CodeDefinition
 {
-    /* NOTE: THIS PROPERTY SHOULD ALWAYS BE LOWERCASE; USE setTagName() TO ENSURE THIS */
+    /* @var string NOTE: THIS PROPERTY SHOULD ALWAYS BE LOWERCASE; USE setTagName() TO ENSURE THIS */
     protected $tagName;
 
-    /* Whether or not this CodeDefinition uses an option parameter. */
+    /* @var boolean Whether or not this CodeDefinition uses an option parameter. */
     protected $useOption;
 
-    /* The replacement text to be used for simple CodeDefinitions */
+    /* @var string The replacement text to be used for simple CodeDefinitions */
     protected $replacementText;
 
-    /* Whether or not to parse elements of this definition's contents */
+    /* @var boolean Whether or not to parse elements of this definition's contents */
     protected $parseContent;
 
-    /* How many of this element type may be nested within each other */
+    /* @var integer How many of this element type may be nested within each other */
     protected $nestLimit;
 
-    /* How many of this element type have been seen */
+    /* @var integer How many of this element type have been seen */
     protected $elCounter;
 
-    /* The input validator to run options through */
+    /* @var InputValidator The input validator to run options through */
     protected $optionValidator;
 
-    /* The input validator to run the body ({param}) through */
+    /* @var InputValidator The input validator to run the body ({param}) through */
     protected $bodyValidator;
 
     /**
@@ -78,8 +78,8 @@ class CodeDefinition
      * Determines if the arguments to the given element are valid based on
      * any validators attached to this CodeDefinition.
      *
-     * @param $el  the ElementNode to validate
-     * @return true if the ElementNode's {option} and {param} are OK, false if they're not
+     * @param ElementNode $el  the ElementNode to validate
+     * @return boolean true if the ElementNode's {option} and {param} are OK, false if they're not
      */
     public function hasValidInputs(ElementNode $el)
     {
@@ -113,9 +113,9 @@ class CodeDefinition
      * markup of the element. This is a commonly overridden class for custom CodeDefinitions
      * so that the content can be directly manipulated.
      *
-     * @param $el  the element to return an html representation of
+     * @param ElementNode $el  the element to return an html representation of
      *
-     * @return the parsed html of this element (INCLUDING ITS CHILDREN)
+     * @return string the parsed html of this element (INCLUDING ITS CHILDREN)
      */
     public function asHtml(ElementNode $el)
     {
@@ -162,9 +162,9 @@ class CodeDefinition
      * Accepts an ElementNode that is defined by this CodeDefinition and returns the text
      * representation of the element. This may be overridden by a custom CodeDefinition.
      *
-     * @param $el  the element to return a text representation of
+     * @param ElementNode $el  the element to return a text representation of
      *
-     * @return  the text representation of $el
+     * @return string the text representation of $el
      */
     public function asText(ElementNode $el)
     {
@@ -181,7 +181,7 @@ class CodeDefinition
     /**
      * Returns the tag name of this code definition
      *
-     * @return this definition's associated tag name
+     * @return string this definition's associated tag name
      */
     public function getTagName()
     {
@@ -193,7 +193,7 @@ class CodeDefinition
      * CodeDefinition class was extended. For default, html replacement CodeDefinitions this returns the html
      * markup for the definition.
      *
-     * @return the replacement text of this CodeDefinition
+     * @return string the replacement text of this CodeDefinition
      */
     public function getReplacementText()
     {
@@ -203,7 +203,7 @@ class CodeDefinition
     /**
      * Returns whether or not this CodeDefinition uses the optional {option}
      *
-     * @return true if this CodeDefinition uses the option, false otherwise
+     * @return boolean true if this CodeDefinition uses the option, false otherwise
      */
     public function usesOption()
     {
@@ -211,10 +211,10 @@ class CodeDefinition
     }
 
     /**
-     * Returns whether or not this CodeDefnition parses elements contained within it,
+     * Returns whether or not this CodeDefinition parses elements contained within it,
      * or just treats its children as text.
      *
-     * @return true if this CodeDefinition parses elements contained within itself
+     * @return boolean true if this CodeDefinition parses elements contained within itself
      */
     public function parseContent()
     {
@@ -226,6 +226,8 @@ class CodeDefinition
      * nested together. If after parsing elements are nested beyond this limit, the
      * subtrees formed by those nodes will be removed from the parse tree. A nest
      * limit of -1 signifies no limit.
+     *
+     * @return integer
      */
     public function getNestLimit()
     {
@@ -237,7 +239,7 @@ class CodeDefinition
      *
      * @deprecated
      *
-     * @param the new tag name of this definition
+     * @param string $tagName the new tag name of this definition
      */
     public function setTagName($tagName)
     {
@@ -249,7 +251,7 @@ class CodeDefinition
      *
      * @deprecated
      *
-     * @param the new replacement text
+     * @param string $txt the new replacement text
      */
     public function setReplacementText($txt)
     {
