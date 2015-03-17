@@ -280,8 +280,8 @@ class Parser
      */
     protected function createTextNode(ElementNode $parent, $string)
     {
-        if (count($parent->getChildren())) {
-            $children = $parent->getChildren();
+        $children = $parent->getChildren();
+        if (!empty($children)) {
             $lastElement = end($children);
             reset($children);
 
@@ -518,7 +518,7 @@ class Parser
                 $idx++;
             }
 
-            if(count($keys) && count($values)){
+            if(!empty($keys) && !empty($values)){
                 if(count($keys)==(count($values)+1)){
                     array_unshift($values, "");
                 }

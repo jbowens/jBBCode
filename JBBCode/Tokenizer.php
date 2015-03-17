@@ -49,7 +49,7 @@ class Tokenizer
      */
     public function hasNext()
     {
-        return count($this->tokens) > 1 + $this->i;
+        return isset($this->tokens[$this->i + 1]);
     }
 
     /**
