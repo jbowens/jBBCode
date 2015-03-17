@@ -29,19 +29,19 @@ class Tokenizer
             if (']' == $str[$index] || '[' == $str[$index]) {
                 /* Are there characters in the buffer from a previous string? */
                 if ($strStart < $index) {
-                    array_push($this->tokens, substr($str, $strStart, $index - $strStart));
+                    $this->tokens[] = substr($str, $strStart, $index - $strStart);
                     $strStart = $index;
                 }
 
                 /* Add the [ or ] to the tokens array. */
-                array_push($this->tokens, $str[$index]);
+                $this->tokens[] = $str[$index];
                 $strStart = $index+1;
             }
         }
 
         if ($strStart < $strLen) {
             /* There are still characters in the buffer. Add them to the tokens. */
-            array_push($this->tokens, substr($str, $strStart, $strLen - $strStart));
+            $this->tokens[] = substr($str, $strStart, $strLen - $strStart);
         }
     }
 

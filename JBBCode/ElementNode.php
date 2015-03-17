@@ -176,7 +176,7 @@ class ElementNode extends Node
      */
     public function addChild(Node $child)
     {
-        array_push($this->children, $child);
+        $this->children[] = $child;
         $child->setParent($this);
     }
 

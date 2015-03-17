@@ -97,8 +97,7 @@ class Parser
      */
     public function addCodeDefinition(CodeDefinition $definition)
     {
-        array_push($this->bbcodes, $definition);
-
+        $this->bbcodes[] = $definition;
         return $this;
     }
 
