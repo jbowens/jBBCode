@@ -24,7 +24,8 @@ class Tokenizer
     public function __construct($str)
     {
         $strStart = 0;
-        for ($index = 0; $index < strlen($str); ++$index) {
+        $strLen = strlen($str);
+        for ($index = 0; $index < $strLen; ++$index) {
             if (']' == $str[$index] || '[' == $str[$index]) {
                 /* Are there characters in the buffer from a previous string? */
                 if ($strStart < $index) {
@@ -38,9 +39,9 @@ class Tokenizer
             }
         }
 
-        if ($strStart < strlen($str)) {
+        if ($strStart < $strLen) {
             /* There are still characters in the buffer. Add them to the tokens. */
-            array_push($this->tokens, substr($str, $strStart, strlen($str) - $strStart));
+            array_push($this->tokens, substr($str, $strStart, $strLen - $strStart));
         }
     }
 
