@@ -33,13 +33,13 @@ class Parser
     const OPTION_STATE_QUOTED_VALUE = 4;
     const OPTION_STATE_JAVASCRIPT = 5;
 
-    /* The root element of the parse tree */
+    /* @var DocumentElement The root element of the parse tree */
     protected $treeRoot;
 
-    /* The list of bbcodes to be used by the parser. */
+    /* @var CodeDefinition[] The list of bbcodes to be used by the parser. */
     protected $bbcodes;
 
-    /* The next node id to use. This is used while parsing. */
+    /* @var integer The next node id to use. This is used while parsing. */
     protected $nextNodeid;
 
     /**
@@ -61,7 +61,7 @@ class Parser
      * @param integer $nestLimit    an optional limit of the number of elements of this kind that can be nested within
      *                              each other before the parser stops parsing them.
      * @param InputValidator $optionValidator   the validator to run {option} through
-     * @param BodyValidator  $bodyValidator     the validator to run {param} through (only used if $parseContent == false)
+     * @param InputValidator  $bodyValidator     the validator to run {param} through (only used if $parseContent == false)
      *
      * @return Parser
      */
@@ -152,7 +152,7 @@ class Parser
     /**
      * Accepts the given NodeVisitor at the root.
      *
-     * @param NodeVisitor  a NodeVisitor
+     * @param NodeVisitor $nodeVisitor a NodeVisitor
      *
      * @return Parser
      */
@@ -273,8 +273,8 @@ class Parser
     /**
      * Creates a new text node with the given parent and text string.
      *
-     * @param $parent  the parent of the text node
-     * @param $string  the text of the text node
+     * @param ElementNode $parent  the parent of the text node
+     * @param string $string  the text of the text node
      *
      * @return TextNode the newly created TextNode
      */
