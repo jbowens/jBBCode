@@ -409,10 +409,15 @@ class Parser
                                 $buffer = "";
                                 break;
                             case ' ':
-                                $state = static::OPTION_STATE_DEFAULT;
-                                $tagName = $buffer;
-                                $buffer = '';
-                                $keys[] = $tagName;
+                                if($buffer) {
+                                    $state = static::OPTION_STATE_DEFAULT;
+                                    $tagName = $buffer;
+                                    $buffer = '';
+                                    $keys[] = $tagName;
+                                }
+                                break;
+                            case "\n":
+                            case "\r":
                                 break;
 
                             case null:
@@ -442,7 +447,7 @@ class Parser
                                 break;
                             case null: // intentional fall-through
                             case ' ': // key=value<space> delimits to next key
-                                $values[] = $buffer;
+                                $values[] = trim($buffer);
                                 $buffer = "";
                                 $state = static::OPTION_STATE_KEY;
                                 break;
@@ -476,7 +481,7 @@ class Parser
                         switch($char){
                             case '=':
                                 $state = static::OPTION_STATE_VALUE;
-                                $keys[] = $buffer;
+                                $keys[] = trim($buffer);
                                 $buffer = '';
                                 break;
                             case ' ': // ignore <space>key=value

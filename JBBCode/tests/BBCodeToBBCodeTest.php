@@ -65,7 +65,15 @@ class BBCodeToBBCodeTest extends PHPUnit_Framework_TestCase
         $this->assertBBCodeOutput($code, $codeOutput);
     }
 
-    /**
+    public function testCodeOptionsWithNewline()
+    {
+        $code = 'This contains a [
+        url=http://jbbcode.com]url[/url] which uses an option, and has a newline in the tag.';
+        $codeOutput = 'This contains a [url=http://jbbcode.com]url[/url] which uses an option, and has a newline in the tag.';
+        $this->assertBBCodeOutput($code, $codeOutput);
+    }
+
+	/**
      * @depends testCodeOptions
      */
     public function testOmittedOption()
