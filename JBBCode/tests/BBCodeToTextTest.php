@@ -21,20 +21,6 @@ class BBCodeToTextTest extends PHPUnit_Framework_TestCase
         $this->_parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
     }
 
-    /**
-     * A utility method for these tests that will evaluate
-     * its arguments as bbcode with a fresh parser loaded
-     * with only the default bbcodes. It returns the
-     * text output.
-     */
-    private function defaultTextParse($bbcode)
-    {
-        $parser = new JBBCode\Parser();
-        $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
-        $parser->parse($bbcode);
-        return $parser->getAsText();
-    }
-
     public function testEmptyString()
     {
         $this->assertEmpty($this->_parser->parse('')->getAsText());
