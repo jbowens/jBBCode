@@ -97,7 +97,7 @@ class Parser
      */
     public function addCodeDefinition(CodeDefinition $definition)
     {
-        $this->bbcodes[$this->getTagKey($definition->getTagName(), $definition->usesOption())] = $definition;
+        $this->bbcodes[$definition->getTagName()][$definition->usesOption()] = $definition;
         return $this;
     }
 
@@ -227,7 +227,7 @@ class Parser
      */
     public function codeExists($tagName, $usesOption = false)
     {
-        return isset($this->bbcodes[$this->getTagKey($tagName,$usesOption)]);
+        return isset($this->bbcodes[strtolower($tagName)][$usesOption]);
     }
 
     /**
@@ -241,25 +241,10 @@ class Parser
     public function getCode($tagName, $usesOption = false)
     {
         if($this->codeExists($tagName, $usesOption)) {
-            return $this->bbcodes[$this->getTagKey($tagName,$usesOption)];
+            return $this->bbcodes[strtolower($tagName)][$usesOption];
         }
 
         return null;
-    }
-
-    /**
-     * Returns a key for the given combination of tag name and usesOption parameter
-     *
-     * @param string  $tagName    the name of the tag for which a key is to be generated
-     * @param boolean $usesOption whether or not the given tag accepts an option
-     * @return string a key representing tag and option
-     */
-    protected function getTagKey($tagName, $usesOption = false)
-    {
-        return serialize(array(
-            strtolower($tagName),
-            $usesOption
-        ));
     }
 
     /**
