@@ -35,15 +35,6 @@ class BBCodeToTextTest extends PHPUnit_Framework_TestCase
         return $parser->getAsText();
     }
 
-    /**
-     * Asserts that the given bbcode matches the given text when
-     * the bbcode is run through defaultTextParse
-     */
-    private function assertTextOutput($bbcode, $text)
-    {
-        $this->assertEquals($text, $this->defaultTextParse($bbcode));
-    }
-
     public function testEmptyString()
     {
         $this->assertEmpty($this->_parser->parse('')->getAsText());
