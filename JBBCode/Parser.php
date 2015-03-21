@@ -37,18 +37,17 @@ class Parser
     protected $treeRoot;
 
     /* The list of bbcodes to be used by the parser. */
-    protected $bbcodes;
+    protected $bbcodes = array();
 
     /* The next node id to use. This is used while parsing. */
-    protected $nextNodeid;
+    protected $nextNodeid = 1;
 
     /**
      * Constructs an instance of the BBCode parser
      */
     public function __construct()
     {
-        $this->reset();
-        $this->bbcodes = array();
+        $this->treeRoot = new DocumentElement();
     }
 
     /**
