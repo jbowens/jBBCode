@@ -37,7 +37,7 @@ class Parser
     protected $treeRoot;
 
     /* @var CodeDefinition[] The list of bbcodes to be used by the parser. */
-    protected $bbcodes;
+    protected $bbcodes = array();
 
     /* @var integer The next node id to use. This is used while parsing. */
     protected $nextNodeid;
