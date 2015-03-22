@@ -23,25 +23,19 @@ class Tokenizer
      */
     public function __construct($str)
     {
-        $strStart = 0;
         $strLen = strlen($str);
-        for ($index = 0; $index < $strLen; ++$index) {
-            if (']' == $str[$index] || '[' == $str[$index]) {
-                /* Are there characters in the buffer from a previous string? */
-                if ($strStart < $index) {
-                    $this->tokens[] = substr($str, $strStart, $index - $strStart);
-                    $strStart = $index;
-                }
+        $position = 0;
 
-                /* Add the [ or ] to the tokens array. */
-                $this->tokens[] = $str[$index];
-                $strStart = $index+1;
+        while ($position < $strLen) {
+            $offset = strcspn($str, '[]', $position);
+            //Have we hit a single ']' or '['?
+            if ($offset == 0) {
+                $this->tokens[] = $str[$position];
+                $position++;
+            } else {
+                $this->tokens[] = substr($str, $position, $offset);
+                $position += $offset;
             }
-        }
-
-        if ($strStart < $strLen) {
-            /* There are still characters in the buffer. Add them to the tokens. */
-            $this->tokens[] = substr($str, $strStart, $strLen - $strStart);
         }
     }
 
