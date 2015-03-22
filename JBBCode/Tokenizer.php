@@ -28,6 +28,7 @@ class Tokenizer
 
         while($position < $strLen) {
             $offset = strcspn($str, '[]', $position);
+            //Have we hit a single ']' or '['?
             if($offset == 0) {
                 $this->tokens[] = $str{$position};
                 $position++;
