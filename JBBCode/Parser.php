@@ -97,7 +97,7 @@ class Parser
      */
     public function addCodeDefinition(CodeDefinition $definition)
     {
-        $this->bbcodes[] = $definition;
+        $this->bbcodes[$definition->getTagName()][$definition->usesOption()] = $definition;
         return $this;
     }
 
@@ -227,13 +227,7 @@ class Parser
      */
     public function codeExists($tagName, $usesOption = false)
     {
-        foreach ($this->bbcodes as $code) {
-            if (strtolower($tagName) == $code->getTagName() && $usesOption == $code->usesOption()) {
-                return true;
-            }
-        }
-
-        return false;
+        return isset($this->bbcodes[strtolower($tagName)][$usesOption]);
     }
 
     /**
@@ -246,10 +240,8 @@ class Parser
      */
     public function getCode($tagName, $usesOption = false)
     {
-        foreach ($this->bbcodes as $code) {
-            if (strtolower($tagName) == $code->getTagName() && $code->usesOption() == $usesOption) {
-                return $code;
-            }
+        if($this->codeExists($tagName, $usesOption)) {
+            return $this->bbcodes[strtolower($tagName)][$usesOption];
         }
 
         return null;

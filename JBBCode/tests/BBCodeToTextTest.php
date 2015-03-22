@@ -10,69 +10,60 @@ require_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Parser.php');
  */
 class BBCodeToTextTest extends PHPUnit_Framework_TestCase
 {
-
     /**
-     * A utility method for these tests that will evaluate
-     * its arguments as bbcode with a fresh parser loaded
-     * with only the default bbcodes. It returns the
-     * text output.
+     * @var JBBCode\Parser
      */
-    private function defaultTextParse($bbcode)
-    {
-        $parser = new JBBCode\Parser();
-        $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
-        $parser->parse($bbcode);
-        return $parser->getAsText();
-    }
+    private $_parser;
 
-    /**
-     * Asserts that the given bbcode matches the given text when
-     * the bbcode is run through defaultTextParse
-     */
-    private function assertTextOutput($bbcode, $text)
+    protected function setUp()
     {
-        $this->assertEquals($text, $this->defaultTextParse($bbcode));
+        $this->_parser = new JBBCode\Parser();
+        $this->_parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
     }
 
     public function testEmptyString()
     {
-        $this->assertTextOutput('', '');
+        $this->assertEmpty($this->_parser->parse('')->getAsText());
     }
 
-    public function testOneTag()
+    public function testContentCleared()
     {
-        $this->assertTextOutput('[b]this is bold[/b]', 'this is bold');
-    }
-
-    public function testOneTagWithSurroundingText()
-    {
-        $this->assertTextOutput('buffer text [b]this is bold[/b] buffer text',
-                              'buffer text this is bold buffer text');
-    }
-
-    public function testMultipleTags()
-    {
-        $bbcode = 'this is some text with [b]bold tags[/b] and [i]italics[/i] and ' .
-                  'things like [u]that[/u].';
-        $text = 'this is some text with bold tags and italics and things like that.';
-        $this->assertTextOutput($bbcode, $text);
-    }
-
-    public function testCodeOptions()
-    {
-        $code = 'This contains a [url=http://jbbcode.com]url[/url] which uses an option.';
-        $text = 'This contains a url which uses an option.';
-        $this->assertTextOutput($code, $text);
+        $this->assertEquals('foo', $this->_parser->parse('foo')->getAsText());
+        $this->assertEquals('bar', $this->_parser->parse('bar')->getAsText());
     }
 
     /**
-     * @depends testCodeOptions
+     * @param string $code
+     * @param string $expected
+     * @dataProvider codeProvider
      */
-    public function testOmittedOption()
+    public function testParse($code, $expected)
     {
-        $code = 'This doesn\'t use the url option [url]http://jbbcode.com[/url].';
-        $text = 'This doesn\'t use the url option http://jbbcode.com.';
-        $this->assertTextOutput($code, $text);
+        $this->assertEquals($expected, $this->_parser->parse($code)->getAsText());
     }
 
+    public function codeProvider()
+    {
+        return array(
+            array('foo', 'foo'),
+            array('[b]this is bold[/b]', 'this is bold'),
+            array('[b]this is bold', 'this is bold'),
+            array(
+                'buffer text [b]this is bold[/b] buffer text',
+                'buffer text this is bold buffer text'
+            ),
+            array(
+                'this is some text with [b]bold tags[/b] and [i]italics[/i] and things like [u]that[/u].',
+                'this is some text with bold tags and italics and things like that.'
+            ),
+            array(
+                'This contains a [url=http://jbbcode.com]url[/url] which uses an option.',
+                'This contains a url which uses an option.'
+            ),
+            array(
+                'This doesn\'t use the url option [url]http://jbbcode.com[/url].',
+                'This doesn\'t use the url option http://jbbcode.com.'
+            ),
+        );
+    }
 }
