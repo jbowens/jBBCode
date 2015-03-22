@@ -28,7 +28,7 @@ class DocumentElement extends ElementNode
      *
      * Returns the BBCode representation of this document
      *
-     * @return this document's bbcode representation
+     * @return string this document's bbcode representation
      */
     public function getAsBBCode()
     {
@@ -48,7 +48,7 @@ class DocumentElement extends ElementNode
      * children, so getAsHTML() simply iterates through the document's children,
      * returning their html.
      *
-     * @return the HTML representation of this document
+     * @return string the HTML representation of this document
      */
     public function getAsHTML()
     {

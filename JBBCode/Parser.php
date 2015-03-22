@@ -33,14 +33,14 @@ class Parser
     const OPTION_STATE_QUOTED_VALUE = 4;
     const OPTION_STATE_JAVASCRIPT = 5;
 
-    /* The root element of the parse tree */
+    /* @var DocumentElement The root element of the parse tree */
     protected $treeRoot;
 
-    /* The list of bbcodes to be used by the parser. */
-    protected $bbcodes = array();
+    /* @var CodeDefinition[] The list of bbcodes to be used by the parser. */
+    protected $bbcodes;
 
-    /* The next node id to use. This is used while parsing. */
-    protected $nextNodeid = 1;
+    /* @var integer The next node id to use. This is used while parsing. */
+    protected $nextNodeid;
 
     /**
      * Constructs an instance of the BBCode parser
@@ -60,7 +60,7 @@ class Parser
      * @param integer $nestLimit    an optional limit of the number of elements of this kind that can be nested within
      *                              each other before the parser stops parsing them.
      * @param InputValidator $optionValidator   the validator to run {option} through
-     * @param BodyValidator  $bodyValidator     the validator to run {param} through (only used if $parseContent == false)
+     * @param InputValidator  $bodyValidator     the validator to run {param} through (only used if $parseContent == false)
      *
      * @return Parser
      */
@@ -96,8 +96,7 @@ class Parser
      */
     public function addCodeDefinition(CodeDefinition $definition)
     {
-        array_push($this->bbcodes, $definition);
-
+        $this->bbcodes[$definition->getTagName()][$definition->usesOption()] = $definition;
         return $this;
     }
 
@@ -151,7 +150,7 @@ class Parser
     /**
      * Accepts the given NodeVisitor at the root.
      *
-     * @param NodeVisitor  a NodeVisitor
+     * @param NodeVisitor $nodeVisitor a NodeVisitor
      *
      * @return Parser
      */
@@ -227,13 +226,7 @@ class Parser
      */
     public function codeExists($tagName, $usesOption = false)
     {
-        foreach ($this->bbcodes as $code) {
-            if (strtolower($tagName) == $code->getTagName() && $usesOption == $code->usesOption()) {
-                return true;
-            }
-        }
-
-        return false;
+        return isset($this->bbcodes[strtolower($tagName)][$usesOption]);
     }
 
     /**
@@ -246,10 +239,8 @@ class Parser
      */
     public function getCode($tagName, $usesOption = false)
     {
-        foreach ($this->bbcodes as $code) {
-            if (strtolower($tagName) == $code->getTagName() && $code->usesOption() == $usesOption) {
-                return $code;
-            }
+        if($this->codeExists($tagName, $usesOption)) {
+            return $this->bbcodes[strtolower($tagName)][$usesOption];
         }
 
         return null;
@@ -272,15 +263,15 @@ class Parser
     /**
      * Creates a new text node with the given parent and text string.
      *
-     * @param $parent  the parent of the text node
-     * @param $string  the text of the text node
+     * @param ElementNode $parent  the parent of the text node
+     * @param string $string  the text of the text node
      *
      * @return TextNode the newly created TextNode
      */
     protected function createTextNode(ElementNode $parent, $string)
     {
-        if (count($parent->getChildren())) {
-            $children = $parent->getChildren();
+        $children = $parent->getChildren();
+        if (!empty($children)) {
             $lastElement = end($children);
             reset($children);
 
@@ -409,10 +400,15 @@ class Parser
                                 $buffer = "";
                                 break;
                             case ' ':
-                                $state = static::OPTION_STATE_DEFAULT;
-                                $tagName = $buffer;
-                                $buffer = '';
-                                $keys[] = $tagName;
+                                if($buffer) {
+                                    $state = static::OPTION_STATE_DEFAULT;
+                                    $tagName = $buffer;
+                                    $buffer = '';
+                                    $keys[] = $tagName;
+                                }
+                                break;
+                            case "\n":
+                            case "\r":
                                 break;
 
                             case null:
@@ -442,7 +438,7 @@ class Parser
                                 break;
                             case null: // intentional fall-through
                             case ' ': // key=value<space> delimits to next key
-                                $values[] = $buffer;
+                                $values[] = trim($buffer);
                                 $buffer = "";
                                 $state = static::OPTION_STATE_KEY;
                                 break;
@@ -476,7 +472,7 @@ class Parser
                         switch($char){
                             case '=':
                                 $state = static::OPTION_STATE_VALUE;
-                                $keys[] = $buffer;
+                                $keys[] = trim($buffer);
                                 $buffer = '';
                                 break;
                             case ' ': // ignore <space>key=value
@@ -517,7 +513,7 @@ class Parser
                 $idx++;
             }
 
-            if(count($keys) && count($values)){
+            if(!empty($keys) && !empty($values)){
                 if(count($keys)==(count($values)+1)){
                     array_unshift($values, "");
                 }
