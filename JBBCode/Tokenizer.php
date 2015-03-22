@@ -12,8 +12,16 @@ namespace JBBCode;
 class Tokenizer
 {
 
+    /**
+     * @var integer[]
+     */
     protected $tokens = array();
-    protected $i = -1;
+
+    /**
+     * @var integer current position in the tokens[] array
+     */
+    protected $currentPosition = -1;
+    protected $string;
 
     /**
      * Constructs a tokenizer from the given string. The string will be tokenized
@@ -24,17 +32,17 @@ class Tokenizer
     public function __construct($str)
     {
         $strLen = strlen($str);
+        $this->string = $str;
         $position = 0;
 
         while($position < $strLen) {
-            $offset = strcspn($str, '[]', $position);
-            //Have we hit a single ']' or '['?
+            $offset = strcspn($this->string, '[]', $position);
             if($offset == 0) {
-                $this->tokens[] = $str{$position};
+                $this->tokens[] = $position;
                 $position++;
             } else {
-                $this->tokens[] = substr($str, $position, $offset);
-                $position+=$offset;
+                $this->tokens[] = $position;
+                $position += $offset;
             }
         }
     }
@@ -45,7 +53,7 @@ class Tokenizer
      */
     public function hasNext()
     {
-        return isset($this->tokens[$this->i + 1]);
+        return isset($this->tokens[$this->currentPosition + 1]);
     }
 
     /**
@@ -57,7 +65,8 @@ class Tokenizer
         if (!$this->hasNext()) {
             return null;
         } else {
-            return $this->tokens[++$this->i];
+            $this->currentPosition++;
+            return $this->current();
         }
     }
 
@@ -67,10 +76,16 @@ class Tokenizer
      */
     public function current()
     {
-        if ($this->i < 0) {
+        if ($this->currentPosition < 0) {
             return null;
         } else {
-            return $this->tokens[$this->i];
+            $start = $this->tokens[$this->currentPosition];
+            if($this->hasNext()) {
+                $length = $this->tokens[$this->currentPosition + 1] - $start;
+                return substr($this->string, $start, $length);
+            } else {
+                return substr($this->string, $start);
+            }
         }
     }
 
@@ -79,8 +94,8 @@ class Tokenizer
      */
     public function stepBack()
     {
-        if ($this->i > -1) {
-            $this->i--;
+        if ($this->currentPosition > -1) {
+            $this->currentPosition--;
         }
     }
 
@@ -89,7 +104,7 @@ class Tokenizer
      */
     public function restart()
     {
-        $this->i = -1;
+        $this->currentPosition = -1;
     }
 
     /**
@@ -98,7 +113,9 @@ class Tokenizer
      */
     public function toString()
     {
-        return implode('', array_slice($this->tokens, $this->i + 1));
+        if($this->hasNext()) {
+            return substr($this->string, $this->tokens[$this->currentPosition + 1]);
+        }
+        return '';
     }
-
 }
