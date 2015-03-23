@@ -58,7 +58,7 @@ what needs to be done. Before submitting a pull request, verify that all unit te
 #### Running unit tests
 To run the unit tests,
 ensure that [phpunit](http://github.com/sebastianbergmann/phpunit) is installed, or install it through the composer
-dev dependencies. Then run `phpunit ./tests` from the project directory. If you're adding new functionality, writing
+dev dependencies. Then run `phpunit` from the project directory. If you're adding new functionality, writing
 additional unit tests is a great idea.
 
 Author
