@@ -11,7 +11,7 @@ require_once 'Node.php';
  */
 class TextNode extends Node
 {
-    /* @var string The value of this text node */
+    /** @var string The value of this text node */
     protected $value;
 
     /**

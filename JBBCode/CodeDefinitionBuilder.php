@@ -13,19 +13,19 @@ require_once "CodeDefinition.php";
 class CodeDefinitionBuilder
 {
 
-    /* @var string */
+    /** @var string */
     protected $tagName;
-    /* @var boolean */
+    /** @var boolean */
     protected $useOption = false;
-    /* @var string */
+    /** @var string */
     protected $replacementText;
-    /* @var boolean */
+    /** @var boolean */
     protected $parseContent = true;
-    /* @var integer */
+    /** @var integer */
     protected $nestLimit = -1;
-    /* @var InputValidator[] */
+    /** @var InputValidator[] */
     protected $optionValidator = array();
-    /* @var InputValidator */
+    /** @var InputValidator */
     protected $bodyValidator = null;
 
     /**
