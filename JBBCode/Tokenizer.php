@@ -12,7 +12,10 @@ namespace JBBCode;
 class Tokenizer
 {
 
+    /** @var integer[] the positions of tokens found during parsing */
     protected $tokens = array();
+
+    /** @var integer the number of the current token */
     protected $i = -1;
 
     /**
