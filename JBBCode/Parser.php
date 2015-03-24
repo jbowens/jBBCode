@@ -33,13 +33,13 @@ class Parser
     const OPTION_STATE_QUOTED_VALUE = 4;
     const OPTION_STATE_JAVASCRIPT = 5;
 
-    /* @var DocumentElement The root element of the parse tree */
+    /** @var DocumentElement The root element of the parse tree */
     protected $treeRoot;
 
-    /* @var CodeDefinition[] The list of bbcodes to be used by the parser. */
+    /** @var CodeDefinition[] The list of bbcodes to be used by the parser. */
     protected $bbcodes = array();
 
-    /* @var integer The next node id to use. This is used while parsing. */
+    /** @var integer The next node id to use. This is used while parsing. */
     protected $nextNodeid;
 
     /**

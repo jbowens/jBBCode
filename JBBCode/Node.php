@@ -11,10 +11,10 @@ namespace JBBCode;
  */
 abstract class Node
 {
-    /* @var Node Pointer to the parent node of this node */
+    /** @var Node Pointer to the parent node of this node */
     protected $parent;
 
-    /* @var integer The node id of this node */
+    /** @var integer The node id of this node */
     protected $nodeid;
 
     /**

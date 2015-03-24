@@ -11,28 +11,28 @@ namespace JBBCode;
  */
 class CodeDefinition
 {
-    /* @var string NOTE: THIS PROPERTY SHOULD ALWAYS BE LOWERCASE; USE setTagName() TO ENSURE THIS */
+    /** @var string NOTE: THIS PROPERTY SHOULD ALWAYS BE LOWERCASE; USE setTagName() TO ENSURE THIS */
     protected $tagName;
 
-    /* @var boolean Whether or not this CodeDefinition uses an option parameter. */
+    /** @var boolean Whether or not this CodeDefinition uses an option parameter. */
     protected $useOption;
 
-    /* @var string The replacement text to be used for simple CodeDefinitions */
+    /** @var string The replacement text to be used for simple CodeDefinitions */
     protected $replacementText;
 
-    /* @var boolean Whether or not to parse elements of this definition's contents */
+    /** @var boolean Whether or not to parse elements of this definition's contents */
     protected $parseContent;
 
-    /* @var integer How many of this element type may be nested within each other */
+    /** @var integer How many of this element type may be nested within each other */
     protected $nestLimit;
 
-    /* @var integer How many of this element type have been seen */
+    /** @var integer How many of this element type have been seen */
     protected $elCounter;
 
-    /* @var InputValidator The input validator to run options through */
+    /** @var InputValidator The input validator to run options through */
     protected $optionValidator;
 
-    /* @var InputValidator The input validator to run the body ({param}) through */
+    /** @var InputValidator The input validator to run the body ({param}) through */
     protected $bodyValidator;
 
     /**
