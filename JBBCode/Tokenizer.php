@@ -12,15 +12,13 @@ namespace JBBCode;
 class Tokenizer
 {
 
-    /**
-     * @var integer[]
-     */
+    /** @var integer[] the positions of tokens found during parsing */
     protected $tokens = array();
 
-    /**
-     * @var integer current position in the tokens[] array
-     */
+    /** @var integer current position in the tokens[] array */
     protected $currentPosition = -1;
+
+    /** @var string */
     protected $string;
 
     /**
@@ -118,4 +116,5 @@ class Tokenizer
         }
         return '';
     }
+
 }

@@ -13,19 +13,19 @@ require_once 'Node.php';
  */
 class ElementNode extends Node
 {
-    /* @var string The tagname of this element, for i.e. "b" in [b]bold[/b] */
+    /** @var string The tagname of this element, for i.e. "b" in [b]bold[/b] */
     protected $tagName;
 
-    /* @var string[] The attributes, if any, of this element node */
+    /** @var string[] The attributes, if any, of this element node */
     protected $attribute;
 
-    /* @var Node[] The child nodes contained within this element */
+    /** @var Node[] The child nodes contained within this element */
     protected $children;
 
-    /* @var CodeDefinition The code definition that defines this element's behavior */
+    /** @var CodeDefinition The code definition that defines this element's behavior */
     protected $codeDefinition;
 
-    /* @var integer How deeply this node is nested */
+    /** @var integer How deeply this node is nested */
     protected $nestDepth;
 
     /**
