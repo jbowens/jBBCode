@@ -3,8 +3,6 @@ jBBCode
 [![GitHub release](https://img.shields.io/github/release/jbowens/jBBCode.svg)](https://github.com/jbowens/jBBCode/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/jbowens/jBBCode.svg)](https://travis-ci.org/jbowens/jBBCode)
-[![Dependency Status](https://www.versioneye.com/php/jbbcode:jbbcode/badge.svg)](https://www.versioneye.com/php/jbbcode:jbbcode/)
-[![Total Downloads](https://img.shields.io/packagist/dt/jbbcode/jbbcode.svg)](https://packagist.org/packages/jbbcode/jbbcode)
 
 jBBCode is a bbcode parser written in php 5.3. It's relatively lightweight and parses
 bbcodes without resorting to expensive regular expressions.
