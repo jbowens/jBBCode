@@ -1,5 +1,6 @@
 jBBCode
 =======
+[![GitHub release](https://img.shields.io/github/release/jbowens/jBBCode.svg)](https://github.com/jbowens/jBBCode/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/jbowens/jBBCode.svg)](https://travis-ci.org/jbowens/jBBCode)
 
