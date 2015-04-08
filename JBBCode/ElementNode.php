@@ -125,10 +125,13 @@ class ElementNode extends Node
     {
         $str = "[".$this->tagName;
         if (!empty($this->attribute)) {
+            if(isset($this->attribute[$this->tagName])) {
+                $str .= "=".$this->attribute[$this->tagName];
+            }
 
             foreach($this->attribute as $key => $value){
                 if($key == $this->tagName){
-                    $str .= "=".$value;
+                    continue;
                 }
                 else{
                     $str .= " ".$key."=" . $value;
