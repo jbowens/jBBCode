@@ -209,8 +209,6 @@ class Parser
     {
         // remove any old tree information
         $this->treeRoot = new DocumentElement();
-        /* The document element is created with nodeid 0. */
-        $this->nextNodeid = 1;
     }
 
     /**
