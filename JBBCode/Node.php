@@ -14,19 +14,6 @@ abstract class Node
     /** @var Node Pointer to the parent node of this node */
     protected $parent;
 
-    /** @var integer The node id of this node */
-    protected $nodeid;
-
-    /**
-     * Returns the node id of this node. (Not really ever used. Dependent upon the parse tree the node exists within.)
-     *
-     * @return integer this node's id
-     */
-    public function getNodeId()
-    {
-        return $this->nodeid;
-    }
-
     /**
      * Returns this node's immediate parent.
      *
@@ -96,15 +83,4 @@ abstract class Node
     {
         $this->parent = $parent;
     }
-
-    /**
-     * Sets this node's nodeid
-     *
-     * @param integer $nodeid this node's node id
-     */
-    public function setNodeId($nodeid)
-    {
-        $this->nodeid = $nodeid;
-    }
-
 }

@@ -39,9 +39,6 @@ class Parser
     /** @var CodeDefinition[] The list of bbcodes to be used by the parser. */
     protected $bbcodes = array();
 
-    /** @var integer The next node id to use. This is used while parsing. */
-    protected $nextNodeid;
-
     /**
      * Constructs an instance of the BBCode parser
      */
@@ -212,8 +209,6 @@ class Parser
     {
         // remove any old tree information
         $this->treeRoot = new DocumentElement();
-        /* The document element is created with nodeid 0. */
-        $this->nextNodeid = 1;
     }
 
     /**
@@ -282,7 +277,6 @@ class Parser
         }
 
         $textNode = new TextNode($string);
-        $textNode->setNodeId(++$this->nextNodeid);
         $parent->addChild($textNode);
         return $textNode;
     }
@@ -595,7 +589,6 @@ class Parser
 
         /* If we're here, this is a valid opening tag. Let's make a new node for it. */
         $el = new ElementNode();
-        $el->setNodeId(++$this->nextNodeid);
         $code = $this->getCode($actualTagName, !empty($options));
         $el->setCodeDefinition($code);
         if (!empty($options)) {
