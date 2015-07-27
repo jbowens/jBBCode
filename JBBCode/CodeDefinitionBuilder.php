@@ -139,9 +139,12 @@ class CodeDefinitionBuilder
      * Removes the attached option validator if one is attached.
      * @return self
      */
-    public function removeOptionValidator()
+    public function removeOptionValidator($option=null)
     {
-        $this->optionValidator = array();
+        if(empty($option)){
+            $option = $this->tagName;
+        }
+        unset($this->optionValidator[$option]);
         return $this;
     }
 
