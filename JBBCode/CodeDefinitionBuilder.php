@@ -3,12 +3,14 @@
 namespace JBBCode;
 
 require_once "CodeDefinition.php";
+require_once "validators/CallableValidatorAdapter.php";
 
 /**
  * Implements the builder pattern for the CodeDefinition class. A builder
  * is the recommended way of constructing CodeDefinition objects.
  *
  * @author jbowens
+ * @author Kubo2
  */
 class CodeDefinitionBuilder
 {
@@ -29,7 +31,7 @@ class CodeDefinitionBuilder
     protected $bodyValidator = null;
 
     /**
-     * Construct a CodeDefinitionBuilder.
+     * Constructs a CodeDefinitionBuilder.
      *
      * @param string $tagName  the tag name of the definition to build
      * @param string $replacementText  the replacement text of the definition to build
@@ -111,14 +113,15 @@ class CodeDefinitionBuilder
     /**
      * Sets the InputValidator that option arguments should be validated with.
      *
-     * @param InputValidator $validator  the InputValidator instance to use
+     * @param InputValidator|callable $validator  the validator to use when validating input
      * @return self
      */
-    public function setOptionValidator(\JBBCode\InputValidator $validator, $option=null)
+    public function setOptionValidator($validator, $option=null)
     {
         if(empty($option)){
             $option = $this->tagName;
         }
+        $validator = $this->checkInputValidator($validator);
         $this->optionValidator[$option] = $validator;
         return $this;
     }
@@ -126,11 +129,12 @@ class CodeDefinitionBuilder
     /**
      * Sets the InputValidator that body ({param}) text should be validated with.
      *
-     * @param InputValidator $validator  the InputValidator instance to use
+     * @param InputValidator|callable $validator  the validator to use when validating input
      * @return self
      */
-    public function setBodyValidator(\JBBCode\InputValidator $validator)
+    public function setBodyValidator($validator)
     {
+        $validator = $this->checkInputValidator($validator);
         $this->bodyValidator = $validator;
         return $this;
     }
@@ -156,6 +160,27 @@ class CodeDefinitionBuilder
     {
         $this->bodyValidator = null;
         return $this;
+    }
+
+    /**
+     * Checks if `$validator` is a valid input validator, otherwise throws an exception
+     *
+     * @internal
+     * @return InputValidator
+     * @throws \InvalidArgumentException
+     */
+    private function checkInputValidator($validator)
+    {
+        if($validator instanceof InputValidator) {
+            return $validator;
+        } elseif(is_callable($validator)) {
+            return new validators\CallableValidatorAdapter($validator);
+        } else {
+            throw new \InvalidArgumentException(
+                '$validator must be either of type callable, or an instance of JBBCode\InputValidator, ' .
+                (is_object($validator) ? get_class($validator) : gettype($validator)) . ' given'
+            );
+        }
     }
 
     /**

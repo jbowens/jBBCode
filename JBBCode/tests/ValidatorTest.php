@@ -1,13 +1,15 @@
 <?php
 
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Parser.php';
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'validators' . DIRECTORY_SEPARATOR . 'UrlValidator.php';
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'validators' . DIRECTORY_SEPARATOR . 'CssColorValidator.php';
+require_once __DIR__ . '/../Parser.php';
+require_once __DIR__ . '/../validators/UrlValidator.php';
+require_once __DIR__ . '/../validators/CssColorValidator.php';
+require_once __DIR__ . '/../validators/CallableValidatorAdapter.php';
 
 /**
  * Test cases for InputValidators.
  *
  * @author jbowens
+ * @author Kubo2
  * @since May 2013
  */
 class ValidatorTest extends PHPUnit_Framework_TestCase
@@ -146,6 +148,17 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         $parser->parse('[color=" onclick="alert(\'hey ya!\');]click me[/color]');
         $this->assertEquals('[color=" onclick="alert(\'hey ya!\');]click me[/color]',
                 $parser->getAsHtml());
+    }
+
+    /**
+     * Test functionality of {@link JBBCode\CallableValidatorAdapter}
+     */
+    public function testCallableValidatorAdapter() {
+        $emptyValidator = new \JBBCode\validators\CallableValidatorAdapter(function($input) {
+            return empty($input);
+        });
+        $this->assertTrue($emptyValidator->validate(''));
+        $this->assertFalse($emptyValidator->validate('Hey! I am here'));
     }
 
 }
