@@ -1,7 +1,5 @@
 <?php
 
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Parser.php';
-
 /**
  * Test cases for CodeDefinition nest limits. If an element is nested beyond
  * its CodeDefinition's nest limit, it should be removed from the parse tree.
@@ -9,8 +7,45 @@ require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Parser.php';
  * @author jbowens
  * @since May 2013
  */
-class NestLimitTest extends PHPUnit_Framework_TestCase
+class NestLimitVisitorTest extends PHPUnit_Framework_TestCase
 {
+
+    /** @var \JBBCode\visitors\NestLimitVisitor */
+    private $_nestLimitVisitor;
+
+    protected function setUp()
+    {
+        $this->_nestLimitVisitor = new \JBBCode\visitors\NestLimitVisitor();
+    }
+
+    public function testVisitDocumentElement()
+    {
+        $childMock = $this->getMock('JBBCode\ElementNode', array('accept'));
+        $childMock->expects($this->once())
+                  ->method('accept')
+                  ->with($this->equalTo($this->_nestLimitVisitor));
+
+        $mock = $this->getMock('JBBCode\DocumentElement', array('getChildren'));
+        $mock->expects($this->once())
+             ->method('getChildren')
+             ->will($this->returnValue(array(
+                 $childMock
+             )));
+
+        $this->_nestLimitVisitor->visitDocumentElement($mock);
+    }
+
+    public function testVisitTextNode()
+    {
+        $mock = $this->getMockBuilder('JBBCode\TextNode')
+            ->setMethods(array('accept'))
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mock->expects($this->never())
+            ->method('accept');
+
+        $this->_nestLimitVisitor->visitTextNode($mock);
+    }
 
     /**
      * Tests that when elements have no nest limits they may be

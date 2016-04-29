@@ -1,14 +1,13 @@
 <?php
 
-require_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Parser.php');
-require_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'visitors' . DIRECTORY_SEPARATOR . 'HTMLSafeVisitor.php');
+require_once dirname(dirname(__DIR__)) . '/visitors/HTMLSafeVisitor.php';
 
 /**
  * Test cases testing the HTMLSafe visitor, which escapes all html characters in the source text
  *
  * @author astax-t
  */
-class HTMLSafeTest extends PHPUnit_Framework_TestCase
+class HTMLSafeVisitorTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Asserts that the given bbcode string produces the given html string

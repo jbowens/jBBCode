@@ -5,12 +5,27 @@ php:
   - 5.5
   - 5.6
   - hhvm
-  - hhvm-nightly
   - nightly
 
 matrix:
   fast_finish: true
   allow_failures:
     - php: hhvm
-    - php: hhvm-nightly
     - php: nightly
+
+git:
+  depth: 10
+
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+
+sudo: false
+
+install:
+  - composer self-update
+  - composer install --prefer-source --no-interaction
+
+after_success:
+  - php vendor/bin/coveralls -v
