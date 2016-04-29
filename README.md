@@ -63,15 +63,6 @@ ensure that [phpunit](http://github.com/sebastianbergmann/phpunit) is installed,
 dev dependencies. Then run `phpunit` from the project directory. If you're adding new functionality, writing
 additional unit tests is a great idea.
 
-Author
-------
-
-jBBCode was written by Jackson Owens. You may reach him at [jackson_owens@alumni.brown.edu](mailto:jackson_owens@alumni.brown.edu).
-
-Other languages
----------------
-
-This library is in the process of being ported to java. For more information, see [jBBCode-java](https://github.com/jbowens/jBBCode-java).
 
 License
 -------
