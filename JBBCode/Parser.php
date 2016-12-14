@@ -10,7 +10,6 @@ require_once 'CodeDefinition.php';
 require_once 'CodeDefinitionBuilder.php';
 require_once 'CodeDefinitionSet.php';
 require_once 'NodeVisitor.php';
-require_once 'ParserException.php';
 require_once 'Tokenizer.php';
 require_once 'visitors/NestLimitVisitor.php';
 require_once 'InputValidator.php';
@@ -487,7 +486,7 @@ class Parser
 
                                 // peek ahead. If the next character is not a space or a closing brace, we have a bad tag and need to abort
                                 if(isset($tagContent[$idx+1]) && $tagContent[$idx+1]!=" " && $tagContent[$idx+1]!="]" ){
-                                    throw new ParserException("Badly formed attribute: $tagContent");
+                                    throw new \DomainException("Badly formed attribute: $tagContent");
                                 }
                                 break;
                             default:
@@ -515,7 +514,7 @@ class Parser
                 $options = array_combine($keys, $values);
             }
         }
-        catch(ParserException $e){
+        catch(\DomainException $e){
             // if we're in this state, then something evidently went wrong. We'll consider everything that came after the tagname to be the attribute for that keyname
             $options[$tagName]= substr($tagContent, strpos($tagContent, "=")+1);
         }
