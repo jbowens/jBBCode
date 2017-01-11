@@ -13,12 +13,12 @@
 		</testsuite>
 	</testsuites>
 	<filter>
-		<blacklist>
-			<directory suffix=".php">examples/</directory>
-			<directory suffix=".php">vendor</directory>
-		</blacklist>
+		<whitelist>
+			<directory suffix=".php">JBBCode</directory>
+			<exclude>
+				<directory suffix=".php">JBBCode/tests</directory>
+				<directory suffix=".php">JBBCode/examples</directory>
+			</exclude>
+		</whitelist>
 	</filter>
-	<logging>
-		<log type="coverage-clover" target="clover.xml"/>
-	</logging>
 </phpunit>
