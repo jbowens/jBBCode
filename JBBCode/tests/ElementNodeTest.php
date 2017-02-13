@@ -76,4 +76,22 @@ class ElementNodeTest extends PHPUnit_Framework_TestCase {
         ));
         $this->assertEquals('[foo=bar bar=baz][/foo]', $this->_elementNode->getAsBBCode());
     }
+
+    public function testGetAsBBCodeUppercased()
+    {
+        $builder = new JBBCode\CodeDefinitionBuilder('FOO', 'bar');
+        $codeDefinition = $builder->build();
+        $this->_elementNode->setCodeDefinition($codeDefinition);
+        $this->assertEquals('[FOO][/FOO]', $this->_elementNode->getAsBBCode());
+
+        $this->_elementNode->setAttribute(array('bar' => 'baz'));
+        $this->assertEquals('[FOO bar=baz][/FOO]', $this->_elementNode->getAsBBCode());
+
+        /** @ticket 55 */
+        $this->_elementNode->setAttribute(array(
+            'bar' => 'baz',
+            'FOO' => 'bar'
+        ));
+        $this->assertEquals('[FOO=bar bar=baz][/FOO]', $this->_elementNode->getAsBBCode());
+    }
 }

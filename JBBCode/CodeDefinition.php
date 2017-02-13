@@ -14,6 +14,9 @@ class CodeDefinition
     /** @var string NOTE: THIS PROPERTY SHOULD ALWAYS BE LOWERCASE; USE setTagName() TO ENSURE THIS */
     protected $tagName;
 
+    /** @var string The original defined tag name. Needed for uppercased tags */
+    protected $originalTagName;
+
     /** @var boolean Whether or not this CodeDefinition uses an option parameter. */
     protected $useOption;
 
@@ -189,6 +192,16 @@ class CodeDefinition
     }
 
     /**
+     * Returns the original and not normalized tag name of this code definition
+     *
+     * @return string this definition's associated original tag name
+     */
+    public function getOriginalTagName()
+    {
+        return $this->originalTagName;
+    }
+
+    /**
      * Returns the replacement text of this code definition. This usually has little, if any meaning if the
      * CodeDefinition class was extended. For default, html replacement CodeDefinitions this returns the html
      * markup for the definition.
@@ -243,6 +256,7 @@ class CodeDefinition
      */
     public function setTagName($tagName)
     {
+        $this->originalTagName = $tagName;
         $this->tagName = strtolower($tagName);
     }
 
