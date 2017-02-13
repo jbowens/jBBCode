@@ -78,5 +78,4 @@ class SimpleEvaluationTest extends PHPUnit_Framework_TestCase
     {
         $this->assertProduces('[b]:-[ [fo[o[bar[/b]', '<strong>:-[ [fo[o[bar</strong>');
     }
-
 }

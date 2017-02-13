@@ -18,5 +18,4 @@ interface InputValidator
      * @return boolean
      */
     public function validate($input);
-
 }

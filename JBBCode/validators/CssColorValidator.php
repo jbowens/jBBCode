@@ -27,5 +27,4 @@ class CssColorValidator implements \JBBCode\InputValidator
     {
         return (bool) preg_match('/^[A-z0-9\-#., ()%]+$/', $input);
     }
-
 }

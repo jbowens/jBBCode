@@ -1,6 +1,7 @@
 <?php
 
-class ElementNodeTest extends PHPUnit_Framework_TestCase {
+class ElementNodeTest extends PHPUnit_Framework_TestCase
+{
     /** @var  JBBCode\ElementNode */
     private $_elementNode;
 

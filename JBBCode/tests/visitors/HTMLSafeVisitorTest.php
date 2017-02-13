@@ -19,8 +19,8 @@ class HTMLSafeVisitorTest extends PHPUnit_Framework_TestCase
         $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
         $parser->parse($bbcode);
 
-		$htmlsafer = new JBBCode\visitors\HTMLSafeVisitor();
-		$parser->accept($htmlsafer);
+        $htmlsafer = new JBBCode\visitors\HTMLSafeVisitor();
+        $parser->accept($htmlsafer);
 
         $this->assertEquals($html, $parser->getAsHtml());
     }
@@ -73,5 +73,4 @@ class HTMLSafeVisitorTest extends PHPUnit_Framework_TestCase
     {
         $this->assertProduces('text [url="http://example.com/?a=b&c=d"]this is a "link"[/url]', 'text <a href="http://example.com/?a=b&amp;c=d">this is a &quot;link&quot;</a>');
     }
-
 }

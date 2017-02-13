@@ -34,5 +34,4 @@ class DefaultCodeDefinitionSetTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($parser->codeExists('img', true));
         $this->assertTrue($parser->codeExists('color', true));
     }
-
 }

@@ -1,6 +1,7 @@
 <?php
 
-class CssColorValidatorTest extends PHPUnit_Framework_TestCase {
+class CssColorValidatorTest extends PHPUnit_Framework_TestCase
+{
 
     /**
      * @var JBBCode\validators\CssColorValidator
@@ -21,7 +22,8 @@ class CssColorValidatorTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($this->_validator->validate($color));
     }
 
-    public function validColorProvider() {
+    public function validColorProvider()
+    {
         return array(
             array('red'),
             array('yellow'),

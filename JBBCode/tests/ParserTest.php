@@ -1,6 +1,7 @@
 <?php
 
-class ParserTest extends PHPUnit_Framework_TestCase {
+class ParserTest extends PHPUnit_Framework_TestCase
+{
     /**
      * @var JBBCode\Parser
      */

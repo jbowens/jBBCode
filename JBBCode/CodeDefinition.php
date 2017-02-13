@@ -52,7 +52,7 @@ class CodeDefinition
         $def->optionValidator = $optionValidator;
         $def->bodyValidator = $bodyValidator;
         return $def;
-     }
+    }
 
     /**
      * Constructs a new CodeDefinition.
@@ -86,8 +86,8 @@ class CodeDefinition
         if ($this->usesOption() && $this->optionValidator) {
             $att = $el->getAttribute();
 
-            foreach($att as $name => $value){
-                if(isset($this->optionValidator[$name]) && !$this->optionValidator[$name]->validate($value)){
+            foreach ($att as $name => $value) {
+                if (isset($this->optionValidator[$name]) && !$this->optionValidator[$name]->validate($value)) {
                     return false;
                 }
             }
@@ -127,12 +127,11 @@ class CodeDefinition
 
         if ($this->usesOption()) {
             $options = $el->getAttribute();
-            if(count($options)==1){
+            if (count($options)==1) {
                 $vals = array_values($options);
                 $html = str_ireplace('{option}', reset($vals), $html);
-            }
-            else{
-                foreach($options as $key => $val){
+            } else {
+                foreach ($options as $key => $val) {
                     $html = str_ireplace('{' . $key . '}', $val, $html);
                 }
             }
@@ -145,15 +144,18 @@ class CodeDefinition
         return $html;
     }
 
-    protected function getContent(ElementNode $el){
+    protected function getContent(ElementNode $el)
+    {
         if ($this->parseContent()) {
             $content = "";
-            foreach ($el->getChildren() as $child)
+            foreach ($el->getChildren() as $child) {
                 $content .= $child->getAsHTML();
+            }
         } else {
             $content = "";
-            foreach ($el->getChildren() as $child)
+            foreach ($el->getChildren() as $child) {
                 $content .= $child->getAsBBCode();
+            }
         }
         return $content;
     }
@@ -173,8 +175,9 @@ class CodeDefinition
         }
 
         $s = "";
-        foreach ($el->getChildren() as $child)
+        foreach ($el->getChildren() as $child) {
             $s .= $child->getAsText();
+        }
         return $s;
     }
 

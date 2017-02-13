@@ -33,7 +33,6 @@ class ParseContentTest extends PHPUnit_Framework_TestCase
 
         $this->_parser->parse('[verbatim][b]bold[/b][/verbatim]');
         $this->assertEquals('[b]bold[/b]', $this->_parser->getAsHtml());
-
     }
 
     public function testNoParsingWithBufferText()
@@ -89,5 +88,4 @@ class ParseContentTest extends PHPUnit_Framework_TestCase
         $parser->parse('[verbatim]');
         $this->assertEquals('', $parser->getAsHtml());
     }
-
 }
