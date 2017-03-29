@@ -165,6 +165,9 @@ class Parser
      */
     public function parse($str)
     {
+        /* Convert newlines to HTML <br> tags. */
+        $str = nl2br($str);
+        
         /* Set the tree root back to a fresh DocumentElement. */
         $this->reset();
 
