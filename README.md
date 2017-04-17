@@ -12,7 +12,7 @@ Documentation
 
 For complete documentation and examples visit [jbbcode.com](http://jbbcode.com).
 
-###A basic example
+### A basic example
 
 jBBCode includes a few optional, default bbcode definitions that may be loaded through the
 `DefaultCodeDefinitionSet` class. Below is a simple example of using these codes to convert
