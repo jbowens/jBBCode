@@ -76,7 +76,7 @@ class ElementNode extends Node
     /**
      * Returns the attribute (used as the option in bbcode definitions) of this element.
      *
-     * @return string[] the attributes of this element
+     * @return array the attributes of this element
      */
     public function getAttribute()
     {
