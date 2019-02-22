@@ -19,5 +19,4 @@ interface CodeDefinitionSet
      * @return CodeDefinition[]
      */
     public function getCodeDefinitions();
-
 }

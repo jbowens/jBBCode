@@ -40,7 +40,6 @@ class TagCountingVisitor implements \JBBcode\NodeVisitor
         foreach ($elementNode->getChildren() as $child) {
             $child->accept($this);
         }
-
     }
 
     /**
@@ -58,5 +57,4 @@ class TagCountingVisitor implements \JBBcode\NodeVisitor
             return $this->frequencies[$tagName];
         }
     }
-
 }

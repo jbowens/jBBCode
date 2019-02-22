@@ -1,6 +1,7 @@
 <?php
 
-class TextNodeTest extends PHPUnit_Framework_TestCase {
+class TextNodeTest extends PHPUnit_Framework_TestCase
+{
     /** @var  JBBCode\TextNode */
     private $_textNode;
 
@@ -27,5 +28,4 @@ class TextNodeTest extends PHPUnit_Framework_TestCase {
     {
         $this->assertTrue($this->_textNode->isTextNode());
     }
-
 }

@@ -24,7 +24,6 @@ use JBBCode\CodeDefinition;
  */
 class Parser
 {
-
     const OPTION_STATE_DEFAULT = 0;
     const OPTION_STATE_TAGNAME = 1;
     const OPTION_STATE_KEY = 2;
@@ -103,7 +102,8 @@ class Parser
      *
      * @return Parser
      */
-    public function addCodeDefinitionSet(CodeDefinitionSet $set) {
+    public function addCodeDefinitionSet(CodeDefinitionSet $set)
+    {
         foreach ($set->getCodeDefinitions() as $def) {
             $this->addCodeDefinition($def);
         }
@@ -233,7 +233,7 @@ class Parser
      */
     public function getCode($tagName, $usesOption = false)
     {
-        if($this->codeExists($tagName, $usesOption)) {
+        if ($this->codeExists($tagName, $usesOption)) {
             return $this->bbcodes[strtolower($tagName)][$usesOption];
         }
 
@@ -297,8 +297,7 @@ class Parser
 
         if ('[' == $next) {
             return $this->parseTagOpen($parent, $tokenizer);
-        }
-        else {
+        } else {
             $this->createTextNode($parent, $next);
             /* Drop back into the main parse loop which will call this
              * same method again. */
@@ -317,7 +316,6 @@ class Parser
      */
     protected function parseTagOpen(ElementNode $parent, Tokenizer $tokenizer)
     {
-
         if (!$tokenizer->hasNext()) {
             /* The [ that sent us to this state was just a trailing [, not the
              * opening for a new tag. Treat it as such. */
@@ -350,8 +348,7 @@ class Parser
         $after_next = $tokenizer->next();
         $tokenizer->stepBack();
 
-        if ($after_next != ']')
-        {
+        if ($after_next != ']') {
             $this->createTextNode($parent, '['.$next);
             return $parent;
         }
@@ -380,12 +377,12 @@ class Parser
         $done = false;
         $idx = 0;
 
-        try{
-            while(!$done){
+        try {
+            while (!$done) {
                 $char = $idx < $len ? $tagContent[$idx]:null;
-                switch($state){
+                switch ($state) {
                     case static::OPTION_STATE_TAGNAME:
-                        switch($char){
+                        switch ($char) {
                             case '=':
                                 $state = static::OPTION_STATE_VALUE;
                                 $tagName = $buffer;
@@ -393,7 +390,7 @@ class Parser
                                 $buffer = "";
                                 break;
                             case ' ':
-                                if($buffer) {
+                                if ($buffer) {
                                     $state = static::OPTION_STATE_DEFAULT;
                                     $tagName = $buffer;
                                     $buffer = '';
@@ -415,7 +412,7 @@ class Parser
                         break;
 
                     case static::OPTION_STATE_DEFAULT:
-                        switch($char){
+                        switch ($char) {
                             case ' ':
                                 // do nothing
                             default:
@@ -425,7 +422,7 @@ class Parser
                         break;
 
                     case static::OPTION_STATE_VALUE:
-                        switch($char){
+                        switch ($char) {
                             case '"':
                                 $state = static::OPTION_STATE_QUOTED_VALUE;
                                 break;
@@ -436,7 +433,7 @@ class Parser
                                 $state = static::OPTION_STATE_KEY;
                                 break;
                             case ":":
-                                if($buffer=="javascript"){
+                                if ($buffer=="javascript") {
                                     $state = static::OPTION_STATE_JAVASCRIPT;
                                 }
                                 $buffer .= $char;
@@ -448,7 +445,7 @@ class Parser
                         break;
 
                     case static::OPTION_STATE_JAVASCRIPT:
-                        switch($char){
+                        switch ($char) {
                             case ";":
                                 $buffer .= $char;
                                 $values[] = $buffer;
@@ -462,7 +459,7 @@ class Parser
                         break;
 
                     case static::OPTION_STATE_KEY:
-                        switch($char){
+                        switch ($char) {
                             case '=':
                                 $state = static::OPTION_STATE_VALUE;
                                 $keys[] = trim($buffer);
@@ -477,7 +474,7 @@ class Parser
                         break;
 
                     case static::OPTION_STATE_QUOTED_VALUE:
-                        switch($char){
+                        switch ($char) {
                             case null:
                             case '"':
                                 $state = static::OPTION_STATE_KEY;
@@ -485,7 +482,7 @@ class Parser
                                 $buffer = '';
 
                                 // peek ahead. If the next character is not a space or a closing brace, we have a bad tag and need to abort
-                                if(isset($tagContent[$idx+1]) && $tagContent[$idx+1]!=" " && $tagContent[$idx+1]!="]" ){
+                                if (isset($tagContent[$idx+1]) && $tagContent[$idx+1]!=" " && $tagContent[$idx+1]!="]") {
                                     throw new \DomainException("Badly formed attribute: $tagContent");
                                 }
                                 break;
@@ -495,26 +492,25 @@ class Parser
                         }
                         break;
                     default:
-                        if(!empty($char)){
+                        if (!empty($char)) {
                             $state = static::OPTION_STATE_KEY;
                         }
 
                 }
-                if($idx >= $len){
+                if ($idx >= $len) {
                     $done = true;
                 }
                 $idx++;
             }
 
-            if(!empty($keys) && !empty($values)){
-                if(count($keys)==(count($values)+1)){
+            if (!empty($keys) && !empty($values)) {
+                if (count($keys)==(count($values)+1)) {
                     array_unshift($values, "");
                 }
 
                 $options = array_combine($keys, $values);
             }
-        }
-        catch(\DomainException $e){
+        } catch (\DomainException $e) {
             // if we're in this state, then something evidently went wrong. We'll consider everything that came after the tagname to be the attribute for that keyname
             $options[$tagName]= substr($tagContent, strpos($tagContent, "=")+1);
         }
@@ -641,5 +637,4 @@ class Parser
             $curr = $tokenizer->next();
         }
     }
-
 }

@@ -69,5 +69,4 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('[color=" onclick="alert(\'hey ya!\');]click me[/color]',
                 $parser->getAsHtml());
     }
-
 }

@@ -2,7 +2,8 @@
 
 require_once dirname(dirname(__DIR__)) . '/visitors/SmileyVisitor.php';
 
-class SmileyVisitorTest extends PHPUnit_Framework_TestCase {
+class SmileyVisitorTest extends PHPUnit_Framework_TestCase
+{
     /** @var \JBBCode\visitors\SmileyVisitor */
     private $_smileyVisitor;
 

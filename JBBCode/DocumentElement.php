@@ -32,7 +32,7 @@ class DocumentElement extends ElementNode
     public function getAsBBCode()
     {
         $s = "";
-        foreach($this->getChildren() as $child){
+        foreach ($this->getChildren() as $child) {
             $s .= $child->getAsBBCode();
         }
 
@@ -52,8 +52,9 @@ class DocumentElement extends ElementNode
     public function getAsHTML()
     {
         $s = "";
-        foreach($this->getChildren() as $child)
+        foreach ($this->getChildren() as $child) {
             $s .= $child->getAsHTML();
+        }
 
         return $s;
     }
@@ -62,5 +63,4 @@ class DocumentElement extends ElementNode
     {
         $visitor->visitDocumentElement($this);
     }
-
 }

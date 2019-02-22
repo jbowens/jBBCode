@@ -107,8 +107,9 @@ class ElementNode extends Node
             return $this->codeDefinition->asText($this);
         } else {
             $s = "";
-            foreach ($this->getChildren() as $child)
+            foreach ($this->getChildren() as $child) {
                 $s .= $child->getAsText();
+            }
             return $s;
         }
     }
@@ -125,15 +126,14 @@ class ElementNode extends Node
     {
         $str = "[".$this->tagName;
         if (!empty($this->attribute)) {
-            if(isset($this->attribute[$this->tagName])) {
+            if (isset($this->attribute[$this->tagName])) {
                 $str .= "=".$this->attribute[$this->tagName];
             }
 
-            foreach($this->attribute as $key => $value){
-                if($key == $this->tagName){
+            foreach ($this->attribute as $key => $value) {
+                if ($key == $this->tagName) {
                     continue;
-                }
-                else{
+                } else {
                     $str .= " ".$key."=" . $value;
                 }
             }
@@ -157,7 +157,7 @@ class ElementNode extends Node
      */
     public function getAsHTML()
     {
-        if($this->codeDefinition) {
+        if ($this->codeDefinition) {
             return $this->codeDefinition->asHtml($this);
         } else {
             return "";
@@ -185,8 +185,9 @@ class ElementNode extends Node
     public function removeChild(Node $child)
     {
         foreach ($this->children as $key => $value) {
-            if ($value == $child)
+            if ($value == $child) {
                 unset($this->children[$key]);
+            }
         }
     }
 
@@ -234,5 +235,4 @@ class ElementNode extends Node
             return $currentEl;
         }
     }
-
 }

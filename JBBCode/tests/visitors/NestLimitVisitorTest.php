@@ -77,5 +77,4 @@ class NestLimitVisitorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expectedBbcode, $parser->getAsBBCode());
         $this->assertEquals($expectedHtml, $parser->getAsHtml());
     }
-
 }

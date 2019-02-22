@@ -2,7 +2,8 @@
 
 require_once dirname(dirname(__DIR__)) . '/visitors/TagCountingVisitor.php';
 
-class TagCountingVisitorTest extends \PHPUnit_Framework_TestCase {
+class TagCountingVisitorTest extends \PHPUnit_Framework_TestCase
+{
     /** @var  JBBCode\visitors\TagCountingVisitor */
     protected $_tagCountingVisitor;
 

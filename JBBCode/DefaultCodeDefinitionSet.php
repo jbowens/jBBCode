@@ -73,5 +73,4 @@ class DefaultCodeDefinitionSet implements CodeDefinitionSet
     {
         return $this->definitions;
     }
-
 }

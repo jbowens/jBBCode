@@ -8,7 +8,6 @@
  */
 class TokenizerTest extends PHPUnit_Framework_TestCase
 {
-
     public function testEmptyString()
     {
         $tokenizer = new JBBCode\Tokenizer('');
@@ -92,7 +91,7 @@ class TokenizerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($tokenizer->hasNext());
         $this->assertNull($tokenizer->current());
 
-        foreach($tokens as $token) {
+        foreach ($tokens as $token) {
             $this->assertEquals($token, $tokenizer->next());
         }
 

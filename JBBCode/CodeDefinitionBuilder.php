@@ -100,7 +100,7 @@ class CodeDefinitionBuilder
      */
     public function setNestLimit($limit)
     {
-        if(!is_int($limit) || ($limit <= 0 && -1 != $limit)) {
+        if (!is_int($limit) || ($limit <= 0 && -1 != $limit)) {
             throw new \InvalidArgumentException("A nest limit must be a positive integer " .
                                                "or -1.");
         }
@@ -116,7 +116,7 @@ class CodeDefinitionBuilder
      */
     public function setOptionValidator(\JBBCode\InputValidator $validator, $option=null)
     {
-        if(empty($option)){
+        if (empty($option)) {
             $option = $this->tagName;
         }
         $this->optionValidator[$option] = $validator;
@@ -171,6 +171,4 @@ class CodeDefinitionBuilder
                                                 $this->bodyValidator);
         return $definition;
     }
-
-
 }

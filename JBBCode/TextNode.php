@@ -98,5 +98,4 @@ class TextNode extends Node
     {
         $this->value = $newValue;
     }
-
 }

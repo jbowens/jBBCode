@@ -24,7 +24,7 @@ class NestLimitVisitor implements \JBBCode\NodeVisitor
 
     public function visitDocumentElement(\JBBCode\DocumentElement $documentElement)
     {
-        foreach($documentElement->getChildren() as $child) {
+        foreach ($documentElement->getChildren() as $child) {
             $child->accept($this);
         }
     }
@@ -61,5 +61,4 @@ class NestLimitVisitor implements \JBBCode\NodeVisitor
         /* Now that we're done visiting this node, decrement the depth. */
         $this->depth[$tagName]--;
     }
-
 }

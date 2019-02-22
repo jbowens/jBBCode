@@ -1,6 +1,7 @@
 <?php
 
-class UrlValidatorTest extends PHPUnit_Framework_TestCase {
+class UrlValidatorTest extends PHPUnit_Framework_TestCase
+{
 
     /**
      * @var JBBCode\validators\UrlValidator

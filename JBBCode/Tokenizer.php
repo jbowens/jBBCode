@@ -103,5 +103,4 @@ class Tokenizer
     {
         return implode('', array_slice($this->tokens, $this->i + 1));
     }
-
 }
