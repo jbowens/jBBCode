@@ -16,6 +16,13 @@ class ElementNode extends Node
     /** @var string The tagname of this element, for i.e. "b" in [b]bold[/b] */
     protected $tagName;
 
+    /**
+     * The original defined tag name of this element, for i.e. "b" in [b]bold[/b]
+     * or [B]bold[/B]
+     * @var string
+     */
+    protected $originalTagName;
+
     /** @var string[] The attributes, if any, of this element node */
     protected $attribute;
 
@@ -61,6 +68,7 @@ class ElementNode extends Node
     {
         $this->codeDefinition = $codeDef;
         $this->setTagName($codeDef->getTagName());
+        $this->originalTagName = $codeDef->getOriginalTagName();
     }
 
     /**
@@ -81,6 +89,16 @@ class ElementNode extends Node
     public function getAttribute()
     {
         return $this->attribute;
+    }
+
+    /**
+     * Returns if element has any children.
+     *
+     * @return bool
+     */
+    public function hasChildren()
+    {
+        return (bool) $this->children;
     }
 
     /**
@@ -123,17 +141,19 @@ class ElementNode extends Node
      */
     public function getAsBBCode()
     {
-        $str = "[".$this->tagName;
+        $str = "[".$this->originalTagName;
         if (!empty($this->attribute)) {
-            if(isset($this->attribute[$this->tagName])) {
-                $str .= "=".$this->attribute[$this->tagName];
+            if (isset($this->attribute[$this->originalTagName])) {
+                // avoid to generate something like [FOO= bar=baz]...[/FOO]
+                if (!empty($this->attribute[$this->originalTagName]) || !$this->hasChildren()) {
+                    $str .= "=".$this->attribute[$this->originalTagName];
+                }
             }
 
-            foreach($this->attribute as $key => $value){
-                if($key == $this->tagName){
+            foreach ($this->attribute as $key => $value) {
+                if (strcasecmp($key, $this->originalTagName) === 0) {
                     continue;
-                }
-                else{
+                } else{
                     $str .= " ".$key."=" . $value;
                 }
             }
@@ -142,7 +162,7 @@ class ElementNode extends Node
         foreach ($this->getChildren() as $child) {
             $str .= $child->getAsBBCode();
         }
-        $str .= "[/".$this->tagName."]";
+        $str .= "[/".$this->originalTagName."]";
 
         return $str;
     }
