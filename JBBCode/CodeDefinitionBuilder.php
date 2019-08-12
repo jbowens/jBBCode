@@ -23,7 +23,7 @@ class CodeDefinitionBuilder
     protected $parseContent = true;
     /** @var integer */
     protected $nestLimit = -1;
-    /** @var InputValidator[] */
+    /** @var array[string]InputValidator The input validators to run options through */
     protected $optionValidator = array();
     /** @var InputValidator */
     protected $bodyValidator = null;
