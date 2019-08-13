@@ -29,7 +29,7 @@ class CodeDefinition
     /** @var integer How many of this element type have been seen */
     protected $elCounter;
 
-    /** @var InputValidator The input validator to run options through */
+    /** @var array[string]InputValidator The input validators to run options through */
     protected $optionValidator;
 
     /** @var InputValidator The input validator to run the body ({param}) through */
