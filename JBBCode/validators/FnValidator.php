@@ -34,6 +34,7 @@ class FnValidator implements \JBBCode\InputValidator
 	 */
 	public function validate($input)
 	{
-		return (bool) ($this->validator)($input);
+		$validator = $this->validator; // FIXME: for PHP>=7.0 replace with ($this->validator)($input)
+		return (bool) $validator($input);
 	}
 }
