@@ -1,8 +1,6 @@
 <?php
 
-namespace JBBCode;
-
-class DocumentElementTest extends \PHPUnit_Framework_TestCase
+class DocumentElementTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var DocumentElement
